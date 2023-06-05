@@ -1,0 +1,23 @@
+.SideBar{
+   position: fixed;
+   background: black;
+   width: 240px;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 20px 24px;
+}
+.SideBar .Logo{
+    position:fixed;
+    width: 440px;
+    height: 60px;
+    overflow: hidden;
+   
+    /* background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center; */
+ }
+ .SideBar .Logo img{
+    max-width: 100%;
+    max-height: 100%;
+ }

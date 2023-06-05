@@ -28,7 +28,7 @@ const LoginForm = () => {
   const handleSubmit = (e) =>{
     // to prevent page getting refresh
     e.preventDefault(); 
-    //when submit the form, pass the form values 
+    // pass the form values when submit the form.
     setFormErrors(validate(formValues)); // set the outputs of the validate function in the formErrors object.
     setIsSubmit(true); // when click the submit button, set flag to true
   };
@@ -38,7 +38,7 @@ const LoginForm = () => {
     console.log(formErrors);
      if(Object.keys(formErrors).length === 0 && isSubmit){
         console.log(formValues);
-       
+        console.log(formValues);
 
      }
 
@@ -69,7 +69,7 @@ const LoginForm = () => {
           <Col sm={6} className="DivRight">
             <h2>LOGIN</h2>
             <p>
-              New User? <a href="https://www.w3schools.com"> Create an account</a>{' '}
+              New User? <a href="/UserRegistration"> Create an account</a>{' '}
             </p>
             <Form className="form" onSubmit={handleSubmit}>
               <Form.Group className="mb-3" controlId="formBasicUsername">
