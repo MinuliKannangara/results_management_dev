@@ -44,9 +44,9 @@ justify-content: center;
 
 }
 .FormRegistration{
-    position: relative;
-    top: 2%;
-    left: 10%;
+    position: absolute;
+    top: 5%;
+    left: 5%;
     /* transform: translate(-50%,-50%); */
     width: 488px;
    height: 90px;
@@ -60,14 +60,13 @@ justify-content: center;
     /* backdrop-filter: blur(40px); */
 }
 .FormRegistration2{
-    position: relative;
-    top: 2%;
-    left: 10%;
+    position: absolute;
+    top: 9%;
+    left: 55%;
     width: 488px;
    height: 90px;
-    padding: 20px;
+    padding: 0px;
     box-sizing: border-box;
-    border-radius: 10px;
     background: rgba(255, 255, 255, 0);
 
 }
@@ -75,7 +74,7 @@ justify-content: center;
 
 .FormRegistration label,
 .FormRegistration2 label {
-  color: rgb(121, 119, 117);
+  color: rgb(166, 164, 162);
   opacity: 1;
 }
 
@@ -84,6 +83,7 @@ justify-content: center;
 .FormRegistration2 Select {
   background-color: rgba(0, 0, 0, 0.5);
   border-color: rgba(0, 0, 0, 0.5);
+  color: rgb(255, 255, 255);
  
 }
 

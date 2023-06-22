@@ -2,12 +2,21 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import LoginForm from './Components/Login/login';
-import { Route, Routes } from 'react-router-dom';
+import {BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import UserRegistration from './Components/UserRegistration/UserRegistration';
-import ManageClassDetails from './Components/ClassTeacher/ManageClassDetails';
-import SideBar from './Components/SideBar/SideBar';
+// import SideBar from './Components/SideBar/SideBar';
 // import Dashboard from './Components/NavBar/side';
+import SideBar from './Components/SideBar/SideBar';
+import ManageClassDetails from '../src/Pages/ManageClassDetails';
+import ButtonAppBar from './Components//NavBar/NavBar';
 
+import ManageStudentDetails from './Components/ClassTeacher/ManageStudentDetails';
+import ManageClassResults from './Components/ClassTeacher/ManageClassResults';
+import ManageSubjectResults from './Components/SubjectTeacher/SubjectResults';
+import GradeResultsDashboard from './Components/GradeResultsDashboard/GradeDashboard';
+import StudentPerformance from './Components/GradeHead/StudentPerformance';
+import PrizeHolders from './Components/GradeHead/PrizeHolders';
+import UploadNationalExaminationResults from './Components/GradeHead/NationalExamination';
 
 function App() {
 
@@ -19,8 +28,23 @@ function App() {
       <Route path="/ClassDetails" element={<ManageClassDetails/>} />
       {/* <Route path="/NavBar" element={<Dashboard/>} /> */}
       <Route path= "/SideBar" element = {<SideBar/>}/>
+      <Route path="/ManageClassDetails" element = {<ManageClassDetails/>}/>
+      <Route path="/NavBar" element = {<ButtonAppBar/>}/>
+      <Route path="/Manage Student Details" element = {<ManageStudentDetails/>}/>
+      <Route path="/Manage Class Results" element = {<ManageClassResults/>}/>
+      <Route path="/Manage Subject Results" element = {<ManageSubjectResults/>}/>
+      <Route path="/Grade Results Dashboard" element = {<GradeResultsDashboard/>}/>
+      <Route path="/Student Performance" element={<StudentPerformance/>} />
+      <Route pathe="/Prize Holders" element={<PrizeHolders/>}/>
+      <Route path="/Upload National Examination Results" element={<UploadNationalExaminationResults/>}/>
+
+
+    
+
+     
+
     </Routes> 
-   
+    
   );
 }
 

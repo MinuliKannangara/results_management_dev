@@ -1,0 +1,63 @@
+.div_aca_yr{
+    background-color: #e1e1e1;
+    height: 60px;
+    width: 98%;
+    margin: 1% 1% 1% 1%;
+}
+
+
+.p_aca_yr{
+    font-size: 20px;
+    margin: 2.5% 0% 3% 25%;
+    color:  rgb(0, 0, 0);
+    font-family: sans-serif;
+    
+    
+}
+
+.customDropdown{
+    width: 60%;
+    margin: 2% 0% 3% 5%;
+    background-color: white;
+    color: black;
+    font-family: sans-serif;
+    border-color: white;
+}
+.customDropdownItem{
+    background-color: rgba(165, 37, 37, 0.604);
+}
+
+.divAddStudent{
+    height: 130px;
+}
+.divAddStudentTable{
+    height: auto;
+   
+}
+
+.pAddStudent{
+    color: black;
+    font-size: 18px;
+    font-weight:bolder ;
+    margin-top: 3px;
+    margin-left: 20px;
+    padding: 5px;
+}
+
+.TableRoWUp{
+height: 60px;
+
+}
+
+
+/* Manage class results */
+
+.p_rslt_sheet{
+    font-size: 30px;
+    margin: 0.4% 0% 0% 41%;
+    color:  rgb(0, 0, 0);
+    font-weight: bolder;
+    
+   
+
+}

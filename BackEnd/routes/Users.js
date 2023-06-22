@@ -1,7 +1,7 @@
 const express = require("express"); // import express( create an instance of express)
 
 const router = express.Router();
-const {NewUsers} = require("../models"); // import the user model
+const {users} = require("../models"); // import the user model
 const bcrypt = require("bcrypt"); // import bcrypt(it is used to hash the password)
 
 // router.get("/", (req, res) => {
@@ -11,42 +11,37 @@ const bcrypt = require("bcrypt"); // import bcrypt(it is used to hash the passwo
 //rount for the registration
 //insert data to users table in the database 
 
-router.post("/", async (req, res) => {
-    const us = req.body;
-    await NewUsers.create(us);
-    res.json(us);
-}); 
-
-
-
-
-
-
-
-
-
 // router.post("/", async (req, res) => {
-//     //logic reguaring inserting data to the database 
+//     const user = req.body;
+//     await NewUsers.create(user);
+//     res.json(user);
+// }); 
 
-//     const {name,email,mobile_number,username, password} = req.body; // destructuring the request body
+ 
+//to insert data from the registration form
+router.post("/", async (req, res) => {
+    //logic reguaring inserting data to the database 
+
+    const {name,email,mobile_number,username, password,sclID} = req.body; // destructuring the request body
     
-//     // hash the password
-//     bcrypt.hash(password, 10).then((hashedPassword) => {
-//         //tell the "Users model" to create a new user in the database
-//          NewUsers.create({
-//             name: name,
-//             email: email,
-//             mobile_number: mobile_number,
-//             username: username,
-//             password: hashedPassword, //pass the hashed value
-//         })
+    // hash the password
+    bcrypt.hash(password, 10).then((hashedPassword) => {
+        //tell the "Users model" to create a new user in the database
+            users.create({
+            name: name,
+            email: email,
+            mobile_number: mobile_number,
+            username: username,
+            password: hashedPassword, //pass the hashed value
+            school_ID:sclID
+        })
 
-//         res.json("success"); // send the response to the browser
-//     }) ;
-// });
+        res.json("success"); // send the response to the browser
+    }) ;
+});
 
-//route for the login
-// router.post("/login", async (req, res) => {
+// //route for the login
+// router.post("/", async (req, res) => {
 //     const {name,email,mobile_number,username, password} = req.body;
 
 //     const user = await Users.findOne({where: {username: username}}); // find the user by username

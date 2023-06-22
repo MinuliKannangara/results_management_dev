@@ -1,7 +1,10 @@
 const express = require("express");
+const cors = require('cors');
 const app = express();
 app.use(express.json());
 const db = require("./models");
+
+app.use(cors());
 
 //routers
 // const usersRouter = require("./routes/Users");  //imports a router from a file called "Users" located in the "./routes" directory.
@@ -14,15 +17,18 @@ const db = require("./models");
 // const usersRouter = require("./routes/Users");  //imports a router from a file called "Users" located in the "./routes" directory.
 // app.use("/newusers", usersRouter); //mount this router at the "/Users" path. This means that any request starting with "/Users" will be handled by this router.")
 
-
+//import the router files
 const loginRouter = require("./routes/Users"); 
-app.use("/login", loginRouter);
+app.use("/UserRegistration", loginRouter);
 
+const studentRouter = require("./routes/Students");
+app.use("/studentDetails", studentRouter);
 
+const schoolRouter = require("./routes/Schools");
+app.use("/schoolDetails", schoolRouter);
 
-
-
-
+// const roleRouter = require("./routes/Role");
+// app.use("/roleDetails", roleRouter);
 
 
 
