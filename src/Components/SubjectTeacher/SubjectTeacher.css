@@ -4,8 +4,19 @@
 }
 
 .DropdownDiv2{
-    height: 100px;
+    height: 150px;
     width: 100%;
-    background:#e1e1e1;
-    margin-top: 30px;
+    background-color:#e1e1e1;
+    margin-top: 10px;
+}
+.dropdownSubjects{
+    width: 50%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    margin-top: 20px;
+    border:0 ;
+
 }
