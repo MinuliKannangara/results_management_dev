@@ -8,6 +8,9 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons'
+
 
 
 import axios, { Axios } from 'axios';
@@ -69,10 +72,7 @@ const ManageStudentDetails = () => {
     <div>
       <ButtonAppBar PageName="Manage Student Details" classesName="7-A" />
 
-      
-      
-
-
+     
       <Container fluid className='div_aca_yr '>
         <Row>
           <Col md={3} sm={6} className="div_left_aca_yr">
@@ -156,9 +156,10 @@ const ManageStudentDetails = () => {
             <Table striped bordered hover variant="light">
       <thead>
         <tr>
-          <th>#</th>
+          <th style={{width:"10px"}}>#</th>
           <th>Index Number</th>
           <th>Name</th>
+          <th>Action</th>
       
         </tr>
       </thead>
@@ -169,6 +170,10 @@ const ManageStudentDetails = () => {
               <td>{index.index_number}</td>
               <td>{index.index_number}</td>
               <td>{index.student_name}</td>
+              <td><Button variant="outline-primary"style={{ fontSize: "15px", marginLeft: "2px", marginRight:"2px" }}><FontAwesomeIcon icon={faPenToSquare} /> </Button>
+              <Button variant="outline-primary" style={{ fontSize: "15px", marginLeft: "2px", marginRight:"2px" }}><FontAwesomeIcon  icon={faTrash} /></Button>
+              
+              </td>
             </tr>
           })
         }
@@ -178,6 +183,30 @@ const ManageStudentDetails = () => {
     </Table>
            
         </Row>
+      </Container>
+
+      
+      <Container fluid >
+        <Row>
+          <Col lg={4} sm={12}>
+         <Form>
+             <Button variant="primary" className='btnCrudGroup'>Save</Button>{' '}
+         </Form>
+          </Col>
+          <Col lg={4} sm={12}>
+          <Form>
+          <Button variant="primary"  className='btnCrudGroup'>Update</Button>{' '}
+         </Form>
+            
+          </Col>
+          <Col lg={4} sm={12}>
+          <Form>
+          <Button variant="primary"  className='btnCrudGroup'>Clear</Button>{' '}
+          </Form>
+            
+          </Col>
+        </Row>
+
       </Container>
 
       
