@@ -1,0 +1,27 @@
+.btnYrSubmit{
+  
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+
+.customDropdown2{
+    width: 60%;
+    margin: 2% 0% 3% 5%;
+    background-color: rgb(37, 43, 215);
+    color: black;
+    font-family: sans-serif;
+    border-color: white;
+}
+
+.divSelectYear{
+    background-color: #e1e1e1;
+    height: 60px;
+    width: 98%;
+    margin: 1% 1% 1% 1%;
+}

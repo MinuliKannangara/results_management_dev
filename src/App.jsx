@@ -7,7 +7,6 @@ import UserRegistration from './Components/UserRegistration/UserRegistration';
 // import SideBar from './Components/SideBar/SideBar';
 // import Dashboard from './Components/NavBar/side';
 import SideBar from './Components/SideBar/SideBar';
-import ManageClassDetails from '../src/Pages/ManageClassDetails';
 import ButtonAppBar from './Components//NavBar/NavBar';
 
 import ManageStudentDetails from './Components/ClassTeacher/ManageStudentDetails';
@@ -25,17 +24,16 @@ function App() {
     <Routes>
       <Route path="/login" element={<LoginForm/>} />
       <Route path="/UserRegistration" element={<UserRegistration/>} />
-      <Route path="/ClassDetails" element={<ManageClassDetails/>} />
+      {/* <Route path="/ClassDetails" element={<ManageClassDetails/>} /> */}
       {/* <Route path="/NavBar" element={<Dashboard/>} /> */}
       <Route path= "/SideBar" element = {<SideBar/>}/>
-      <Route path="/ManageClassDetails" element = {<ManageClassDetails/>}/>
       <Route path="/NavBar" element = {<ButtonAppBar/>}/>
       <Route path="/Manage Student Details" element = {<ManageStudentDetails/>}/>
       <Route path="/Manage Class Results" element = {<ManageClassResults/>}/>
       <Route path="/Manage Subject Results" element = {<ManageSubjectResults/>}/>
       <Route path="/Grade Results Dashboard" element = {<GradeResultsDashboard/>}/>
       <Route path="/Student Performance" element={<StudentPerformance/>} />
-      <Route pathe="/Prize Holders" element={<PrizeHolders/>}/>
+      <Route path="/Prize Holders" element={<PrizeHolders/>}/>
       <Route path="/Upload National Examination Results" element={<UploadNationalExaminationResults/>}/>
 
 

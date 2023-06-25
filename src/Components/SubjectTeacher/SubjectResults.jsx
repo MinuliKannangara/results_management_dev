@@ -40,11 +40,11 @@ return (
 <Container  className='DropdownDiv2'>
       <Formik
  
-  // initialValues={{ name: '', email: '', class1: '', class2: '', class3: '', class4: '' }}
-  // onSubmit={async (values) => {
-  //   await new Promise((resolve) => setTimeout(resolve, 500));
-  //   alert(JSON.stringify(values, null, 2));
-  // }}
+  initialValues={{ name: '', email: '', class1: '', class2: '', class3: '', class4: '' }}
+  onSubmit={async (values) => {
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    alert(JSON.stringify(values, null, 2));
+  }}
 >
   <Form>
     <Row>

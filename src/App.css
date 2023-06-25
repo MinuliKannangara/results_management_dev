@@ -1,13 +1,7 @@
-/* .App {
-  width: 800px;
-  height: 400px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: auto;
-} */
 body{
   font-family: sans-serif;
 }
+
 
 .topDiv{
   background: linear-gradient(to bottom, #acb0b7, #ffffff);
@@ -16,8 +10,6 @@ body{
   width: 98%; 
   margin: 1% 1% 1% 1%;
   justify-content: center;
- 
-
  
 }
 
@@ -28,8 +20,6 @@ body{
   font-weight: bolder;
   letter-spacing: 4px;
   
- 
-
 }
 
 .allTables{
@@ -54,3 +44,24 @@ body{
   margin: 1% 1% 0% 1%;
   margin-top:80px;
 }
+
+
+
+
+.divAllDropdown{
+  background-color: #e1e1e1;
+  height: auto;
+  width: 98%;
+  margin: 1% 1% 1% 1%;
+}
+
+
+.pLables{
+  font-size: 20px;
+  margin: 2.5% 0% 3% 25%;
+  color:  rgb(0, 0, 0);
+  font-family: sans-serif;
+  
+  
+}
+

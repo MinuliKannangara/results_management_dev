@@ -27,7 +27,7 @@ export default function ButtonAppBar(props) {
     setState({ ...state, [anchor]: open });
   };
 
-  const userRole = 'Class Teacher'; //assign the user role of the user to this variable
+  const userRole = 'Grade Head'; //assign the user role of the user to this variable
   let sideBarItems = []; //array to assign
 
   if (userRole === 'Class Teacher') {

@@ -73,10 +73,10 @@ const ManageStudentDetails = () => {
       <ButtonAppBar PageName="Manage Student Details" classesName="7-A" />
 
      
-      <Container fluid className='div_aca_yr '>
+      <Container fluid className='divAllDropdown '>
         <Row>
-          <Col md={3} sm={6} className="div_left_aca_yr">
-            <p className='p_aca_yr'>Academic Year</p>
+          <Col md={3} sm={6}>
+            <p className='pLables'>Academic Year</p>
           </Col>
           <Col md={3} sm={6}>
             <Dropdown>
@@ -91,8 +91,8 @@ const ManageStudentDetails = () => {
               </Dropdown.Menu>
             </Dropdown>
           </Col>
-          <Col md={3} sm={6} className="div_left_aca_yr">
-            <p className='p_aca_yr'>Class Name</p>
+          <Col md={3} sm={6} >
+            <p className='pLables'>Class Name</p>
           </Col>
           <Col md={3} sm={6}>
             <Dropdown>
@@ -111,7 +111,7 @@ const ManageStudentDetails = () => {
       </Container>
 
       
-      <Container fluid className='div_aca_yr divAddStudent'>
+      <Container fluid className=' divAddStudent'>
         <Form  onSubmit={submitStudentDetails}>
         <Row>
         <p className='pAddStudent'>Add New Students</p>
@@ -127,16 +127,16 @@ const ManageStudentDetails = () => {
             </FloatingLabel>
           </Col>
           <Col md={4}>
-          <Button type ="submit" variant="light">ADD</Button>{' '}
+          <Button type ="submit" variant="light">ADD</Button>
           </Col>
           
         </Row>
         </Form>
-      </Container>
+      </Container>s
 
     {/* student details table */}
 
-      <Container fluid className='div_aca_yr divAddStudentTable'>
+      <Container fluid className='divAllDropdown divAddStudentTable'>
         <Row className='TableRoWUp'>
 
           <Col md={3}>
