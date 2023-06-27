@@ -1,17 +1,16 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 import TemporaryDrawer from '../SideBar/SideBar';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars} from '@fortawesome/free-solid-svg-icons'
 
+function NavBar(props) {
 
-export default function ButtonAppBar(props) {
-
-  const [state, setState] = React.useState({
+    const [state, setState] = React.useState({
     top: false,
     left: false,
     bottom: false,
@@ -45,37 +44,40 @@ export default function ButtonAppBar(props) {
   } else if (userRole === 'Planning Officer') {
     sideBarItems = ['sds', 'dfdf', 'sdfsdfs'];
   } else if (userRole === 'Develomet Officer') {
-    sideBarItems = ['sds', 'dfdf', 'sdfsdfs'];
+    sideBarItems = ['O/L Results Analysis', 'dfdf', 'sdfsdfs'];
   } 
 
-  
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ backgroundColor: 'white' ,borderBottom: '1px solid gray', height:'50px', boxShadow: 'none' }}>
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="black"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-            onClick={toggleDrawer("left", true)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, color:'black', fontSize: '18px', fontWeight: 'bold'  }}>
-            {props.PageName}
-          </Typography>
+    <Navbar expand="lg" className="bg-body-tertiary">
 
-          <Typography variant="subtitle1" sx={{ color: "black"  }}>
-          {props.classesName}
-         </Typography>
-        </Toolbar>
-      </AppBar>
+       
+        <Container fluid style={{width:'3px',marginRight:'15px'}}>
+            <Form >
+                <Button variant="light" style={{boxSizing:'7'}} onClick={toggleDrawer("left", true)}><FontAwesomeIcon icon={faBars} /></Button>
+          </Form>
+        </Container>
+       
 
+      <Container fluid style={{marginTop:'5px'}} >
+     
+      
+        <Navbar.Brand href="#home">{props.PageName}</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link href={props.Tab1Link}>{props.Tab1}</Nav.Link>
+            <Nav.Link href={props.Tab2Link}> {props.Tab2}</Nav.Link>
+            
+              
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
 
+      
       {/* use the sidebar within the navigation bar and pass the props */}
       <TemporaryDrawer state={state} setState={setState} toggleDrawer={toggleDrawer} items={sideBarItems}/>
-    </Box>
+    </Navbar>
   );
 }
+
+export default NavBar;

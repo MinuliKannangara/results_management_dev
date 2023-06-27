@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import ButtonAppBar from '../NavBar/NavBar';
+import ButtonAppBar from '../NavBar/NavBarwrong';
 import { Container, Row, Col } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
+import NavBar from '../NavBar/NavBar';
 
 import axios, { Axios } from 'axios';
 
@@ -12,7 +13,9 @@ const StudentPerformance = () => {
 
 return (
 <div>
-<ButtonAppBar PageName="Student Performance" />
+{/* <ButtonAppBar PageName="Student Performance" /> */}
+
+<NavBar PageName="Prize Holders"/>
 
 <Container fluid className='div_aca_yr '>
         <Row>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 //import React from 'react';
-import ButtonAppBar from '../NavBar/NavBar';
+import ButtonAppBar from '../NavBar/NavBarwrong';
 import './ManageStudentDetails.css';
 import { Container, Row, Col } from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -10,6 +10,7 @@ import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons'
+import NavBar from '../NavBar/NavBar';
 
 
 
@@ -70,7 +71,9 @@ const ManageStudentDetails = () => {
     
   return (
     <div>
-      <ButtonAppBar PageName="Manage Student Details" classesName="7-A" />
+      {/* <ButtonAppBar PageName="Manage Student Details" classesName="7-A" /> */}
+
+      <NavBar PageName="Manage Student Details" classesName="7-A" />
 
      
       <Container fluid className='divAllDropdown '>

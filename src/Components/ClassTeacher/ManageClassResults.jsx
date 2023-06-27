@@ -1,10 +1,11 @@
 
-import ButtonAppBar from '../NavBar/NavBar';
+import ButtonAppBar from '../NavBar/NavBarwrong';
 import './ManageStudentDetails.css';
 import { Container, Row, Col } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import { Formik, Field, Form } from "formik";
 import { Button } from 'react-bootstrap';
+import NavBar from '../NavBar/NavBar';
 
 import axios, { Axios } from 'axios';
 
@@ -16,7 +17,9 @@ const ManageStudentDetails = () => {
 return (
 <div>
   
-<ButtonAppBar PageName="Manage Class Results" />
+{/* <ButtonAppBar PageName="Manage Class Results" /> */}
+<NavBar PageName="Manage Class Results" />
+
 
 <Container fluid className='topDiv '>
         

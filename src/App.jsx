@@ -7,7 +7,7 @@ import UserRegistration from './Components/UserRegistration/UserRegistration';
 // import SideBar from './Components/SideBar/SideBar';
 // import Dashboard from './Components/NavBar/side';
 import SideBar from './Components/SideBar/SideBar';
-import ButtonAppBar from './Components//NavBar/NavBar';
+import NavBar from './Components/NavBar/NavBar';
 
 import ManageStudentDetails from './Components/ClassTeacher/ManageStudentDetails';
 import ManageClassResults from './Components/ClassTeacher/ManageClassResults';
@@ -16,6 +16,7 @@ import GradeResultsDashboard from './Components/GradeResultsDashboard/GradeDashb
 import StudentPerformance from './Components/GradeHead/StudentPerformance';
 import PrizeHolders from './Components/GradeHead/PrizeHolders';
 import UploadNationalExaminationResults from './Components/GradeHead/NationalExamination';
+import OLResults from './Components/Development Section/OLResults';
 
 function App() {
 
@@ -27,7 +28,7 @@ function App() {
       {/* <Route path="/ClassDetails" element={<ManageClassDetails/>} /> */}
       {/* <Route path="/NavBar" element={<Dashboard/>} /> */}
       <Route path= "/SideBar" element = {<SideBar/>}/>
-      <Route path="/NavBar" element = {<ButtonAppBar/>}/>
+      <Route path="/NavBar" element = {<NavBar/>}/>
       <Route path="/Manage Student Details" element = {<ManageStudentDetails/>}/>
       <Route path="/Manage Class Results" element = {<ManageClassResults/>}/>
       <Route path="/Manage Subject Results" element = {<ManageSubjectResults/>}/>
@@ -35,6 +36,7 @@ function App() {
       <Route path="/Student Performance" element={<StudentPerformance/>} />
       <Route path="/Prize Holders" element={<PrizeHolders/>}/>
       <Route path="/Upload National Examination Results" element={<UploadNationalExaminationResults/>}/>
+      <Route path="/O/L Results Analysis" element={<OLResults/>}/>
 
 
     

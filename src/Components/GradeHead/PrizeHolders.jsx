@@ -1,10 +1,11 @@
 import React from 'react';
-import ButtonAppBar from '../NavBar/NavBar';
+import ButtonAppBar from '../NavBar/NavBarwrong';
 import { Container, Row, Col } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import { Formik, Field, Form } from "formik";
 import './GreadHead.css';
 import { Button } from 'react-bootstrap';
+import NavBar from '../NavBar/NavBar';
 
 import axios, { Axios } from 'axios';
 
@@ -15,7 +16,8 @@ const PrizeHolders = () => {
 
 return (
 <div>
-<ButtonAppBar PageName="Prize Holders" />
+{/* <ButtonAppBar PageName="Prize Holders" /> */}
+<NavBar PageName="Prize Holders"/>
 
 <Container fluid className='topDiv'>
         <Row>
@@ -61,7 +63,7 @@ return (
           <Col md={2} sm={6}>
             <p className='pAddStudent'>Total Subjects</p>
           </Col>
-          <Col md={3} sm={6}>
+          <Col md={2} sm={6}>
           <form action="">
               <input type="text"
               style={{width:'10%', alignItems:'left', border:'none', borderBottom:'2px solid #000000', backgroundColor:'transparent', color:'#000000', fontSize:'10px', fontWeight:'bold'}}
@@ -70,14 +72,26 @@ return (
             
           </Col>
           <Col md={4} sm={6}>
-           <p className='pAddStudent'> add a search bar</p>
+           {/* <p className='pAddStudent'> add a search bar</p> */}
             
           </Col>
-          <Col md={3} sm={6}>
+          <Col md={2} sm={6}>
             
             <Formik>
             <Form>
-            <Button className='btnUpdate' type='submit'>Update Table</Button>
+            <Button className='btnUpdate' type='submit'>Display</Button>
+        
+            </Form>
+          </Formik>
+            
+          </Col>
+          <Col md={2} sm={6}>
+            
+            <Formik>
+            <Form>
+        
+            {/* change the button type */}
+            <Button className='btnUpdate' type='submit'>Print</Button>
             </Form>
           </Formik>
             
@@ -93,15 +107,19 @@ return (
           <th>Index Number</th>
           <th>Name</th>
           <th>Subject </th>
-          <th>Rank</th>
+          <th>Class</th>
+          <th>Prize</th>
       
         </tr>
       </thead>
       <tbody>
 
-                <td>vd</td>
-                <td>vd</td>
-                <td>vd</td>
+                <td>xx</td>
+                <td>xx</td>
+                <td>xx</td>
+                <td>xx</td>
+                <td>xx</td>
+                <td>xx</td>
     
    
        

@@ -1,9 +1,10 @@
 import React from 'react';
-import ButtonAppBar from '../NavBar/NavBar';
+import ButtonAppBar from '../NavBar/NavBarwrong';
 import { Container,div, Row, Col, Button,FormLabel } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import './SubjectTeacher.css';
 import { Formik, Field, Form } from "formik";
+import NavBar from '../NavBar/NavBar';
 
 
 
@@ -19,7 +20,9 @@ return (
 <div>
 
   
-<ButtonAppBar PageName="Manage Subject Results" />
+{/* <ButtonAppBar PageName="Manage Subject Results" /> */}
+
+<NavBar PageName="Manage Subject Results"/>
 
 <Container fluid className='topDiv'>
 
