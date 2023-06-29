@@ -1,0 +1,18 @@
+.topicsP{
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    color: #000;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+   
+}
+
+.divColumns{
+   height: 500px;
+    /* margin-bottom: 1rem;
+    margin-top: 1rem; */
+    background-color: rgb(232, 232, 232);
+}

@@ -4,7 +4,12 @@
 module.exports = (sequelize, DataTypes) =>{
     const users = sequelize.define("users", {
        
-      
+        user_ID:{
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            allowNull: false,
+            autoIncrement: true,
+        },
         name: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -45,35 +50,7 @@ module.exports = (sequelize, DataTypes) =>{
         });
         
 
-        // pass the user_ID as foreig keys to the user roles
-        // users.hasMany(models.system_admin, {
-        //     foreignKey: "user_ID",
-        // });
-
-        // users.hasMany(models.school_admin, {
-        //     foreignKey: "user_ID",
-        // });
-
-        // users.hasMany(models.planning_officer, {
-        //     foreignKey: "user_ID",
-        // });
-
-        
-        // users.hasMany(models.grade_head, {
-        //     foreignKey: "user_ID",
-        // });
-
-        // users.hasMany(models.dev_officer,{
-        //     foreignKey:"user_ID",
-        // });
-
-        // users.hasMany(models.sectional_head,{
-        //     foreignKey:"user_ID",
-        // });
-
-        // users.hasMany(models.subject_teacher,{
-        //     foreignKey:"user_ID",
-        // });
+    
     };
 
 

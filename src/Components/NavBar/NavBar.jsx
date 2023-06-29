@@ -48,35 +48,39 @@ function NavBar(props) {
   } 
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+  <Container fluid>
+<Navbar expand="lg" className="bg-body-tertiary" style={{backgroundColor:"#F0EBE7"}}>
 
        
-        <Container fluid style={{width:'3px',marginRight:'15px'}}>
-            <Form >
-                <Button variant="light" style={{boxSizing:'7'}} onClick={toggleDrawer("left", true)}><FontAwesomeIcon icon={faBars} /></Button>
-          </Form>
-        </Container>
-       
+<Container fluid style={{width:'4px',marginRight:'15px'}}>
+    <Form >
+        <Button variant="light" style={{boxSizing:'7',backgroundColor:"#F0EBE7",marginTop:'0px'}} onClick={toggleDrawer("left", true)}><FontAwesomeIcon icon={faBars} /></Button>
+  </Form>
+</Container>
 
-      <Container fluid style={{marginTop:'5px'}} >
-     
-      
-        <Navbar.Brand href="#home">{props.PageName}</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href={props.Tab1Link}>{props.Tab1}</Nav.Link>
-            <Nav.Link href={props.Tab2Link}> {props.Tab2}</Nav.Link>
-            
-              
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
 
+<Container fluid style={{marginTop:'5px'}} >
+
+
+<Navbar.Brand href="#home">{props.PageName}</Navbar.Brand>
+{/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
+<Navbar.Collapse id="basic-navbar-nav">
+  <Nav className="me-auto">
+    <Nav.Link href={props.Tab1Link}>{props.Tab1}</Nav.Link>
+    <Nav.Link href={props.Tab2Link}> {props.Tab2}</Nav.Link>
+    
       
-      {/* use the sidebar within the navigation bar and pass the props */}
-      <TemporaryDrawer state={state} setState={setState} toggleDrawer={toggleDrawer} items={sideBarItems}/>
-    </Navbar>
+  </Nav>
+</Navbar.Collapse>
+</Container>
+
+
+{/* use the sidebar within the navigation bar and pass the props */}
+<TemporaryDrawer state={state} setState={setState} toggleDrawer={toggleDrawer} items={sideBarItems}/>
+</Navbar>
+
+    </Container>
+    
   );
 }
 

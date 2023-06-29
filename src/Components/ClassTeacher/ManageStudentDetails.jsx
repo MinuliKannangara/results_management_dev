@@ -135,7 +135,7 @@ const ManageStudentDetails = () => {
           
         </Row>
         </Form>
-      </Container>s
+      </Container>
 
     {/* student details table */}
 

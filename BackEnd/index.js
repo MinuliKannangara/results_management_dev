@@ -27,6 +27,12 @@ app.use("/studentDetails", studentRouter);
 const schoolRouter = require("./routes/Schools");
 app.use("/schoolDetails", schoolRouter);
 
+const NExaminationRouter = require("../BackEnd/routes/NationalExamintion");
+app.use("/NationalExaminationDetails", NExaminationRouter);
+
+const subjectRouter = require("./routes/Subjects");
+app.use("/subject", subjectRouter);
+
 // const roleRouter = require("./routes/Role");
 // app.use("/roleDetails", roleRouter);
 
