@@ -7,7 +7,7 @@ import { Formik, Field, Form } from "formik";
 import NavBar from '../NavBar/NavBar';
 
 
-
+ 
 
 import axios, { Axios } from 'axios';
 
@@ -18,7 +18,6 @@ const ManageSubjectResults = () => {
   
 return (
 <div>
-
   
 {/* <ButtonAppBar PageName="Manage Subject Results" /> */}
 

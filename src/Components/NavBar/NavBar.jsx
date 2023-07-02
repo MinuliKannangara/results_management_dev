@@ -26,7 +26,7 @@ function NavBar(props) {
     setState({ ...state, [anchor]: open });
   };
 
-  const userRole = 'Grade Head'; //assign the user role of the user to this variable
+  const userRole = 'Subject Teacher'; //assign the user role of the user 
   let sideBarItems = []; //array to assign
 
   if (userRole === 'Class Teacher') {
@@ -49,7 +49,7 @@ function NavBar(props) {
 
   return (
   <Container fluid>
-<Navbar expand="lg" className="bg-body-tertiary" style={{backgroundColor:"#F0EBE7"}}>
+<Navbar expand="lg" className="bg-body-tertiary" style={{backgroundColor:"#e1e1e1"}}>
 
        
 <Container fluid style={{width:'4px',marginRight:'15px'}}>

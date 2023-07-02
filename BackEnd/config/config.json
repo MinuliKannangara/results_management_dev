@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "1234",
-    "database": "result_smanagement_system",
+    "database": "results_management_system",
     "host": "localhost",
     "dialect": "mysql"
   },

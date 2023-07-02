@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import { Button } from 'react-bootstrap';
@@ -6,19 +6,36 @@ import NavBar from '../NavBar/NavBar';
 import { Dropdown } from 'react-bootstrap';
 import './OLResults.css';
 import axios, { Axios } from 'axios';
+import DivisionWiseTable from '../Charts/DivWiseTable';
 
 const OLResults = () => {
 
-const[listOfStudentsSat, setListOfStudentsSat] = useState([]);
 
-axios.get('http://localhost:3001/NationalExaminationDetails//NationalExaminationResults').then((responese)=>{
-  setListOfStudentsSat(responese.data);
-  console.log(responese.data);
-})
-.catch((error)=>{
-  console.log(error);
-});
-   
+  const [meerigamaCount, setMeerigamaCount] = useState(0);
+  const [minuwangodaCount, setMinuwangodaCount] = useState(0);
+  const [divulapitiyaCount, setDivulapitiyaCount] = useState(0);
+  const [meerigamaPassed, setMeerigamaPassed] = useState(0);
+  const[divulapitiyaPassed, setDivulapitiyaPassed] = useState(0);
+  const[minuwangodaPassed, setMinuwangodaPassed] = useState(0);
+
+  useEffect(() => {
+    fetch('http://localhost:3001/NationalExaminationDetails/NationalExaminationResults')
+      .then((res) => res.json())
+      .then((data) => {
+        setMeerigamaCount(data.meerigama);
+        setMinuwangodaCount(data.minuwangoda);
+        setDivulapitiyaCount(data.divulapitiya);
+        setMeerigamaPassed(data.meerigamaPassed);
+        setDivulapitiyaPassed(data.divulapitiyaPassed);
+        setMinuwangodaPassed(data.minuwangodaPassed);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+  
+
 
 return (
 <div>
@@ -63,36 +80,22 @@ Tab2Link="http://localhost:3000/Manage Student Details"
 
       <Container fluid>
             <Row>
-                  <Col md={4} sm={6} className='divColumns'>
-
-                  <Table striped bordered hover size="sm">
-      <thead>
-        <tr>
-          <th>Division</th>
-          <th>Number of Sat</th>
-          <th>Number of passed</th>
-          <th>Passed percentage</th>
-        </tr>
-      </thead>
-      <tbody>
-        {listOfStudentsSat.map((value)=>{
-          return <tr>
-          <td>{}</td>
-          </tr>
-        })}
-       
-       
-      </tbody>
-    </Table>
-
+                  <Col md={8} sm={6} className='divColumns'>
+                    <DivisionWiseTable 
+                    minuwangoda={minuwangodaCount} 
+                    meerigama={meerigamaCount} 
+                    divulapitiya = {divulapitiyaCount} 
+                    meerigamaPassCount={meerigamaPassed}
+                    minuangodaPassCount={minuwangodaPassed}
+                    divulapitiyaPassCount={divulapitiyaPassed}
+                    />
 
                   </Col>
-                  <Col md={4} sm={6} className='divColumns'>
-                        
+                  <Col md={8} sm={6} className='divColumns'>
+                    
+              
                   </Col>
-                  <Col md={4} sm={6} className='divColumns'>
-                        
-                  </Col>
+                 
             </Row>
       </Container>
 
