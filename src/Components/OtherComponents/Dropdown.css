@@ -1,0 +1,18 @@
+.customDropdownButton {
+  background-color: #c1c1c1;
+  border: none;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.customDropdown{
+    background-color: #c1c1c1;
+    border: none;
+    color: rgb(0, 0, 0);
+}
