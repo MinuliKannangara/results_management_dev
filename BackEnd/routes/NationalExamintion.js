@@ -4,25 +4,14 @@ const { NationalExaminationResults, NationalExaminations, Student, School } = re
 const { Op } = require("sequelize");
 
 
-router.get("/NationalExaminationResults", async(req, res)=>{
+router.get("/NationalExaminationResults/:year", async(req, res)=>{
 
-  // const result = await NationalExaminationResults.findAndCountAll({
-  //   attributes: [
-  //     [sequelize.fn('COUNT', sequelize.col('admission_number')), 'divisionCount'],
-  //   ],
-  //   include: [
-  //     { model: School },
-  //     { model: Student },
-  //     { model: NationalExaminations },
-  //   ],
-  // });
-  // const divisionCount = result.count;
   
-  // console.log('Division Count:', divisionCount);
 
   try {
-  
+    const year = req.params.year.toString();
 
+      
     const meerigamaCount = await NationalExaminationResults.count({
       include: [
         {
@@ -34,7 +23,9 @@ router.get("/NationalExaminationResults", async(req, res)=>{
           where: { examination_name: 'O/L' },
         },
       ],
-      // where: { year: 2022 },
+      where: { year},
+      distinct: true,
+      col: 'admission_number',
     });
 
     const divulapitiyaCount = await NationalExaminationResults.count({
@@ -48,7 +39,9 @@ router.get("/NationalExaminationResults", async(req, res)=>{
           where: { examination_name: 'O/L' },
         },
       ],
-      // where: { year: 2022 },
+      where: { year},
+      distinct: true,
+      col: 'admission_number',
     });
 
     const minuwangodaCount = await NationalExaminationResults.count({
@@ -62,7 +55,9 @@ router.get("/NationalExaminationResults", async(req, res)=>{
           where: { examination_name: 'O/L' },
         },
       ],
-      // where: { year: 2022 },
+       where: { year},
+       distinct: true,
+      col: 'admission_number',
     });
 
     const meerigamaPassedCount = await NationalExaminationResults.count({
@@ -78,7 +73,7 @@ router.get("/NationalExaminationResults", async(req, res)=>{
       ],
 
       where: {
-        // year: 2022,
+      year,
         marks: { [Op.in]: ['A', 'B', 'C', 'D'] },
       },
     });
@@ -96,7 +91,7 @@ router.get("/NationalExaminationResults", async(req, res)=>{
       ],
 
       where: {
-        // year: 2022,
+        year,
         marks: { [Op.in]: ['A', 'B', 'C', 'D'] },
       },
     });
@@ -114,7 +109,7 @@ router.get("/NationalExaminationResults", async(req, res)=>{
       ],
 
       where: {
-        // year: 2022,
+        year,
         marks: { [Op.in]: ['A', 'B', 'C', 'D'] },
       },
     });
@@ -129,9 +124,15 @@ router.get("/NationalExaminationResults", async(req, res)=>{
       meerigamaPassed: meerigamaPassedCount,
       divulapitiyaPassed: divulapitiyaPassedCount,
       minuwangodaPassed: minuwangodaPassedCount,
-      
+
+
+
       
     });
+      
+
+  
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to fetch the count." });

@@ -1,14 +1,24 @@
 module.exports = (sequelize, DataTypes)=>{
     const NationalExaminationResults = sequelize.define("NationalExaminationResults",{
 
+        result_id:{
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+        },
+
         admission_number:{
             type: DataTypes.STRING,
-            primaryKey: true,
             allowNull: false,
         },
         marks:{
             type:DataTypes.STRING,
             allowNull:false,
+        },
+        year:{
+            type:DataTypes.STRING,
+            allowNull:false,
+
         }
 
     });
