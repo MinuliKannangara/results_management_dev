@@ -44,7 +44,7 @@ function NavBar(props) {
   } else if (userRole === 'Planning Officer') {
     sideBarItems = ['sds', 'dfdf', 'sdfsdfs'];
   } else if (userRole === 'Develomet Officer') {
-    sideBarItems = ['O/L Results Analysis', 'dfdf', 'sdfsdfs'];
+    sideBarItems = ['O/L Results Analysis', 'Grade 5 Scholarship Results Analysis', 'sdfsdfs'];
   } 
 
   return (

@@ -33,6 +33,8 @@ app.use("/NationalExaminationDetails", NExaminationRouter);
 const subjectRouter = require("./routes/Subjects");
 app.use("/subject", subjectRouter);
 
+const subjectWiseAnalysisRouter = require("./routes/subjectWIseAnalysis");
+app.use("/subjectWiseAnalysis", subjectWiseAnalysisRouter);
 // const roleRouter = require("./routes/Role");
 // app.use("/roleDetails", roleRouter);
 

@@ -7,6 +7,8 @@ import './OLResults.css';
 import axios, { Axios } from 'axios';
 import DivisionWiseTable from '../Charts/DivWiseTable';
 import DropdownButtonForAll from '../OtherComponents/Dropdown';
+import SubjectWiseTable from '../Charts/SubjectWiseTable';
+import SubjectWiseAnalysisOL from './SubjectWiseOL';
 
 const OLResults = () => {
   const currentYear = new Date().getFullYear();
@@ -56,9 +58,7 @@ useEffect(() => {
   fetchDataForYear(currentYear-2, setMeerigamaCountYear3,  setDivulapitiyaCountYear3, setMinuwangodaCountYear3,setMeerigamaPassedYear3, setDivulapitiyaPassedYear3, setMinuwangodaPassedYear3 );
   fetchDataForYear(currentYear-3, setMeerigamaCountYear4,  setDivulapitiyaCountYear4, setMinuwangodaCountYear4,setMeerigamaPassedYear4, setDivulapitiyaPassedYear4, setMinuwangodaPassedYear4 );
   fetchDataForYear(currentYear-4, setMeerigamaCountYear5,  setDivulapitiyaCountYear5, setMinuwangodaCountYear5,setMeerigamaPassedYear5, setDivulapitiyaPassedYear5, setMinuwangodaPassedYear5 );
-  // fetchDataForYear(3, setYear3Data);
-  // fetchDataForYear(4, setYear4Data);
-  // fetchDataForYear(5, setYear5Data);
+ 
 }, []);
   
 
@@ -79,26 +79,6 @@ useEffect(() => {
         console.log(error);
       });
   };
-
-  // useEffect(() => {
-  //   fetch('http://localhost:3001/NationalExaminationDetails/NationalExaminationResults')
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setMeerigamaCount(data.meerigama);
-  //       setMinuwangodaCount(data.minuwangoda);
-  //       setDivulapitiyaCount(data.divulapitiya);
-  //       setMeerigamaPassed(data.meerigamaPassed);
-  //       setDivulapitiyaPassed(data.divulapitiyaPassed);
-  //       setMinuwangodaPassed(data.minuwangodaPassed);
-  //       console.log(data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
-  
-
-  
 
 
 return (
@@ -246,6 +226,14 @@ Tab2Link="http://localhost:3000/Manage Student Details"
                  
             </Row>
       </Container>
+
+      <Container fluid>
+        <SubjectWiseAnalysisOL/>
+      </Container>
+
+
+
+    
 
 </div>
 );

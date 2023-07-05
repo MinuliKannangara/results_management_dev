@@ -1,13 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { NationalExaminationResults, NationalExaminations, Student, School } = require("../models");
-const { Op } = require("sequelize");
+const { NationalExaminationResults, NationalExaminations, Student, School, Subject } = require("../models");
+const { Op, literal } = require("sequelize");
 
 
 router.get("/NationalExaminationResults/:year", async(req, res)=>{
-
-  
-
   try {
     const year = req.params.year.toString();
 
@@ -112,137 +109,22 @@ router.get("/NationalExaminationResults/:year", async(req, res)=>{
         year,
         marks: { [Op.in]: ['A', 'B', 'C', 'D'] },
       },
-    });
-  
-  
-
-    
+    });  
     res.json({
       meerigama: meerigamaCount,
       divulapitiya: divulapitiyaCount,
       minuwangoda: minuwangodaCount,
       meerigamaPassed: meerigamaPassedCount,
       divulapitiyaPassed: divulapitiyaPassedCount,
-      minuwangodaPassed: minuwangodaPassedCount,
-
-
-
-      
+      minuwangodaPassed: minuwangodaPassedCount,  
     });
-      
-
-  
-
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to fetch the count." });
   }
   
-  
-
-
-
-  // try {
-  
-
-  //   const meerigamaCount = await NationalExaminationResults.findAndCountAll({
-  //     where: {
-  //       school_ID: {
-  //         [Op.in]: sequelize.literal(
-  //           `(SELECT school_ID FROM Schools WHERE division = 'Meerigama')`
-  //         ),
-  //       },
-  //       exam_ID: {
-  //         [Op.in]: sequelize.literal(
-  //           `(SELECT exam_ID FROM NationalExaminations WHERE examination_name = 'O/L')`
-  //         ),
-  //       },
-  //     },
-  //   });
-
-  //   res.json({
-  //     meerigama: meerigamaCount,
-  //   });
-  // } catch (error) {
-  //   console.error(error);
-  //   res.status(500).json({ error: "Failed to fetch the count." });
-  // }
-  
-
-
-
-    // try {
-    //     const meerigamaCount = await NationalExaminationResults.count({
-    //       include: [
-    //         {
-    //           model: Student,
-    //           include: {
-    //             model: School,
-    //             where: {
-    //               division: "Meerigama",
-    //             },
-    //           },
-    //         },
-    //         {
-    //           model: NationalExaminations,
-    //           where: {
-    //             examination_name: "O/L",
-    //           },
-    //         },
-    //       ],
-    //     });
-      
-    //     const minuwangodaCount = await NationalExaminationResults.count({
-    //       include: [
-    //         {
-    //           model: Student,
-    //           include: {
-    //             model: School,
-    //             where: {
-    //               division: "Minuwangoda",
-    //             },
-    //           },
-    //         },
-    //         {
-    //           model: NationalExaminations,
-    //           where: {
-    //             examination_name: "O/L",
-    //           },
-    //         },
-    //       ],
-    //     });
-      
-    //     const divulapitiyaCount = await NationalExaminationResults.count({
-    //       include: [
-    //         {
-    //           model: Student,
-    //           include: {
-    //             model: School,
-    //             where: {
-    //               division: "'Divulapitiya'",
-    //             },
-    //           },
-    //         },
-    //         {
-    //           model: NationalExaminations,
-    //           where: {
-    //             examination_name: "O/L",
-    //           },
-    //         },
-    //       ],
-    //     });
-      
-    //     res.json({
-    //       meerigama: meerigamaCount,
-    //       minuwangoda: minuwangodaCount,
-    //       divulapitiya: divulapitiyaCount,
-    //     });
-    //   } catch (error) {
-    //     console.error(error);
-    //     res.status(500).json({ error: "Failed to fetch the count." });
-    //   }
-      
 });
+
 
 
 router.post("/NationalExaminations", async (req, res) => {
@@ -267,6 +149,79 @@ router.post("/NationalExaminations", async (req, res) => {
     }
   });
   
+
+  //to fetch the scholarship results
+
+
+  const getScholarshipSatCount = async (division, year) => {
+    const count = await NationalExaminationResults.count({
+      include: [
+        {
+          model: School,
+          where: { division },
+        },
+        {
+          model: NationalExaminations,
+          where: { examination_name: 'Grade five scholarship'},
+        }
+      ],
+      where: {year,},
+
+    });
+    return count;
+
+  };
+
+  const getScholarshipPassCount = async (division, year, passmark) => {
+    const count = await NationalExaminationResults.count({
+      include: [
+        {
+          model: School,
+          where: { division },
+        },
+        {
+          model: NationalExaminations,
+          where: { examination_name: 'Grade five scholarship'},
+        }
+      ],
+      where: {
+        year,
+        marks: {
+          [Op.gte]:passmark,
+        },
+      },
+    });
+    return count;
+
+  };
+
+  router.get("/ScholarshipResults/:year/:mark", async (req, res) => {
+
+    try{
+       const year = req.params.year.toString();
+       const passMark = req.params.mark; 
+       const locations = ["Minuwangoda", "Meerigama", "Divulapitiya"];
+
+       const divisionCounts = {};
+
+       for(const location of locations){
+         const divisionSatCount = await getScholarshipSatCount(location, year);
+         const divisionPassCount = await getScholarshipPassCount(location, year, passMark);
+
+          divisionCounts[location] = {
+            satCount: divisionSatCount,
+            passCount: divisionPassCount,
+          };
+       }
+
+       res.json(divisionCounts);
+
+    }
+    catch (error) {
+      console.error(error);
+    res.status(500).json({ error: "Failed to fetch the scholarship results count." });
+    }
+  });
 
 
 

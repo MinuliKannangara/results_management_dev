@@ -17,6 +17,7 @@ import StudentPerformance from './Components/GradeHead/StudentPerformance';
 import PrizeHolders from './Components/GradeHead/PrizeHolders';
 import UploadNationalExaminationResults from './Components/GradeHead/NationalExamination';
 import OLResults from './Components/Development Section/OLResults';
+import ScholarshipResults from './Components/Development Section/ScholarshipResults';
 
 function App() {
 
@@ -37,6 +38,8 @@ function App() {
       <Route path="/Prize Holders" element={<PrizeHolders/>}/>
       <Route path="/Upload National Examination Results" element={<UploadNationalExaminationResults/>}/>
       <Route path="/O/L Results Analysis" element={<OLResults/>}/>
+      <Route path="/Scholarship Results Analysis" element={<ScholarshipResults/>}/>
+
 
 
     
