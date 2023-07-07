@@ -22,7 +22,7 @@ const bcrypt = require("bcrypt"); // import bcrypt(it is used to hash the passwo
 router.post("/", async (req, res) => {
     //logic reguaring inserting data to the database 
 
-    const {name,email,mobile_number,username, password, class_name, sclID} = req.body; // destructuring the request body
+    const {name,email,mobile_number,username, password, class_name, school_ID} = req.body; // destructuring the request body
     
     // hash the password
     bcrypt.hash(password, 10).then((hashedPassword) => {
@@ -34,7 +34,7 @@ router.post("/", async (req, res) => {
             username: username,
             class_name:class_name,
             password: hashedPassword, //pass the hashed value
-            school_ID:sclID,
+            school_ID:school_ID,
             
         })
 

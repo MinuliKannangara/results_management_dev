@@ -1,6 +1,6 @@
 const express =require("express");
 const router = express.Router();
-const {Subject,SubjectCategory} =require("../models");
+const {Subject,SubjectCategory,SubjectResults} =require("../models");
 
 
 router.post("/", async (req, res) => {
@@ -14,6 +14,12 @@ router.post("/", async (req, res) => {
     const createSubjectCategory = await SubjectCategory.create(subjectCategory);
     res.json(createSubjectCategory);
   });
+
+  router.post("/SubjectResults", async (req, res) =>{
+    const subjectResults = req.body;
+    const createSubjectResults = await SubjectResults.create(subjectResults);
+    res.json(createSubjectResults);
+  })
 
 // router.get("/", async (req,res)=>{
 //     const listOfStudents = await Subject.findAll();

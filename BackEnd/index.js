@@ -22,7 +22,7 @@ app.use(cors());
 const loginRouter = require("./routes/Users"); 
 app.use("/UserRegistration", loginRouter);
 
-const studentRouter = require("./routes/Students");
+const studentRouter = require("../BackEnd/routes/Students");
 app.use("/studentDetails", studentRouter);
 
 const schoolRouter = require("./routes/Schools");
