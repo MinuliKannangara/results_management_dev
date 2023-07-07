@@ -13,6 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       NExamYear.belongsTo(models.NationalExaminations, {
         foreignKey: "exam_ID",
         primaryKey: true,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       });
     };
   

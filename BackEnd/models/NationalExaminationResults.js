@@ -27,18 +27,26 @@ module.exports = (sequelize, DataTypes)=>{
             
             NationalExaminationResults.belongsTo(models.Student,{
                 foreignKey:"index_number",
+                onDelete: 'CASCADE',
+                onUpdate: 'CASCADE'
             });
     
             NationalExaminationResults.belongsTo(models.Subject,{
                 foreignKey:"subject_ID",
+                onDelete: 'CASCADE',
+                onUpdate: 'CASCADE'
             });
 
             NationalExaminationResults.belongsTo(models.School,{
                 foreignKey:"school_ID",
+                onDelete: 'CASCADE',
+                onUpdate: 'CASCADE'
             });
 
             NationalExaminationResults.belongsTo(models.NationalExaminations,{
                 foreignKey:"exam_ID",
+                onDelete: 'CASCADE',
+                onUpdate: 'CASCADE'
             });
 
     };

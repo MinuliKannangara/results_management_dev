@@ -6,6 +6,7 @@ const db = require("./models");
 
 app.use(cors());
 
+
 //routers
 // const usersRouter = require("./routes/Users");  //imports a router from a file called "Users" located in the "./routes" directory.
 // //mount this router at the "/login" path. This means that any request starting with "/login" will be handled by this router.
@@ -35,6 +36,9 @@ app.use("/subject", subjectRouter);
 
 const subjectWiseAnalysisRouter = require("./routes/subjectWIseAnalysis");
 app.use("/subjectWiseAnalysis", subjectWiseAnalysisRouter);
+
+const classesRouter = require("./routes/Classes");
+app.use("/classDetails", classesRouter);
 // const roleRouter = require("./routes/Role");
 // app.use("/roleDetails", roleRouter);
 

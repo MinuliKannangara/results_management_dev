@@ -1,4 +1,4 @@
-
+import React, { useEffect, useState } from 'react';
 import ButtonAppBar from '../NavBar/NavBarwrong';
 import './ManageStudentDetails.css';
 import { Container, Row, Col } from 'react-bootstrap';
@@ -10,9 +10,27 @@ import NavBar from '../NavBar/NavBar';
 import axios, { Axios } from 'axios';
 
 
-const ManageStudentDetails = () => {
+const ManageClassResults = () => {
 
-   
+  
+
+  // write the code to get the user name of the user
+  // const username = localStorage.getItem('username');
+  const enteredUsername = "minu"; 
+  
+const [classname, setClassName] = useState({});
+const [subjectsForTable, setSubjectsForTable] = useState([]);
+
+   useEffect(()=> {
+    axios.get(`http://localhost:3001/classDetails/classOfUser/${enteredUsername}`).then((response) => {
+      setClassName(response.data);
+      setSubjectsForTable(response.data.subjectNames);
+      console.log(response.data);})
+  
+
+    .catch((error) => {console.log(error)});
+   },[]);
+
 
 return (
 <div>
@@ -23,11 +41,14 @@ return (
 
 <Container fluid className='topDiv '>
         
-         <p className='pTopDiv'>Results Sheet</p>
+         <p className='pTopDiv'>Results Sheet - {classname?.className}</p>
+         
       
       </Container>
 
 <Container fluid className='div_aca_yr divAddStudentTable'>
+
+      
         <Row className='TableRoWUp'>
 
           <Col md={2} sm={6}>
@@ -60,18 +81,14 @@ return (
         
             <Table striped bordered hover variant="light">
       <thead>
-        <tr>
-          <th>#</th>
+      <tr>
+      <th>#</th>
           <th>Index Number</th>
           <th>Name</th>
-          <th>Subject 1</th>
-          <th>Subject 2</th>
-          <th>Subject 3</th>
-          <th>Subject 4</th>
-          <th>Subject 4</th>
-          <th>Subject 4</th>
-          <th>Subject 4</th>
-          <th>Subject 4</th>
+        {subjectsForTable.map((subject, index) => (
+           <th key={index}>{subject}</th>
+
+        ))}
           <th>Total</th>
           <th>Average</th>
           <th>Rank</th>
@@ -96,4 +113,4 @@ return (
 );
 };
 
-export default ManageStudentDetails;
+export default ManageClassResults;

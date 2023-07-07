@@ -72,6 +72,7 @@ function NavBar(props) {
       
   </Nav>
 </Navbar.Collapse>
+
 </Container>
 
 

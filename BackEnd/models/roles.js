@@ -26,7 +26,10 @@ module.exports = (sequelize, DataTypes)=>{
         // roles.belongsToMany(permission, { through: role_permission});
         
         const { users, user_roles } = models;
-        roles.belongsToMany(users, { through: user_roles,as: "users", foreignKey: 'role_ID' });
+        roles.belongsToMany(users, { through: user_roles,as: "users", 
+        foreignKey: 'role_ID',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE' });
     
     };
 

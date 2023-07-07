@@ -10,7 +10,7 @@ import SideBar from './Components/SideBar/SideBar';
 import NavBar from './Components/NavBar/NavBar';
 
 import ManageStudentDetails from './Components/ClassTeacher/ManageStudentDetails';
-import ManageClassResults from './Components/ClassTeacher/ManageClassResults';
+import ManageClassResults from "../src/Components/ClassTeacher/ManageClassResults";
 import ManageSubjectResults from './Components/SubjectTeacher/SubjectResults';
 import GradeResultsDashboard from './Components/GradeResultsDashboard/GradeDashboard';
 import StudentPerformance from './Components/GradeHead/StudentPerformance';
