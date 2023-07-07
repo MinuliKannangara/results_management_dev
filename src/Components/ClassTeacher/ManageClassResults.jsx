@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import ButtonAppBar from '../NavBar/NavBarwrong';
 import './ManageStudentDetails.css';
 import { Container, Row, Col } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
-import { Formik, Field, Form } from "formik";
+import { Formik, Form } from "formik";
 import { Button } from 'react-bootstrap';
 import NavBar from '../NavBar/NavBar';
-
-import axios, { Axios } from 'axios';
+import DropdownButtonForAll from '../OtherComponents/Dropdown';
+import axios from 'axios';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 
 const ManageClassResults = () => {
@@ -17,16 +18,18 @@ const ManageClassResults = () => {
   // write the code to get the user name of the user
   // const username = localStorage.getItem('username');
   const enteredUsername = "laksika"; 
-  const year = new Date().getFullYear();
-  const term = "1st Term";
+  const CurrentYear = new Date().getFullYear();
+
   
 const [classname, setClassName] = useState({});
 const [subjectsForTable, setSubjectsForTable] = useState([]);
 const [nameList, setNameList] = useState([]);
 const [resultOfStudents, setResultOfStudents] = useState([]);
+const [selectedYear, setSelectedYear] = useState(CurrentYear);
+const [selectedTerm, setSelectedTerm] = useState();
 
    useEffect(()=> {
-    axios.get(`http://localhost:3001/classDetails/classOfUser/${enteredUsername}/${year}/${term}`).then((response) => {
+    axios.get(`http://localhost:3001/classDetails/classOfUser/${enteredUsername}/${selectedYear}/${selectedTerm}`).then((response) => {
       setClassName(response.data);
       setSubjectsForTable(response.data.subjectNames);
       setNameList(response.data. studentsNames);
@@ -35,7 +38,7 @@ const [resultOfStudents, setResultOfStudents] = useState([]);
   
 
     .catch((error) => {console.log(error)});
-   },[]);
+   },[enteredUsername,selectedYear, selectedTerm]);
 
 
 return (
@@ -45,9 +48,10 @@ return (
 <NavBar PageName="Manage Class Results" />
 
 
+
 <Container fluid className='topDiv '>
         
-         <p className='pTopDiv'>Results Sheet - {classname?.className}, year ekatai term ekatai dropdown</p>
+         <p className='pTopDiv'>Results Sheet - {classname?.className}</p>
          
       
       </Container>
@@ -57,30 +61,55 @@ return (
       
         <Row className='TableRoWUp'>
 
-          <Col md={2} sm={6}>
-            <p className='pAddStudent'>Total Subjects</p>
-          </Col>
-          <Col md={3} sm={6}>
+          <Col md={3} sm={6} lg={2}>
           <form action="">
-              <input type="text"
-              style={{width:'10%', alignItems:'left', border:'none', borderBottom:'2px solid #000000', backgroundColor:'transparent', color:'#000000', fontSize:'10px', fontWeight:'bold'}}
+             <label className='pAddStudent'>Total Students :</label>
+              <input type="text" 
+              style={{width:'10%', alignItems:'left', border:'none', 
+              backgroundColor:'transparent', color:'#000000', fontSize:'20px', fontWeight:'bold'}}
+              value={nameList.length} readOnly 
                />
             </form>
             
           </Col>
-          <Col md={4} sm={6}>
+
+          <Col md={4} sm={6} lg={2}>
+          <form action="">
+             <label className='pAddStudent'>Total Subjects :</label>
+              <input type="text" 
+              style={{width:'10%', alignItems:'left', border:'none', 
+              backgroundColor:'transparent', color:'#000000', fontSize:'20px', fontWeight:'bold'}}
+              value={subjectsForTable.length} readOnly 
+               />
+            </form>
+            
+          </Col>
+
+          <Col md={3} sm={6} lg={3}>
+          <DropdownButton className='customDropdownButton' id="dropdown-basic-button" title={`${selectedYear}`}>
+      <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear)}>{CurrentYear}</Dropdown.Item>
+      <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear-1)}>{CurrentYear-1}</Dropdown.Item>
+      <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear-2)}>{CurrentYear-2}</Dropdown.Item>
+      <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear-3)}>{CurrentYear-3}</Dropdown.Item>
+      <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear-4)}>{CurrentYear-4}</Dropdown.Item>
+      
+    
+    </DropdownButton>
+            
+           </Col>
+           <Col md={3} sm={6} lg={3}>
+           <DropdownButton className='customDropdownButton' id="dropdown-basic-button" title={`${selectedTerm}`}>
+    <Dropdown.Item className='customDropdown' onClick={() => setSelectedTerm("1st Term")}>1st Term</Dropdown.Item>
+    <Dropdown.Item className='customDropdown' onClick={() => setSelectedTerm("2nd Term")}>2nd Term</Dropdown.Item>
+    <Dropdown.Item className='customDropdown' onClick={() => setSelectedTerm("3rd Term")}>3rd Term</Dropdown.Item>
+  </DropdownButton>
+            
+           </Col>
+          <Col md={4} sm={6} lg={2}>
            <p className='pAddStudent'> add a search bar</p>
             
           </Col>
-          <Col md={3} sm={6}>
-            
-            <Formik>
-            <Form>
-            <Button className='btnUpdate' type='submit'>Update Table</Button>
-            </Form>
-          </Formik>
-            
-          </Col>
+         
 
         </Row>
         <Row className='TableRoWDown'>
@@ -112,8 +141,18 @@ return (
               resultOfStudents[name.index_number][subject].join(", ")}
           </td>
         ))}
-        <td>Total Value</td>
-        <td>Average Value</td>
+         
+         <td>
+        {Object.values(resultOfStudents[name.index_number] || {}).reduce(
+          (total, marks) =>
+            total + (Array.isArray(marks) ? marks.reduce((sum, mark) => sum + mark, 0) : 0),
+          0
+        )}
+      </td>
+
+      <td>
+        
+      </td>
         <td>Rank Value</td>
       </tr>
     ))}
