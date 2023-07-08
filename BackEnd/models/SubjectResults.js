@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes)=>{
         })
 
         SubjectResults.belongsTo(models.Student,{
-            foreignKey:"index_number",
+            foreignKey:"student_ID",
 
         })
     };

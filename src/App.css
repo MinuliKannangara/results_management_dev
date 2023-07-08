@@ -4,7 +4,7 @@ body{
 
 
 .topDiv{
-  background: linear-gradient(to bottom, #acb0b7, #ffffff);
+  /* background: linear-gradient(to bottom, #acb0b7, #ffffff); */
   /* background-color: #acb0b7; */
   height: 60px;
   width: 98%; 

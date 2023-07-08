@@ -24,6 +24,32 @@ return (
       </Container>
 
 <Container fluid className='div_aca_yr divAddStudentTable'>
+
+<Container fluid>
+            <Row><p className='subTopicsP'>High Performing Students</p></Row>
+            <Row>
+            <Table striped bordered hover variant="light">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Index Number</th>
+                <th>Name</th>
+                <th>Marks</th>
+              </tr>
+            </thead>
+            <tbody>
+           
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+      
+            </tbody>
+          </Table>
+            </Row>
+</Container>
       
    
 

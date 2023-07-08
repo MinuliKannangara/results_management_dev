@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes)=>{
     NationalExaminationResults.associate = (models) => {
             
             NationalExaminationResults.belongsTo(models.Student,{
-                foreignKey:"index_number",
+                foreignKey:"student_ID",
                 onDelete: 'CASCADE',
                 onUpdate: 'CASCADE'
             });

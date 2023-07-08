@@ -1,10 +1,17 @@
 module.exports = (sequelize,DataTypes) =>{
     const Student = sequelize.define("Student",{
 
-        index_number:{
+        //index number cannot be the primary key bcz it can be repeated when a student is repeating for years
+        student_ID:{
             type:DataTypes.INTEGER,
             allowNull:false,
             primaryKey:true,
+            autoIncrement:true,
+        },
+        index_number:{
+            type:DataTypes.INTEGER,
+            allowNull:false,
+       
         },
         student_name:{
             type:DataTypes.STRING,
@@ -12,6 +19,10 @@ module.exports = (sequelize,DataTypes) =>{
         },
         class_name:{
             type:DataTypes.STRING,
+        },
+        year:{
+            type:DataTypes.STRING,
+            allowNull:false,
         }
     });
 
@@ -24,10 +35,10 @@ module.exports = (sequelize,DataTypes) =>{
       
 
         Student.hasMany(models.NationalExaminationResults,{
-            foreignKey:"index_number",
+            foreignKey:"student_ID",
         });
         Student.hasMany(models.SubjectResults,{
-            foreignKey:"index_number",
+            foreignKey:"student_ID",
         });
 
        

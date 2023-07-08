@@ -19,9 +19,7 @@ module.exports = (sequelize, DataTypes)=>{
             foreignKey:"exam_ID",
         });
 
-        NationalExaminations.hasMany(models.NExamYear,{
-            foreignKey:"exam_ID",
-        });
+       
     }
 
     return NationalExaminations;

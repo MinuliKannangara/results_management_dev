@@ -3,6 +3,7 @@ const router = express.Router();
 const {Subject, users, SubjectCategory, Student,SubjectResults,School} = require("../models");
 
 
+// to get the subject results of each student for each subject
 const getSubjectResults = async (indexNumber, subjectName, year, term) => {
     const subjectResults = await SubjectResults.findAll({
       attributes: ['marks'],
@@ -42,6 +43,8 @@ const getSubjectResults = async (indexNumber, subjectName, year, term) => {
       });
   
       const grade = parseInt(classOfUser.class_name.match(/\d+/)[0]);
+
+      //to select the section of a class is belongs to
       let category;
       if (grade >= 6 && grade <= 9) {
         category = "grade 6-9";
@@ -62,6 +65,7 @@ const getSubjectResults = async (indexNumber, subjectName, year, term) => {
         ],
       });
   
+      //to get the list of students of a particular school particular class.
       const studentsNameList = await Student.findAll({
         attributes: ["student_name", "index_number"],
         include: [
@@ -88,6 +92,7 @@ const getSubjectResults = async (indexNumber, subjectName, year, term) => {
         }));
       }
   
+      //to get the results of each student for each subject
       const resultsOfEachStudent = {};
   
       for (const student of studentData) {
@@ -117,11 +122,11 @@ const getSubjectResults = async (indexNumber, subjectName, year, term) => {
   });
   
 
-router.post("/createClass", async(req, res)=>{
-    const classes = req.body;
-    const createStudent = await Class.create(classes);
-    res.json(createStudent);
+// router.post("/createClass", async(req, res)=>{
+//     const classes = req.body;
+//     const createStudent = await Class.create(classes);
+//     res.json(createStudent);
 
-});
+// });
 
 module.exports = router;
