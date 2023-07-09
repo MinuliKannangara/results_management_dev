@@ -39,6 +39,9 @@ app.use("/subjectWiseAnalysis", subjectWiseAnalysisRouter);
 
 const classesRouter = require("./routes/Classes");
 app.use("/classDetails", classesRouter);
+
+const calculatedResultsRouter = require("./routes/calculatedResultsRouter");
+app.use("/calculatedResults",calculatedResultsRouter);
 // const roleRouter = require("./routes/Role");
 // app.use("/roleDetails", roleRouter);
 

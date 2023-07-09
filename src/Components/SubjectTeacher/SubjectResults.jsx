@@ -24,6 +24,8 @@ const ManageSubjectResults = () => {
   const [selectedClass, setSelectedClass] = useState('7-A');
   const [selectedSubjectID, setselectedSubjectID] = useState(0);
 
+
+  //when the teacher add new mark or change the mark in the table rows
   const handleMarksChange = (studentID, index, event) => {
     const { textContent } = event.target;
     const parsedMarks = parseInt(textContent);
