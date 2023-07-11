@@ -19,7 +19,7 @@ app.use(cors());
 // app.use("/newusers", usersRouter); //mount this router at the "/Users" path. This means that any request starting with "/Users" will be handled by this router.")
 
 //import the router files
-const loginRouter = require("./routes/Users"); 
+const loginRouter = require("./routes/Userss"); 
 app.use("/UserRegistration", loginRouter);
 
 const studentRouter = require("../BackEnd/routes/Students");
@@ -42,8 +42,12 @@ app.use("/classDetails", classesRouter);
 
 const calculatedResultsRouter = require("./routes/calculatedResultsRouter");
 app.use("/calculatedResults",calculatedResultsRouter);
-// const roleRouter = require("./routes/Role");
-// app.use("/roleDetails", roleRouter);
+
+const SchoolUsersRouter = require("./routes/ManageSchoolUsers");
+app.use("/schoolUsers",SchoolUsersRouter );
+
+const roleRouter = require("./routes/Role");
+app.use("/roleDetails", roleRouter);
 
 
 

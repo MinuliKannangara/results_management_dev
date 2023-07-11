@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import ButtonAppBar from '../NavBar/NavBarwrong';
 import { Container, Row, Col,FormLabel } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import NavBar from '../NavBar/NavBar';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-
-
 import axios, { Axios } from 'axios';
 
 
@@ -36,7 +33,7 @@ const StudentPerformance = () => {
   useEffect(() =>{
     axios.get(`http://localhost:3001/calculatedResults/${selectedYear}/${selectedTerm}/${school}/${selectedGrade}`).then((response)=>{
       setHighperformanceData(response.data.highPerformers);
-      LowPerformanceData(response.data.lowPerformers);
+      setLowPerformanceData(response.data.lowPerformers);
     })
 
     .catch((error) =>{console.log(error)});
@@ -144,13 +141,7 @@ return (
               <td>{index.average}</td>
             </tr>
            ))}
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-      
+                
             </tbody>
           </Table>
             </Row>
@@ -182,12 +173,6 @@ return (
               <td>{index.averageLow}</td>
             </tr>
            ))}
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
       
             </tbody>
           </Table>

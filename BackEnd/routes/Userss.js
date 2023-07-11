@@ -4,9 +4,6 @@ const router = express.Router();
 const {users} = require("../models"); // import the user model
 const bcrypt = require("bcrypt"); // import bcrypt(it is used to hash the password)
 
-// router.get("/", (req, res) => {
-//     res.send("hello world"); // send hello world to the browser(res: response req: request)
-// });
 
 //rount for the registration
 //insert data to users table in the database 

@@ -1,10 +1,18 @@
 const express = require("express");
 const router = express.Router();
-const {user_roles} = require("../models");
+const {user_roles, roles} = require("../models");
 
-router.post("/", async(req, res)=>{
-    const role_ID = req.body;
-    const createRole = await user_roles.create(role_ID);
+router.post("/userRole", async(req, res)=>{
+    const userrole = req.body;
+    const createUserRole = await user_roles.create(userrole);
+    res.json(createUserRole);
+});
+
+router.post("/role", async(req, res)=>{
+    const roless = req.body;
+    const createRole = await roles.create(roless);
     res.json(createRole);
 });
+
+module.exports = router;
 

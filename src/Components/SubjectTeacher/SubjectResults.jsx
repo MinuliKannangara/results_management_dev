@@ -25,11 +25,57 @@ const ManageSubjectResults = () => {
   const [selectedSubjectID, setselectedSubjectID] = useState(0);
 
 
+  const [rangeValues, setRangeValues] = useState(null);
+  const findRangeValues =(markArray) =>{
+
+    const marksArray = Object.values(markArray);
+    let gtEighty = 0;
+    let btw60and79 = 0;
+    let btw40and59 = 0;
+    let btw20and39 = 0;
+    let lt19 = 0;
+    let rangeAnalysis = {}; 
+    for(const mark of marksArray){
+      if(mark>=80){
+        gtEighty = gtEighty +1;
+      }
+      else if (mark<=79 && mark>=60){
+        btw60and79 =btw60and79+1;
+      }
+      else if (mark<=59 && mark>=40){
+        btw40and59 =btw40and59+1;
+      }
+      else if (mark<=39 && mark>=20){
+        btw20and39 =btw20and39+1;
+      }
+      else{
+        lt19 =lt19+1;
+      }
+      
+    }
+    rangeAnalysis={
+      gtEighty:gtEighty,
+      btw60and79:btw60and79,
+      btw40and59:btw40and59,
+      btw20and39:btw20and39,
+      lt19:lt19,
+    }
+    return rangeAnalysis;
+  }
+
+
+  const handleCalculateValues = (marks) => {
+    const calculatedRangeValues = findRangeValues(marks);
+    setRangeValues(calculatedRangeValues);
+  };
+
+
+
   //when the teacher add new mark or change the mark in the table rows
   const handleMarksChange = (studentID, index, event) => {
     const { textContent } = event.target;
     const parsedMarks = parseInt(textContent);
-  
+   // Checks if the parsed marks value is not NaN (not a number). ((validation ensures that only valid numeric values are handled.)
     if (!isNaN(parsedMarks)) {
       setMarks((prevMarks) => {
         const updatedMarks = { ...prevMarks };
@@ -251,7 +297,7 @@ const ManageSubjectResults = () => {
         <Row className="TableRoWUp">
           <Col lg={10} sm={12}></Col>
           <Col lg={2} sm={12}>
-            <Button className="btnViewResults" type="submit">
+            <Button className="btnViewResults" onClick={() => handleCalculateValues(Marks)}>
               Calculate Values
             </Button>
           </Col>
@@ -266,12 +312,32 @@ const ManageSubjectResults = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>xx</td>
-                <td>xx</td>
-                <td>xx</td>
-              </tr>
-            </tbody>
+            <tr>
+              <td>0-19</td>
+              <td>{rangeValues && rangeValues.lt19}</td>
+              <td>{rangeValues && `${((rangeValues.lt19 / StudentList.length) * 100).toFixed(2)}%`}</td>
+            </tr>
+            <tr>
+              <td>20-39</td>
+              <td>{rangeValues && rangeValues.btw20and39}</td>
+              <td>{rangeValues && `${((rangeValues.btw20and39/ StudentList.length) * 100).toFixed(2)}%`}</td>
+            </tr>
+            <tr>
+              <td>40-59</td>
+              <td>{rangeValues && rangeValues.btw40and59}</td>
+              <td>{rangeValues && `${((rangeValues.btw40and59 / StudentList.length) * 100).toFixed(2)}%`}</td>
+            </tr>
+            <tr>
+              <td>60-79</td>
+              <td>{rangeValues && rangeValues.btw60and79}</td>
+              <td>{rangeValues && `${((rangeValues.btw60and79 / StudentList.length) * 100).toFixed(2)}%`}</td>
+            </tr>
+            <tr>
+              <td>More than 80</td>
+              <td>{rangeValues && rangeValues.gtEighty}</td>
+              <td>{rangeValues && `${((rangeValues.gtEighty/ StudentList.length) * 100).toFixed(2)}%`}</td>
+            </tr>
+          </tbody>
           </Table>
         </Row>
       </Container>

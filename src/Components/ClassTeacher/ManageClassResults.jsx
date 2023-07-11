@@ -26,7 +26,7 @@ const [subjectsForTable, setSubjectsForTable] = useState([]);
 const [nameList, setNameList] = useState([]);
 const [resultOfStudents, setResultOfStudents] = useState([]);
 const [selectedYear, setSelectedYear] = useState(CurrentYear);
-const [selectedTerm, setSelectedTerm] = useState();
+const [selectedTerm, setSelectedTerm] = useState('1st Term');
 
    useEffect(()=> {
     axios.get(`http://localhost:3001/classDetails/classOfUser/${enteredUsername}/${selectedYear}/${selectedTerm}`).then((response) => {
@@ -143,15 +143,28 @@ return (
         ))}
          
          <td>
-        {Object.values(resultOfStudents[name.index_number] || {}).reduce(
-          (total, marks) =>
-            total + (Array.isArray(marks) ? marks.reduce((sum, mark) => sum + mark, 0) : 0),
-          0
-        )}
-      </td>
+  {Object.values(resultOfStudents[name.index_number] || {})
+    .reduce((total, marks) => {
+      if (Array.isArray(marks)) {
+        return total + marks.reduce((sum, mark) => sum + mark, 0);
+      }
+      return total;
+    }, 0)}
+</td>
 
       <td>
-        
+      <td>
+  {Object.values(resultOfStudents[name.index_number] || {}).length > 0
+    ? (Object.values(resultOfStudents[name.index_number] || {})
+        .reduce((total, marks) => {
+          if (Array.isArray(marks)) {
+            return total + marks.reduce((sum, mark) => sum + mark, 0);
+          }
+          return total;
+        }, 0) /
+        Object.values(resultOfStudents[name.index_number] || {}).length)
+    : 0}
+</td>
       </td>
         <td>Rank Value</td>
       </tr>
