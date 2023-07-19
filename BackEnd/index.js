@@ -4,7 +4,12 @@ const app = express();
 app.use(express.json());
 const db = require("./models");
 
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
+
 app.use(cors());
+
 
 
 //routers
@@ -48,6 +53,21 @@ app.use("/schoolUsers",SchoolUsersRouter );
 
 const roleRouter = require("./routes/Role");
 app.use("/roleDetails", roleRouter);
+
+const prizeHoldersRouter = require("./routes/PrizHolders");
+app.use("/prizeHolders", prizeHoldersRouter);
+
+// const prizeHoldersRouter = require("./routes/PrizHolders");
+// app.use("/SchoolRegistration ", prizeHoldersRouter);
+
+const SchoolDashboardRouter = require("../BackEnd/routes/SchoolDashboard");
+app.use("/SchoolDashboardDetails", SchoolDashboardRouter);
+
+const zonalSubjectResultsRouter = require("../BackEnd/routes/ZonalSubjectResults");
+app.use("/ZonalSubjectResults", zonalSubjectResultsRouter);
+
+const EducationOfficeUsersRouter = require("../BackEnd/routes/ManageEduOfficeUsers");
+app.use("/EducationOfficeUsers", EducationOfficeUsersRouter);
 
 
 

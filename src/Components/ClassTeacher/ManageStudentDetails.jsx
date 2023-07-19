@@ -46,7 +46,7 @@ const [selectedYear, setSelectedYear] = useState(CurrentYear);
 const [selectedClass, setSelectedClass] = useState("");
 
 useEffect(() => {
-  axios.get(`http://localhost:3001/studentDetails/${username}/${selectedYear}`)
+  axios.get(`http://localhost:3001/studentDetails/${selectedYear}`)
   .then((response) => {
     setListOfStudents(response.data.StudentList);
     setSelectedClass(response.data.userClass);
@@ -132,12 +132,8 @@ const deleteStudent = (studentID) => {
     
     </DropdownButton>
           </Col>
-          <Col md={3} sm={6} >
-            <p className='pLables'>Class Name</p>
-          </Col>
-          <Col md={3} sm={6}>
          
-          </Col>
+         
         </Row>
       </Container>
 

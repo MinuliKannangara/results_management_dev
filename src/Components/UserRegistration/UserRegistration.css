@@ -10,7 +10,7 @@
 .FormBackground{
     position: absolute;
     top: 15%;
-    left: 7%;
+    left: 11%;
     /* transform: translate(-50%,-50%); */
     width: 1300px;
     height: 550px;
@@ -38,7 +38,7 @@ font-size: 48px;
 line-height: 90px;
 /* or 188% */
 text-align: center;
-color:rgb(221, 100, 42);
+color:rgb(255, 255, 255);
 font-variation-settings: 'slnt' 0;
 justify-content: center;
 
@@ -71,13 +71,15 @@ justify-content: center;
 
 }
 
-
+.schoolRegistration label
 .FormRegistration label,
 .FormRegistration2 label {
   color: rgb(166, 164, 162);
   opacity: 1;
 }
 
+.schoolRegistration Select,
+.schoolRegistration input,
 .FormRegistration input,
 .FormRegistration2 input, 
 .FormRegistration2 Select {
@@ -91,3 +93,42 @@ justify-content: center;
 .FormRegistration2 input::placeholder {
   color: rgba(40, 247, 161, 0.7);
 } */
+
+.schoolRegistration{
+   position: relative;
+    /* margin: 30% 100 100 70%; */
+    margin-left: 100%;
+    margin-top: 4%;
+    width: 700px;
+   height: 90px;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0);
+   
+}
+
+.error{
+  color: red;
+}
+
+/* school Regidtrstion page */
+.PnewUser{
+  font-family: 'Source Sans Pro', sans-serif;
+font-weight: 400;
+font-size: 17px;
+/* line-height: 90px; */
+margin-left: 30%;
+margin-top: 6px;
+word-wrap: break-word;
+color: #FFFFFF;
+font-variation-settings: 'slnt' 0;
+
+}
+a{
+  color: rgb(221, 100, 42);
+}
+a:hover {
+  color: rgb(221, 100, 42);
+}
+

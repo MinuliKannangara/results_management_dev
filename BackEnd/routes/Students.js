@@ -1,6 +1,11 @@
 const express =require("express");
 const router = express.Router();
 const {Student, users} =require("../models");
+const {createTokens,validateToken} = require("../JWT");
+// const app = express(); 
+// const cookieParser = require("cookie-parser"); 
+// app.use(cookieParser()); 
+
 
 
 router.post("/", async (req, res) => {
@@ -21,10 +26,11 @@ router.delete("/:studentID", async (req, res) => {
 });
 
 
-router.get("/:username/:year", async (req,res)=>{
+router.get("/:year",validateToken, async (req,res)=>{
 
   try{
-    const userName = req.params.username;
+    // const userName = req.params.username;
+    const userName = req.user.username; //get the username from the token
     
     const classOFUser = await users.findOne({
       where: {

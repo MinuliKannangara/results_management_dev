@@ -1,233 +1,185 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './UserRegistration.css';
 import background from './background3.jpg';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
-import axios, { Axios } from 'axios';
+import axios from 'axios';
 
+const UserRegistration = () => {
 
+  //to get the selected role IDs of the checkboxes
+  const [roleID, setRoleID] = useState([]);
 
+  const initialValues = {
+    name: '',
+    email: '',
+    mobileNumber: '',
+    username: '',
+    password: '',
+    confirmPassword: '',
+    schoolID:'',
+    classes: '',
+    role_ID: roleID,
+  };
+  const [formValues, setFormValues] = useState(initialValues);
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
+  const[schoolOptions, setSchoolOptions] = useState([]);
+  const [roleList, setRoleList] = useState([]);
 
-const UserRegistration =() => {
+  const formData = {
+    ...formValues,
+    role_ID: roleID, // Use the roleID state to send the checked role IDs
+  };
 
-    const initialValues = {name:"", email:"", username:"", password:"", confirmPassword:""}; //state variables
-    const [formValues, setFormValues] = useState(initialValues);  //create the use state
-    const [formErrors, setFormErrors] = useState({});
-    const [isSubmit, setIsSubmit] = useState(false); 
+  const classes = ["6-A", "6-B", "6-C", "6-D", "6-E", "6-F", "6-G", "6-H", "6-I", "7-A", "7-B", "7-C", "7-D", "7-E", "7-F", "7-G", "7-H", "7-I", "8-A", "8-B", "8-C", "8-D", "8-E", "8-F", "8-G", "8-H", "8-I", "9-A", "9-B", "9-C", "9-D", "9-E", "9-F", "9-G", "9-H", "9-I", "10-A", "10-B", "10-C", "10-D",
+   "10-E", "10-F", "10-G", "10-H", "10-I", "11-A", "11-B", "11-C", "11-D", "11-E", "11-F", "11-G", "11-H", "11-I", "12-A", "12-B", "12-C", "12-D", "12-E", "12-F", "12-G", "12-H", "12-I", "13-A", "13-B", "13-C", "13-D", "13-E", "13-F", "13-G", "13-H", "13-I"]
 
-    //for the role dropdown
-    const [selectedValue,setSelectedRole] =  useState('') 
-    const [inputFields, setInputFields] = useState([]);
+  const handleFieldChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
 
-    //for the school dropdown
-    const[selectedSchool, setSelectedSchool] = useState(null);
-    const[schoolOptions, setSchoolOptions] = useState([]);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Perform form validation here
+    // ...
 
-    //fetch schools from the database
-    useEffect(() => {
-      axios.get('http://localhost:3001/schoolDetails').then(response =>{
-        const schools = response.data.map(school =>({
+    // If form is valid, submit the data
+    axios
+      .post('http://localhost:3001/UserRegistration', formData)
+      .then((response) => {
+        // Reset form values
+        setFormValues(initialValues);
+        setRoleID([])
+        // Display success message or perform other actions
+        console.log('User registered successfully');
+      })
+      .catch((error) => {
+        console.error('Error creating user:', error);
+      });
+  };
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/schoolDetails')
+      .then((response) => {
+        const schools = response.data.map((school) => ({
           value: school.school_ID,
-          label: school.school_name
+          label: school.school_name,
         }));
         setSchoolOptions(schools);
-        setSchool(schools[0].value);
-        
+        // setSchool(schools[0].value);
       })
-      .catch(error =>{
+      .catch((error) => {
         console.error('Error fetching schools:', error);
       });
-    }, []);
+  
+  axios
+    .get('http://localhost:3001/UserRegistration/roleList')
+    .then((response) => {
+      const roleList = response.data.roleListForSchool;
+      if (Array.isArray(roleList)) {
+        const roles = roleList.map((role) => ({
+          value: role.role_ID,
+          label: role.role_name,
+        }));
+        setRoleList(roles);
+        console.log(roles);
+      } else {
+        console.error('Role list is not an array');
+      }
+    })
+    .catch((error) => {
+      console.error('Error fetching roles:', error);
+    });
+  }, []);
+  
+   //for the check Boxes
+   const handleChange = (e) => {
+    const { checked, value } = e.target;
 
-    //handle selected item in the school dropdown
-    const handleSchoolChange = (selectedOption) => {
-      const selectedSchoolValue = selectedOption ? selectedOption.value : null;
-      setSelectedSchool(selectedSchoolValue);
-      //setSchool(selectedSchoolValue);
-    };
-
-    //handle selected item in the role dropdown
-    const handleDropdownChange = (e) => {
-       setSelectedRole(e.target.value);
-        if (e.target.value === '1') {
-            setInputFields([...inputFields, { name: 'Class', value: '' }]);
-           
-        }   
-        
-        else if (e.target.value === '2') {
-            setInputFields([...inputFields, { name: 'Subject', value: '' }]);
-        }
-        else if (e.target.value === '3') {
-            setInputFields([...inputFields, { name: 'Grade', value: '' }]);
-        }
-    };
-
-    const handleFieldChange = (e, index) => {
-        const updatedFields = [...inputFields];
-        updatedFields[index].value = e.target.value;
-        setInputFields(updatedFields);
-      };
-
-      const renderInputFields = () => {
-        return inputFields.map((field, index) => (
-          <div key={index}>
-            <FloatingLabel controlId={`floatingInput${index}`} label={field.name} className="mb-3">
-              <Form.Control
-                type="text"
-                placeholder={field.name}
-                value={field.value}
-                onChange={(e) => handleFieldChange(e, index)}
-              />
-            </FloatingLabel>
-          </div>
-        ));
-      };
-
-
-      //handle Submit
-
-      const[name, setName] = useState('');
-      const[email, setEmail] = useState('');
-      const[mobile_number, setMobileNumber] = useState('');
-      const[username,setUsername] = useState('');
-      const[password, setPassword] = useState('');
-      const[SchoolID, setSchool] = useState('');
-      const submitRegistration = (e) =>{
-        //e.preventDefault();
-        const data = {
-          name: name,
-          email:email,
-          mobile_number:mobile_number,
-          username:username,
-          password:password,
-          school_ID:SchoolID,
-        };
-console.log(data);
-        axios.post('http://localhost:3001/UserRegistration', data).then(response =>{
-
-        //if success, reset the state variable values to empty
-          setName("");
-          setEmail("");
-          setMobileNumber("");
-          setUsername("");
-          setPassword("");
-          setSchool("");
-
-        })
-        .catch((error) => {
-          console.log('Error creating user:', error);
-        });
-
-      };
+    if (checked) {
+      setRoleID((prevRoles) => [...prevRoles, value]);
+    } else {
+      setRoleID((prevRoles) => prevRoles.filter((id) => id !== value));
+    }
+  };
 
   return (
-    <Row sm={6} className='divRegistrationBackground' style={{backgroundImage:`url(${background})`, backgroundSize: 'cover',}}>
-        <h1 id='h1CreateAccount'>Create New Account</h1>
-        <Row sm={6} className='FormBackground'>
-            
-            <Form onSubmit={submitRegistration}>
-            <Col sm={6} className='FormRegistration' >
-            
-            <FloatingLabel
-                     controlId="floatingInput"
-                    label="Name"
-                    className="mb-3 abc"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                 >
-                <Form.Control type="text" placeholder="name@example.com" />
-                </FloatingLabel>
-                <br />
-                <FloatingLabel
-                     controlId="floatingInput"
-                    label="Email address"
-                    className="mb-3"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                 >
-                <Form.Control type="email" placeholder="name@example.com" />
-                </FloatingLabel>
+    <Row sm={6} className='divRegistrationBackground' style={{ backgroundImage: `url(${background})`, backgroundSize: 'cover' }}>
+      <h1 id='h1CreateAccount'>Create New Account</h1>
 
-                <FloatingLabel
-                    controlId="floatingInput"
-                    label="Mobile Number"
-                    className="mb-3 abc"
-                    value={mobile_number}
-                    onChange={(e) => setMobileNumber(e.target.value)}
-                    required
-                 >
-                <Form.Control type="text" placeholder="name@example.com" />
-                </FloatingLabel>
-                <br />
-                <FloatingLabel
-                     controlId="floatingInput"
-                    label="Username"
-                    className="mb-3"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                 >
-                <Form.Control type="text" placeholder="name@example.com" />
-                </FloatingLabel>
-                <br />
-                <FloatingLabel
-                     controlId="floatingInput"
-                    label="Password"
-                    className="mb-3"
-                    value={password}
-                 >
-                <Form.Control type="password" placeholder="name@example.com" />
-                </FloatingLabel>
-                <br />
-                <FloatingLabel
-                     controlId="floatingInput"
-                    label="Confirm Password"
-                    className="mb-3"
-                    
-                 >
-                <Form.Control type="password" placeholder="name@example.com" />
-                </FloatingLabel>
-            
-            </Col>  
+      <Row sm={6} className='FormBackground'>
 
+        <Form onSubmit={handleSubmit}>
+          <Col sm={6} className='FormRegistration'>
+            <FloatingLabel controlId='floatingInput' label='Name' className='mb-3 abc'>
+              <Form.Control type='text' placeholder='Enter your name' name='name' value={formValues.name} onChange={handleFieldChange} required />
+            </FloatingLabel>
+            
+            <FloatingLabel controlId='floatingInput' label='Mobile Number' className='mb-3'>
+              <Form.Control type='text' placeholder='Enter your email' name='mobileNumber' value={formValues.mobileNumber} onChange={handleFieldChange} required />
+            </FloatingLabel>
+            <FloatingLabel controlId='floatingInput' label='Email address' className='mb-3'>
+              <Form.Control type='email' placeholder='Enter your email' name='email' value={formValues.email} onChange={handleFieldChange} required />
+            </FloatingLabel>
+            <FloatingLabel controlId='floatingInput' label='Username' className='mb-3'>
+              <Form.Control type='text' placeholder='Enter your username' name='username' value={formValues.username} onChange={handleFieldChange} required />
+            </FloatingLabel>
           
-            
-            <Col sm={6} className='FormRegistration2'>
-            <FloatingLabel
-                 controlId="floatingSelectGrid"
-                 label="Select Your Role"
-                 >
-                <Form.Select aria-label="Floating label select example" onChange={handleDropdownChange}>
-                    
-                    <option value="1">Class Teacher</option>
-                    <option value="2">Subject Teacher</option>
-                    <option value="3">Grade Head</option>
-                    <option value="4">Sectional Head</option>
-                    <option value="5">School Administrator</option>
-                    <option value="6">Development Officer</option>
-                    <option value="7">Planning Officer</option>
+            <FloatingLabel controlId='floatingInput' label='Password' className='mb-3'>
+              <Form.Control type='password' placeholder='Enter your password' name='password' value={formValues.password} onChange={handleFieldChange} required />
+            </FloatingLabel>
+        
+            <FloatingLabel controlId='floatingInput' label='Confirm Password' className='mb-3'>
+              <Form.Control type='password' placeholder='Confirm your password' name='confirmPassword' value={formValues.confirmPassword} onChange={handleFieldChange} required />
+            </FloatingLabel>
+          </Col>
+
+          <Col sm={6} className='FormRegistration2'>
+
+            <div>
+              <p style={{fontSize:"17px", marginLeft:"0px"}}>Select Your Roles</p>
+            {roleList.map((role, index) => (
+  <div key={index}>
+    <Form.Check
+      type="checkbox"
+      id={`checkbox-${role.value}`} 
+      label={role.label} 
+      value={role.value}
+      onChange={handleChange}
+ 
+    />
+  </div>
+))}
+            </div>
+            <br />
+            {/* Render additional input fields based on the selected role */}
+
+              <FloatingLabel controlId='floatingInput' label='Class' className='mb-3'>
+                <Form.Select aria-label='Select your class' name='classes' value={formValues.classes} onChange={handleFieldChange}>
+                  <option value=''>Select Class</option>
+                  {classes.map((classValue, index) => (
+                    <option key={index} value={classValue}>{classValue}</option>
+                  ))}
                 </Form.Select>
-                </FloatingLabel>
-                <br />
-                {renderInputFields()}
-
-               
-
-                {/* select school */}
-                <FloatingLabel
+              </FloatingLabel>
+         
+              <FloatingLabel
                  controlId="floatingSelectGrid"
                  label="Select Your School"
                  >
                 <Form.Select
                 aria-label="Floating label select example"
-                onChange={handleSchoolChange}
-                value={selectedSchool}
+                name="schoolID"
+                value={formValues.schoolID}
+                onChange={handleFieldChange}
               >
-                <option value="">Select School</option>
+                <option disabled value="">Select School</option>
                 {schoolOptions.map((school) => (
                   <option key={school.value} value={school.value}>
                     {school.label}
@@ -235,27 +187,19 @@ console.log(data);
                 ))}
                 </Form.Select>
                 </FloatingLabel>
-    
-              <Button variant="primary" type="submit" className="customBtn">
-                Submit
-              </Button>
-     
-            </Col>     
-            </Form>
-           
-           
-        </Row>
+            
+            <Button variant='primary' type='submit' className='customBtn'>
+              Submit
+            </Button>
+
+            <p className='PnewUser' style={{marginLeft:'18%'}}>
+            Alreadey have an account? <a href="/login">Login here</a>
+          </p>
+          </Col>
+        </Form>
+      </Row>
     </Row>
-    
-    
   );
-}
+};
 
 export default UserRegistration;
-
-
-
-
-
-                
-               

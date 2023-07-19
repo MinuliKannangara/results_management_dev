@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const {user_roles, roles} = require("../models");
+const { Op } = require("sequelize");
+
 
 router.post("/userRole", async(req, res)=>{
     const userrole = req.body;

@@ -15,10 +15,20 @@ import ManageSubjectResults from './Components/SubjectTeacher/SubjectResults';
 import GradeResultsDashboard from './Components/GradeResultsDashboard/GradeDashboard';
 import StudentPerformance from './Components/GradeHead/StudentPerformance';
 import PrizeHolders from './Components/GradeHead/PrizeHolders';
-import UploadNationalExaminationResults from './Components/GradeHead/NationalExamination';
+
 import OLResults from './Components/Development Section/OLResults';
 import ScholarshipResults from './Components/Development Section/ScholarshipResults';
 import ManageSchoolUsers from './Components/SchoolAdmin/ManageSchoolUsers'
+import EditSchoolUser from '../src/Components/SchoolAdmin/EditUserPage'
+import SchoolRegistration from './Components/UserRegistration/School_Registration';
+import SchoolProfile from './Components/Profiles/SchoolProfile';
+import SchoolAdminDashboard from './Components/SchoolAdmin/SchoolAdminDashboard';
+import SchoolDashboard from './Components/School Dashboard/SchoolDashboard';
+import ZonalSubjctResults from './Components/Development Section/SubjectResultsAnalysis';
+import ManageEducationOfficeUsers from './Components/SystemAdmin/ManageEduOfficeUsers.jsx';
+
+import UploadExaminationResults from './Components/GradeHead/UploadExaminationResults';
+
 
 function App() {
 
@@ -37,10 +47,18 @@ function App() {
       <Route path="/Grade Results Dashboard" element = {<GradeResultsDashboard/>}/>
       <Route path="/Student Performance" element={<StudentPerformance/>} />
       <Route path="/Prize Holders" element={<PrizeHolders/>}/>
-      <Route path="/Upload National Examination Results" element={<UploadNationalExaminationResults/>}/>
+      <Route path ="/upload National Examination Results" element ={<UploadExaminationResults/>}/>
       <Route path="/O/L Results Analysis" element={<OLResults/>}/>
       <Route path="/Scholarship Results Analysis" element={<ScholarshipResults/>}/>
       <Route path= "/Manage School Users" element={<ManageSchoolUsers/>} />
+      <Route path ="/Edit Users/:userName" element ={<EditSchoolUser/>}/>
+      <Route path ="School Registration" element ={<SchoolRegistration/>}/>
+      <Route path ="/School Profile" element ={<SchoolProfile/>}/>
+      <Route path ="/School Admin Dashboard" element ={<SchoolAdminDashboard/>}/>
+      <Route path ="/School Dashboard" element ={<SchoolDashboard/>}/>
+      <Route path="/Zonal Subject Results Analysis" element={<ZonalSubjctResults/>}/>
+      <Route path="/Manage Education Office Users" element={<ManageEducationOfficeUsers/>}/>
+
 
 
 

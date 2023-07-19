@@ -9,9 +9,15 @@ router.get("/", async(req, res)=>{
 });
 
 router.post("/", async(req, res)=>{
-    const school = req.body;
-    const createSchool = await School.create(school);
-    res.json(createSchool);
+    try{
+        const school = req.body;
+        const createSchool = await School.create(school);
+        res.json(createSchool);
+    } catch(error){
+        console.error(error.message);
+        res.status(500).json({ error: "Failed to create school." });
+    }
+   
 });
 
 module.exports = router;

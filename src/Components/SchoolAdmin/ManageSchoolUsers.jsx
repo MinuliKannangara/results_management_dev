@@ -6,12 +6,16 @@ import { Container, Row, Col,FormLabel } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons'
 import Button from 'react-bootstrap/Button';
+import {useNavigate} from 'react-router-dom';
+
 
 
 const ManageSchoolUsers = () =>{
 
-    const UserName = "dine"
+   
+    const UserName = "laksika"
     const [userDetails, setUserDetails] = useState([]);
+    let navigate = useNavigate();
 
     useEffect(() => {
         axios
@@ -52,11 +56,11 @@ const ManageSchoolUsers = () =>{
                   <td>{user.email}</td>
                   <td>{user.mobile_number}</td>
                   <td>{user.class_name}</td>
-                  <td>{user.roles[0].role_name}</td>
+                  <td>{user.roles.length > 0 && user.roles[0].role_name}</td>
                   <td>  <Button
                     variant="outline-primary"
                     style={{ fontSize: "15px", marginLeft: "2px", marginRight: "2px" }}
-                   
+                    onClick={() =>{ navigate(`/Edit Users/${user.username}`)}}
                     >
                     <FontAwesomeIcon icon={faPenToSquare} />
                     </Button>
