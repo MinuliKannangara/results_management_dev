@@ -7,15 +7,6 @@ import axios, { Axios } from 'axios';
 import DropdownButtonForAll from '../OtherComponents/Dropdown';
 import SubjectWiseTable from '../Charts/SubjectWiseTable';
 
-// const subjects = [
-//     { subject: 'Sinhala', propPrefix: 'sinhala' },
-//     { subject: 'Religion', propPrefix: 'religion' },
-//     { subject: 'History', propPrefix: 'history' },
-//     { subject: 'Science', propPrefix: 'science' },
-//     { subject: 'Mathematics', propPrefix: 'mathematics' },
-//     { subject: 'English', propPrefix: 'english' },
-    
-//   ];
 
   const subjects = [
     'Sinhala', 'Religion', 'History', 'Science',  'Mathematics',  'English' ,

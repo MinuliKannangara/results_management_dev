@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 //import React from 'react';
 import ButtonAppBar from '../NavBar/NavBarwrong';
 import './ManageStudentDetails.css';
@@ -12,7 +12,7 @@ import Table from 'react-bootstrap/Table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons'
 import NavBar from '../NavBar/NavBar';
-
+import { AuthContext } from '../../helpers/AuthContext';
 
 
 import axios, { Axios } from 'axios';
@@ -24,9 +24,9 @@ import axios, { Axios } from 'axios';
 
 const ManageStudentDetails = () => {
 
-
+const {authState} = useContext(AuthContext);
   const CurrentYear = new Date().getFullYear();
-  const username = "laksika"
+  const username = authState.username;
   // users school ID
  // const schoolId = 1
   
@@ -45,7 +45,7 @@ const [selectedYear, setSelectedYear] = useState(CurrentYear);
 const [selectedClass, setSelectedClass] = useState("");
 
 useEffect(() => {
-  axios.get(`http://localhost:3001/studentDetails/${selectedYear}`)
+  axios.get(`http://localhost:3001/studentDetails/${username}/${selectedYear}`)
     .then((response) => {
       if (response.data && response.data.StudentList) {
         setListOfStudents(response.data.StudentList);
@@ -66,7 +66,7 @@ const submitStudentDetails = (e) => {
     index_number: parseInt(indexNumber),
     student_name: name,
     year: selectedYear,
-   // school_ID: schoolId,
+   school_ID: authState.schoolID,
     class_name: selectedClass,
   };
   
@@ -86,7 +86,7 @@ const submitStudentDetails = (e) => {
      setIndexNumber("");
      setName("");
       //Fetch the updated list of students
-      axios.get(`http://localhost:3001/studentDetails/${selectedYear}`)
+      axios.get(`http://localhost:3001/studentDetails/${username}/${selectedYear}`)
       .then((response) => {
         if (response.data && response.data.StudentList) {
           setListOfStudents(response.data.StudentList);
@@ -103,7 +103,7 @@ const submitStudentDetails = (e) => {
     });
 };
 
-//fro the delete button
+//for the delete button
 const deleteStudent = (studentID) => {
 
   axios.delete(`http://localhost:3001/studentDetails/${studentID}`)

@@ -5,8 +5,8 @@ import './Dropdown.css';
 
 function DropdownButtonForAll(Props) {
   return (
-    <DropdownButton className='customDropdownButton' id="dropdown-basic-button" title={Props.dropdownTitle}>
-      <Dropdown.Item className='customDropdown' href="#/action-1">{Props.item1}</Dropdown.Item>
+    <DropdownButton className='customDropdownButton2' id="dropdown-basic-button" title={Props.dropdownTitle}>
+      <Dropdown.Item className='customDropdown2' href="#/action-1">{Props.item1}</Dropdown.Item>
       <Dropdown.Item className='customDropdown' href="#/action-2">{Props.item2}</Dropdown.Item>
       <Dropdown.Item className='customDropdown' href="#/action-3">{Props.item3}</Dropdown.Item>
       <Dropdown.Item className='customDropdown' href="#/action-4">{Props.item4}</Dropdown.Item>

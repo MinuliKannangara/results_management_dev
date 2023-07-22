@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext} from 'react';
 import './ManageStudentDetails.css';
 import { Container, Row, Col } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
@@ -9,15 +9,14 @@ import DropdownButtonForAll from '../OtherComponents/Dropdown';
 import axios from 'axios';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
-
+import { AuthContext } from '../../helpers/AuthContext';
 
 const ManageClassResults = () => {
 
-  
+  const {authState} = useContext(AuthContext);
 
-  // write the code to get the user name of the user
-  // const username = localStorage.getItem('username');
-  const enteredUsername = "laksika"; 
+
+  const enteredUsername = authState.username; 
   const CurrentYear = new Date().getFullYear();
 
   

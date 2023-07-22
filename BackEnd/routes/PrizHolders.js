@@ -3,8 +3,8 @@ const router = express.Router();
 const {Subject, users, SubjectCategory, Student,SubjectResults,School} = require("../models");
 const {Op} = require("sequelize");
 
-router.get("/:grade/:year", async (req, res) => {
-    const username = "laksika";
+router.get("/:grade/:year/:username", async (req, res) => {
+    const username = req.params.username;
     const grade = req.params.grade;
     const year = req.params.year;
 

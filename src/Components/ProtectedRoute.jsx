@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Route, Navigate } from "react-router-dom";
+import { AuthContext } from '../helpers/AuthContext';
 
-const ProtectedRoute = ({ element: Component, allowedRoles, redirectTo, ...rest}) => {
-    const {authState} = useContext(AuthContext);
+const ProtectedRoute = ({ component: Component, allowedRoles, redirectTo, ...rest }) => {
+    const { authState } = useContext(AuthContext);
 
-    const isRoleAllowd = allowedRoles.includes(authState.role);
+    const isRoleAllowed = allowedRoles.includes(authState.role);
 
     return (
-        <Route {...rest} element={isRoleAllowd ? <Component /> : <Navigate to={redirectTo} replace />} />
+        <Route {...rest} element={isRoleAllowed ? <Component /> : <Navigate to={redirectTo} replace />} />
     );
 };
 

@@ -9,11 +9,11 @@ router.post("/", async(req,res) => {
     const createdResult =  await CalculatedResults.create(results);
     res.json(createdResult);
 })
-router.get("/:year/:term/:schoolName/:grade", async (req, res) => {
+router.get("/:year/:term/:schoolID/:grade", async (req, res) => {
     try {
       const school = await School.findOne({
         where: {
-          school_name: req.params.schoolName,
+          school_ID: req.params.schoolID,
         },
       });
   

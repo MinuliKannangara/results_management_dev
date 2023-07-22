@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Container from 'react-bootstrap/Container';
+import { useContext } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import TemporaryDrawer from '../SideBar/SideBar';
@@ -7,6 +7,9 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars} from '@fortawesome/free-solid-svg-icons'
+import { AuthContext } from '../../helpers/AuthContext';
+import { Container, Row, Col } from 'react-bootstrap';
+import logo from '../Login/logoForLogin2.png';
 
 function NavBar(props) {
 
@@ -26,61 +29,93 @@ function NavBar(props) {
     setState({ ...state, [anchor]: open });
   };
 
-  const userRole = 'Subject Teacher'; //assign the user role of the user 
+  const {authState, setAuthState} = useContext(AuthContext);
+
+  const userRole =  authState.role; //assign the user role of the user 
   let sideBarItems = []; //array to assign
 
-  if (userRole === 'Class Teacher') {
-    sideBarItems = ['Grade Results Dashboard', 'Manage Student Details', 'Manage Class Results'];
-  } else if (userRole === 'Grade Head') {
-    sideBarItems = ['Grade Results Dashboard', 'Student performance', 'Prize Holders','Upload National Examination Results'];
-  } else if (userRole === 'Sectional Head') {
-    sideBarItems = ['Grade Results Dashboard', 'Student Performence'];
-  } else if (userRole === 'Subject Teacher') {
-    sideBarItems = ['Grade Results Dashboard', 'Manage Subject Results'];
-  } else if (userRole === 'School Admin') {
-    sideBarItems = ['Grade Results Dashboard', 'Manage School users', ''];
-  } else if (userRole === 'System Admin') {
-    sideBarItems = ['Manage Roles', 'dfdf', 'sdfsdfs'];
-  } else if (userRole === 'Planning Officer') {
-    sideBarItems = ['sds', 'dfdf', 'sdfsdfs'];
-  } else if (userRole === 'Develomet Officer') {
-    sideBarItems = ['O/L Results Analysis', 'Grade 5 Scholarship Results Analysis', 'sdfsdfs'];
-  } 
+  if (userRole.includes('School Admin')) {
+    sideBarItems.push('School Admin Dashboard', 'Manage School Users', 'Student Performance', 'Prize Holders');
+  }
+  
+  if (userRole.includes('Class Teacher') || userRole.includes('Subject Teacher') || userRole.includes('Grade Head') || userRole.includes('Sectional Head') || userRole.includes('School Admin')) {
+    sideBarItems.push('School Dashboard');
+  }
 
+  if (userRole.includes('Class Teacher')) {
+    sideBarItems.push( 'Manage Student Details', 'Manage Class Results');
+  }
+  
+  if (userRole.includes('Subject Teacher')) {
+    sideBarItems.push('Manage Subject Results');
+  }
+  
+  if (userRole.includes('Grade Head') || userRole.includes('Sectional Head')) {
+    sideBarItems.push('Student Performance', 'Prize Holders', 'upload National Examination Results');
+  }
+
+  if (userRole.includes('Development Officer') || userRole.includes('Planning Officer') || userRole.includes('System Admin')) {
+    sideBarItems.push('Zonal Education Office Dashboard');
+  }
+
+  if (userRole.includes('System Admin')) {
+    sideBarItems.push('Manage Education Office Users', 'O/L Results Analysis', 'Scholarship Results Analysis', 'Zonal Subject Results Analysis');
+  }
+
+  if (userRole.includes('Development Officer') || userRole.includes('Planning Officer')) {
+    sideBarItems.push('O/L Results Analysis', 'Scholarship Results Analysis', 'Zonal Subject Results Analysis');
+  }
+
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    setAuthState({...authState, status:false});
+  };
+  
   return (
-  <Container fluid>
-<Navbar expand="lg" className="bg-body-tertiary" style={{backgroundColor:"#e1e1e1"}}>
+  
+    <Navbar expand="lg" className="bg-body-tertiary" style={{ backgroundColor: 'white', padding: 0, borderBottom: '1px solid black', height: 'auto' }}>
+  
+      <Row style={{width:"100%"}}>
+        {/* <Col lg={3} sm={12} style={{ paddingLeft: '0px', paddingRight: '0px',backgroundColor: 'red' }}>
+          <img src={logo} alt="Logo" border="0" style={{ width: '150px', height: 'auto' }} />
+        </Col> */}
 
-       
-<Container fluid style={{width:'4px',marginRight:'15px'}}>
-    <Form >
-        <Button variant="light" style={{boxSizing:'7',backgroundColor:"#F0EBE7",marginTop:'0px'}} onClick={toggleDrawer("left", true)}><FontAwesomeIcon icon={faBars} /></Button>
-  </Form>
-</Container>
+        <Col lg={1} sm={12} style={{ paddingLeft: '10px', paddingRight: '0px' }}>
+          <Button variant="light" style={{ boxSizing: '7', backgroundColor: '#769FCD', marginTop: '2px',marginLeft:"5px"}} onClick={toggleDrawer('left', true)}>
+            <FontAwesomeIcon icon={faBars} />
+          </Button>
+        </Col>
+
+        <Col lg={6} sm={12} style={{ paddingLeft: '0px', paddingRight: '0px',paddingTop:"8px"}}>
+          <Navbar.Brand id="pagename">{props.PageName}</Navbar.Brand>
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <Nav.Link href={props.Tab1Link}>{props.Tab1}</Nav.Link>
+              <Nav.Link href={props.Tab2Link}>{props.Tab2}</Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Col>
+        
+        <Col lg={5} sm={12} className="d-flex justify-content-end" style={{ paddingLeft: '0px', paddingRight: '0px'}}>
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto" >
+              {authState.status && (
+                <>
+                  <Button style={{marginLeft:"1300px",backgroundColor:"#769FCD",borderColor:"#769FCD", color:"black"}} onClick={logout}>Logout</Button>
+                  <h6>{authState.name}</h6>
+                </>
+              )}
+            </Nav>
+          </Navbar.Collapse>
+        </Col>
+      </Row>
 
 
-<Container fluid style={{marginTop:'5px'}} >
+    {/* Use the sidebar within the navigation bar and pass the props */}
+    <TemporaryDrawer state={state} setState={setState} toggleDrawer={toggleDrawer} items={sideBarItems} />
+  </Navbar>
 
-
-<Navbar.Brand href="#home">{props.PageName}</Navbar.Brand>
-{/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
-<Navbar.Collapse id="basic-navbar-nav">
-  <Nav className="me-auto">
-    <Nav.Link href={props.Tab1Link}>{props.Tab1}</Nav.Link>
-    <Nav.Link href={props.Tab2Link}> {props.Tab2}</Nav.Link>
-    
-      
-  </Nav>
-</Navbar.Collapse>
-
-</Container>
-
-
-{/* use the sidebar within the navigation bar and pass the props */}
-<TemporaryDrawer state={state} setState={setState} toggleDrawer={toggleDrawer} items={sideBarItems}/>
-</Navbar>
-
-    </Container>
+ 
     
   );
 }

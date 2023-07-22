@@ -17,7 +17,7 @@ const ZonalSubjctResults= () => {
 
   // static demoUrl = 'https://codesandbox.io/s/pie-chart-with-customized-label-dlhhj';
   const CurrentYear = new Date().getFullYear();
-  const username = "dine";
+  // const username = "dine";
   const grades = ['Grade 6','Grade 7','Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12', 'Grade 13'];
       // Used replace method to remove the "Grade " prefix from the grade string.
       const extractNumber = (grade) => {
@@ -42,8 +42,7 @@ const ZonalSubjctResults= () => {
     axios.get(`http://localhost:3001/ZonalSubjectResults/${selectedGrade}/${selectedyear}/${selectedTerm}/${selectedDivision}/${selectedSubject}`)
       .then((response) => {
         setSubjectList(response.data.subjectList);
-        setStudentCounts(response.data.studentCounts);
-       
+        setStudentCounts(response.data.studentCounts);     
       })
       .catch((error) => {
         console.error(error);

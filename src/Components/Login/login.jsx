@@ -51,8 +51,8 @@ const LoginForm = () => {
             alert(response.data.error);
           } else{
             localStorage.setItem('accessToken', response.data.token);
-            setAuthState({username:response.data.username, id:response.data.id, schoolID:response.data.schoolId, status:true, role:response.data.roles});
-            navigate('/Manage Student Details');
+            setAuthState({username:response.data.username, id:response.data.id, schoolID:response.data.schoolId, status:true, role:response.data.roles, name:response.data.name});
+           
 
             const roles = response.data.roles;
         if (roles.includes('School Admin')) {
@@ -68,6 +68,8 @@ const LoginForm = () => {
         } else if (roles.includes('Development Officer')) {
           navigate('/Zonal Education Office Dashboard');
         }else if (roles.includes('Planning Officer')) {
+          navigate('/Zonal Education Office Dashboard');
+        } else if (roles.includes('System Admin')) {
           navigate('/Zonal Education Office Dashboard');
         }
         else {

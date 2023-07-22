@@ -1,3 +1,10 @@
 a:hover {
     color: rgb(243, 109, 26);
   }
+
+#pagename{
+    font-size: 20px;
+    font-weight: bold;
+    color:black ;
+  
+}

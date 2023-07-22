@@ -1,4 +1,4 @@
-import React, { useEffect, useState, PureComponent } from 'react';
+import React, { useEffect, useState, PureComponent ,useContext} from 'react';
 import { Container, Row, Col,FormLabel } from 'react-bootstrap';
 import './SchoolDashboard.css';
 import NavBar from '../NavBar/NavBar';
@@ -11,7 +11,7 @@ import { faUserGroup,faLandmark } from '@fortawesome/free-solid-svg-icons'
 import { PieChart, Pie, ResponsiveContainer, Cell } from 'recharts';
 import PieChartForSchool from '../Charts/PieChartForSchools';
 import SchoolDashboardTable from '../Charts/TableSchoolDashboard';
-
+import { AuthContext } from '../../helpers/AuthContext';
 
 
 
@@ -20,7 +20,9 @@ const SchoolDashboard= () => {
 
   // static demoUrl = 'https://codesandbox.io/s/pie-chart-with-customized-label-dlhhj';
   const CurrentYear = new Date().getFullYear();
-  const username = "dine";
+
+  const {authState} = useContext(AuthContext);
+  const username = authState.username;
   const grades = ['Grade 6','Grade 7','Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12', 'Grade 13'];
       // Used replace method to remove the "Grade " prefix from the grade string.
       const extractNumber = (grade) => {

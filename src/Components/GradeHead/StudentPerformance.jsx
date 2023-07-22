@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { Container, Row, Col,FormLabel } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import NavBar from '../NavBar/NavBar';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import axios, { Axios } from 'axios';
-
+import { AuthContext } from '../../helpers/AuthContext';
 
 const StudentPerformance = () => {
 
+  const {authState} = useContext(AuthContext);
   const CurrentYear = new Date().getFullYear();
-  const school = 'ascsdh';
+  // const school = 'ascsdh';
+  const schoolID = authState.schoolID;
 
   //for the grade dropdown
   const grades = ['Grade 6','Grade 7','Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12', 'Grade 13'];
@@ -30,8 +32,9 @@ const StudentPerformance = () => {
   const [selectedTerm, setSelectedTerm] = useState('1st Term');
   const [selectedGrade, setSelectedGrade] = useState('7');
 
+  //back end: calculatedResults route
   useEffect(() =>{
-    axios.get(`http://localhost:3001/calculatedResults/${selectedYear}/${selectedTerm}/${school}/${selectedGrade}`).then((response)=>{
+    axios.get(`http://localhost:3001/calculatedResults/${selectedYear}/${selectedTerm}/${schoolID}/${selectedGrade}`).then((response)=>{
       setHighperformanceData(response.data.highPerformers);
       setLowPerformanceData(response.data.lowPerformers);
     })

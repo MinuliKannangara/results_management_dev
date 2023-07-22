@@ -1,4 +1,4 @@
-import {useState,useEffect} from 'react';
+import {useState,useEffect, useContext} from 'react';
 import NavBar from '../NavBar/NavBar';
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
@@ -7,13 +7,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons'
 import Button from 'react-bootstrap/Button';
 import {useNavigate} from 'react-router-dom';
-
+import { AuthContext } from '../../helpers/AuthContext';
 
 
 const ManageSchoolUsers = () =>{
 
-   
-    const UserName = "laksika"
+    const {authState} = useContext(AuthContext);
+    const UserName = authState.username;
     const [userDetails, setUserDetails] = useState([]);
     let navigate = useNavigate();
 

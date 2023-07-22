@@ -11,6 +11,40 @@ import NavBar from '../NavBar/NavBar';
 function UploadExaminationResults() {
 
   const [selectedExam, setSelectedExam] = useState('Grade 5 Scholarship');
+
+  const showTable = () => {
+    if(selectedExam==="Grade 5 Scholarship"){
+      return(
+        <Table striped bordered hover variant="light">
+        <thead>
+            <tr>
+              <th>Range</th>
+              <th>Maximum Marks</th>
+              <th>Minimum Marks</th>
+            <th>Class</th>
+          
+         
+            </tr>
+          </thead>
+          <tbody>
+      {/* {Object.entries(prizeHolders).map(([subject, details], index) => {
+        const studentDetail = studentDetails.find((detail) => detail.student_ID === parseInt(details.studentId));
+        return (
+          <tr key={index}>
+           <td>{index + 1}</td>
+           <td>{studentDetail ? studentDetail.index_number : ''}</td>
+           <td>{studentDetail ? studentDetail.Student_name : ''}</td>
+            <td>{subject}</td>
+            <td>{studentDetail ? studentDetail.class_name : ''}</td>
+          </tr>
+        );
+      })} */}
+    </tbody>
+   
+        </Table>
+      )
+    }
+  };
   return (
     <div>
      {/* <ButtonAppBar PageName="Prize Holders" /> */}
@@ -56,6 +90,7 @@ function UploadExaminationResults() {
     
              </Row>
             <Row className='TableRoWDown'>
+              
             
               <Table striped bordered hover variant="light">
          <thead>

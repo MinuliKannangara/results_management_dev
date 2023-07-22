@@ -15,7 +15,6 @@ import NavBar from './Components/NavBar/NavBar';
 import ManageStudentDetails from './Components/ClassTeacher/ManageStudentDetails';
 import ManageClassResults from "../src/Components/ClassTeacher/ManageClassResults";
 import ManageSubjectResults from './Components/SubjectTeacher/SubjectResults';
-import GradeResultsDashboard from './Components/GradeResultsDashboard/GradeDashboard';
 import StudentPerformance from './Components/GradeHead/StudentPerformance';
 import PrizeHolders from './Components/GradeHead/PrizeHolders';
 import OLResults from './Components/Development Section/OLResults';
@@ -29,14 +28,15 @@ import SchoolDashboard from './Components/School Dashboard/SchoolDashboard';
 import ZonalSubjctResults from './Components/Development Section/SubjectResultsAnalysis';
 import ManageEducationOfficeUsers from './Components/SystemAdmin/ManageEduOfficeUsers.jsx';
 import EduOfficeDashboard from './Components/OfficeDashboard/EduOfficeDashboard';
+import UploadExaminationResults from './Components/GradeHead/UploadExaminationResults';
 
-// import UploadExaminationResults from './Components/GradeHead/UploadExaminationResults';
 
 
 function App() {
   const [authState, setAuthState] = useState({
     username: "",
     userid: 0,
+    name:"",
     schoolID: 0,
     status: false,
     role:[],
@@ -54,6 +54,7 @@ function App() {
           userid: response.data.id,
           schoolID: response.data.schoolId,
           role: response.data.roles,
+          name: response.data.name,
           status: true,
         });
       }
@@ -64,29 +65,91 @@ function App() {
   
   return (
     <AuthContext.Provider value={{authState, setAuthState}}>
-    <Routes>
-      <Route path="/login" element={<LoginForm/>} />
+      <Routes>
+          {!authState.status ? (
+            <>
+              <Route path="/login" element={<LoginForm/>} />
       <Route path="/UserRegistration" element={<UserRegistration/>} />
       <Route path= "/SideBar" element = {<SideBar/>}/>
       <Route path="/NavBar" element = {<NavBar/>}/>
-      <Route path="/Manage Student Details" element = {<ManageStudentDetails/>}/>
-      <Route path="/Manage Class Results" element = {<ManageClassResults/>}/>
-      <Route path="/Manage Subject Results" element = {<ManageSubjectResults/>}/>
-      <Route path="/Grade Results Dashboard" element = {<GradeResultsDashboard/>}/>
-      <Route path="/Student Performance" element={<StudentPerformance/>} />
-      <Route path="/Prize Holders" element={<PrizeHolders/>}/>
-      {/* <Route path ="/upload National Examination Results" element ={<UploadExaminationResults/>}/> */}
-      <Route path="/O/L Results Analysis" element={<OLResults/>}/>
+      <Route path="/School Registration" element={<SchoolRegistration />} />
+            </>
+          ) : (
+            <>
+              {authState.role.includes('School Admin') && (
+            <>
+              <Route path="/School Dashboard" element={<SchoolDashboard />} />
+              <Route path="/School Admin Dashboard" element={<SchoolAdminDashboard />} />
+              
+              <Route path="/Manage School Users" element={<ManageSchoolUsers />} />
+            </>
+          )}
+           {authState.role.includes('School Admin') || authState.role.includes('Class Teacher') ? (
+            <>
+              <Route path="/Manage Student Details" element={<ManageStudentDetails />} />
+              <Route path="/Manage Class Results" element={<ManageClassResults />} />
+              <Route path ="/School Dashboard" element ={<SchoolDashboard/>}/>
+            </>
+          ) : null}
+
+{authState.role.includes('School Admin') || authState.role.includes('Subject Teacher') ? (
+            <>
+              <Route path="/Manage Subject Results" element = {<ManageSubjectResults/>}/>
+              <Route path ="/School Dashboard" element ={<SchoolDashboard/>}/>
+            </>
+          ) : null}
+
+{authState.role.includes('School Admin') || authState.role.includes('Grade Head') || authState.role.includes('Sectional Head') ? (
+            <>
+               <Route path="/Student Performance" element={<StudentPerformance/>} />
+                <Route path="/Prize Holders" element={<PrizeHolders/>}/>
+              <Route path ="/School Dashboard" element ={<SchoolDashboard/>}/>
+              <Route path ="/upload National Examination Results" element ={<UploadExaminationResults/>}/>
+            </>
+          ) : null}
+
+{authState.role.includes('Syetem Admin') || authState.role.includes('Development Officer') || authState.role.includes('Planning Officer') ? (
+            <>
+               <Route path="/O/L Results Analysis" element={<OLResults/>}/>
       <Route path="/Scholarship Results Analysis" element={<ScholarshipResults/>}/>
-      <Route path= "/Manage School Users" element={<ManageSchoolUsers/>} />
-      <Route path ="/Edit Users/:userName" element ={<EditSchoolUser/>}/>
-      <Route path ="School Registration" element ={<SchoolRegistration/>}/>
-      <Route path ="/School Profile" element ={<SchoolProfile/>}/>
-      <Route path ="/School Admin Dashboard" element ={<SchoolAdminDashboard/>}/>
-      <Route path ="/School Dashboard" element ={<SchoolDashboard/>}/>
       <Route path="/Zonal Subject Results Analysis" element={<ZonalSubjctResults/>}/>
-      <Route path="/Manage Education Office Users" element={<ManageEducationOfficeUsers/>}/>
       <Route path="/Zonal Education Office Dashboard" element={<EduOfficeDashboard/>}/>
+            </>
+          ) : null}
+
+{authState.role.includes('School Admin') || authState.role.includes('System Admin') ? (
+            <>
+              <Route path ="/Edit Users/:userName" element ={<EditSchoolUser/>}/>
+            </>
+          ) : null}
+
+{authState.role.includes('System Admin') && (
+            <>
+              <Route path="/Manage Education Office Users" element={<ManageEducationOfficeUsers/>}/>
+            </>
+          )}
+
+  
+      
+      
+      {/* <Route path="/Grade Results Dashboard" element = {<GradeResultsDashboard/>}/> */}
+     
+      
+     
+      
+     
+      
+      {/* <Route path ="/School Profile" element ={<SchoolProfile/>}/> */}
+     
+      
+      
+      
+      
+            </>
+          )}
+        </Routes>
+    <Routes>
+  
 
 
     </Routes> 

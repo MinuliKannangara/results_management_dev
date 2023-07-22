@@ -1,24 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import axios from 'axios';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../helpers/AuthContext';
 
 
 const EditSchoolUser = () => {
   let { userName } = useParams();
-  const adminRole = "System Admin"; //change the role based on the registration information
+
+  const {authState} = useContext(AuthContext);
+  const adminRole = authState.role; //change the role based on the registration information
   const navigate = useNavigate();
 
-
+  
 
   const classes = ["6-A", "6-B", "6-C", "6-D", "6-E", "6-F", "6-G", "6-H", "6-I", "7-A", "7-B", "7-C", "7-D", "7-E", "7-F", "7-G", "7-H", "7-I", "8-A", "8-B", "8-C", "8-D", "8-E", "8-F", "8-G", "8-H", "8-I", "9-A", "9-B", "9-C", "9-D", "9-E", "9-F", "9-G", "9-H", "9-I", "10-A", "10-B", "10-C", "10-D",
    "10-E", "10-F", "10-G", "10-H", "10-I", "11-A", "11-B", "11-C", "11-D", "11-E", "11-F", "11-G", "11-H", "11-I", "12-A", "12-B", "12-C", "12-D", "12-E", "12-F", "12-G", "12-H", "12-I", "13-A", "13-B", "13-C", "13-D", "13-E", "13-F", "13-G", "13-H", "13-I"]
 
    const showClassDropDown = (role) => {
-    if(role==="School Admin"){
+    if(adminRole.includes('School Admin')){
       return (
         <div>
 <Form.Group as={Col} controlId="formGridState">

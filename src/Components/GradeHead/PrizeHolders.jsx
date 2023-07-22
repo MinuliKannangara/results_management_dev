@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Container, Row, Col,FormLabel } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import './GreadHead.css';
@@ -7,11 +7,15 @@ import NavBar from '../NavBar/NavBar';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import axios from 'axios';
-
+import { AuthContext } from '../../helpers/AuthContext';
 
 
 const PrizeHolders = () => {
   const CurrentYear = new Date().getFullYear();
+
+  const {authState} = useContext(AuthContext);
+
+  const username = authState.username;
 
   const [prizeHolders, setPrizeHolders] = useState([]);
   const [studentDetails, setStudentDetails] = useState([]);
@@ -29,9 +33,8 @@ const PrizeHolders = () => {
   };
 
 
-
   useEffect(() => {
-    axios.get(`http://localhost:3001/prizeHolders/${selectedGrade}/${selectedyear}`).then((response) => {
+    axios.get(`http://localhost:3001/prizeHolders/${selectedGrade}/${selectedyear}/${username}`).then((response) => {
       setPrizeHolders(response.data.maxMarks);
       setStudentDetails(response.data.prizeHoldersList);
     });
