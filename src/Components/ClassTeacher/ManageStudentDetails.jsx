@@ -28,7 +28,7 @@ const ManageStudentDetails = () => {
   const CurrentYear = new Date().getFullYear();
   const username = "laksika"
   // users school ID
-  const schoolId = 1
+ // const schoolId = 1
   
 
     //const username = localStorage.getItem('user');
@@ -38,23 +38,25 @@ const ManageStudentDetails = () => {
 const [listOfStudents, setListOfStudents] = useState([]);
 
 //for the form values
-const [indexNumber, setIndexNumber] = useState([]);
-const [name, setName] = useState([]);
-
+const [indexNumber, setIndexNumber] = useState('');
+const [name, setName] = useState('');
 //for the dropdowns
 const [selectedYear, setSelectedYear] = useState(CurrentYear);
 const [selectedClass, setSelectedClass] = useState("");
 
 useEffect(() => {
   axios.get(`http://localhost:3001/studentDetails/${selectedYear}`)
-  .then((response) => {
-    setListOfStudents(response.data.StudentList);
-    setSelectedClass(response.data.userClass);
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+    .then((response) => {
+      if (response.data && response.data.StudentList) {
+        setListOfStudents(response.data.StudentList);
+        setSelectedClass(response.data.userClass);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }, [selectedYear]);
+
 
 
 // for the ADD button
@@ -64,22 +66,32 @@ const submitStudentDetails = (e) => {
     index_number: parseInt(indexNumber),
     student_name: name,
     year: selectedYear,
-    school_ID: schoolId,
+   // school_ID: schoolId,
     class_name: selectedClass,
   };
   
 
 
-  axios.post('http://localhost:3001/studentDetails', data)
+  axios.post('http://localhost:3001/studentDetails', data,
+  {
+    headers:{
+      accessToken: localStorage.getItem('accessToken'),
+    }
+  })
      .then((response) => {
+      if(response.data.error) {
+        console.log(response.data.error);
+      }
      // Clear the input fields
      setIndexNumber("");
      setName("");
       //Fetch the updated list of students
-      axios.get(`http://localhost:3001/studentDetails/${username}/${selectedYear}`)
+      axios.get(`http://localhost:3001/studentDetails/${selectedYear}`)
       .then((response) => {
-        setListOfStudents(response.data.StudentList);
-        setSelectedClass(response.data.userClass);
+        if (response.data && response.data.StudentList) {
+          setListOfStudents(response.data.StudentList);
+          setSelectedClass(response.data.userClass);
+        }
       })
       .catch((error) => {
         console.log(error);

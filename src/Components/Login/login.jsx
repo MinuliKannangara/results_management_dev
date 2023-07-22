@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Container, Row, Col } from 'react-bootstrap';
@@ -7,8 +7,18 @@ import logo from './logoForLogin2.png';
 import './Login.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../helpers/AuthContext';
+
 
 const LoginForm = () => {
+
+  // const [athState, setAuth] = useState({
+  //   username: "",
+  //   id: 0,
+  //   schoolID: 0,
+  //   status: false,
+  //   role:[],
+  // });
   const styles = {
     backgroundImage: `url(${image})`,
     backgroundSize: 'cover',
@@ -20,6 +30,9 @@ const LoginForm = () => {
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const navigate = useNavigate();
+
+  const {setAuthState} = useContext(AuthContext);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,18 +47,44 @@ const LoginForm = () => {
     axios
       .post('http://localhost:3001/UserRegistration/login', formValues)
       .then((response) => {
-        const { data } = response;
-        if (data.username) {
-          navigate('/Manage Student Details');
-          //Cookies.setItem('accessToken', response.data);
-        } else {
-          console.error('Invalid username or password');
+          if(response.data.error) {
+            alert(response.data.error);
+          } else{
+            localStorage.setItem('accessToken', response.data.token);
+            setAuthState({username:response.data.username, id:response.data.id, schoolID:response.data.schoolId, status:true, role:response.data.roles});
+            navigate('/Manage Student Details');
+
+            const roles = response.data.roles;
+        if (roles.includes('School Admin')) {
+          navigate('/School Admin Dashboard'); 
+        } else if (roles.includes('Subject Teacher')) {
+          navigate('/School Dashboard');
+        } else if (roles.includes('Class Teacher')) {
+          navigate('/School Dashboard'); 
+        } else if (roles.includes('Grade Head')) {
+          navigate('/School Dashboard');
+        } else if (roles.includes('Sectional Head')) {
+          navigate('/School Dashboard');
+        } else if (roles.includes('Development Officer')) {
+          navigate('/Zonal Education Office Dashboard');
+        }else if (roles.includes('Planning Officer')) {
+          navigate('/Zonal Education Office Dashboard');
         }
+        else {
+          // If none of the roles match, you can handle it as needed.
+          // For example, redirect to a default dashboard or show an error message.
+          alert('Unknown role! Please contact the administrator.');
+        }
+            
+          }
+      
       })
       .catch((error) => {
         console.error('Error occurred during login', error);
       });
   };
+
+  
 
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {

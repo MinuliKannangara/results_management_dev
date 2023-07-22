@@ -25,14 +25,14 @@ function UploadExaminationResults() {
                   Examination
                  </FormLabel>
                </Col>
+             
+               <Col lg={5} sm={12} className='divAllDropdown'>
                <DropdownButton className='customDropdownButton' id="dropdown-basic-button" title={`${selectedExam}`} >
          <Dropdown.Item className='customDropdown'  onClick={() => setSelectedExam("Grade 5 Scholarship")}>Grade 5 Scholarship</Dropdown.Item>
           <Dropdown.Item className='customDropdown'  onClick={() => setSelectedExam("O/L Examination")}>O/L Examination</Dropdown.Item>
            <Dropdown.Item className='customDropdown'  onClick={() => setSelectedExam("A/l Examination")}>A/l Examination</Dropdown.Item>
          </DropdownButton> 
     
-               <Col lg={5} sm={12}>
-             
                </Col>
                <Col lg={1} sm={12}>
                

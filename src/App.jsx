@@ -3,6 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import LoginForm from './Components/Login/login';
 import {BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { AuthContext } from './helpers/AuthContext';
+import { useState, useEffect} from 'react';
+import axios from 'axios';
 import UserRegistration from './Components/UserRegistration/UserRegistration';
 // import SideBar from './Components/SideBar/SideBar';
 // import Dashboard from './Components/NavBar/side';
@@ -15,7 +18,6 @@ import ManageSubjectResults from './Components/SubjectTeacher/SubjectResults';
 import GradeResultsDashboard from './Components/GradeResultsDashboard/GradeDashboard';
 import StudentPerformance from './Components/GradeHead/StudentPerformance';
 import PrizeHolders from './Components/GradeHead/PrizeHolders';
-
 import OLResults from './Components/Development Section/OLResults';
 import ScholarshipResults from './Components/Development Section/ScholarshipResults';
 import ManageSchoolUsers from './Components/SchoolAdmin/ManageSchoolUsers'
@@ -26,19 +28,45 @@ import SchoolAdminDashboard from './Components/SchoolAdmin/SchoolAdminDashboard'
 import SchoolDashboard from './Components/School Dashboard/SchoolDashboard';
 import ZonalSubjctResults from './Components/Development Section/SubjectResultsAnalysis';
 import ManageEducationOfficeUsers from './Components/SystemAdmin/ManageEduOfficeUsers.jsx';
+import EduOfficeDashboard from './Components/OfficeDashboard/EduOfficeDashboard';
 
-import UploadExaminationResults from './Components/GradeHead/UploadExaminationResults';
+// import UploadExaminationResults from './Components/GradeHead/UploadExaminationResults';
 
 
 function App() {
+  const [authState, setAuthState] = useState({
+    username: "",
+    userid: 0,
+    schoolID: 0,
+    status: false,
+    role:[],
+  });
 
+  useEffect(() => {
+    axios.get('http://localhost:3001/UserRegistration/auth', {
+      headers: { accessToken: localStorage.getItem('accessToken')}
+    }).then((response) => {
+      if(response.data.error){
+        setAuthState({...authState, status: false});
+      }else{
+        setAuthState({
+          username: response.data.username,
+          userid: response.data.id,
+          schoolID: response.data.schoolId,
+          role: response.data.roles,
+          status: true,
+        });
+      }
+    });
+     
+    
+  },[]);
   
   return (
+    <AuthContext.Provider value={{authState, setAuthState}}>
     <Routes>
       <Route path="/login" element={<LoginForm/>} />
       <Route path="/UserRegistration" element={<UserRegistration/>} />
-      {/* <Route path="/ClassDetails" element={<ManageClassDetails/>} /> */}
-      {/* <Route path="/NavBar" element={<Dashboard/>} /> */}
       <Route path= "/SideBar" element = {<SideBar/>}/>
       <Route path="/NavBar" element = {<NavBar/>}/>
       <Route path="/Manage Student Details" element = {<ManageStudentDetails/>}/>
@@ -47,7 +75,7 @@ function App() {
       <Route path="/Grade Results Dashboard" element = {<GradeResultsDashboard/>}/>
       <Route path="/Student Performance" element={<StudentPerformance/>} />
       <Route path="/Prize Holders" element={<PrizeHolders/>}/>
-      <Route path ="/upload National Examination Results" element ={<UploadExaminationResults/>}/>
+      {/* <Route path ="/upload National Examination Results" element ={<UploadExaminationResults/>}/> */}
       <Route path="/O/L Results Analysis" element={<OLResults/>}/>
       <Route path="/Scholarship Results Analysis" element={<ScholarshipResults/>}/>
       <Route path= "/Manage School Users" element={<ManageSchoolUsers/>} />
@@ -58,15 +86,11 @@ function App() {
       <Route path ="/School Dashboard" element ={<SchoolDashboard/>}/>
       <Route path="/Zonal Subject Results Analysis" element={<ZonalSubjctResults/>}/>
       <Route path="/Manage Education Office Users" element={<ManageEducationOfficeUsers/>}/>
+      <Route path="/Zonal Education Office Dashboard" element={<EduOfficeDashboard/>}/>
 
-
-
-
-    
-
-     
 
     </Routes> 
+    </AuthContext.Provider>
     
   );
 }

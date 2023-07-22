@@ -3,13 +3,14 @@ const express = require("express"); // import express( create an instance of exp
 const router = express.Router();
 const {users,user_roles,roles} = require("../models"); // import the user model
 const bcrypt = require("bcrypt"); // import bcrypt(it is used to hash the password)
-const jwt = require("jsonwebtoken"); // import jsonwebtoken
+const {sign} = require("jsonwebtoken"); // import jsonwebtoken
 
-const cookieParser = require("cookie-parser"); // import cookie-parser
+//const cookieParser = require("cookie-parser"); // import cookie-parser
 const app = express(); // create an instance of express
-app.use(cookieParser()); // use cookie-parser
-const {createTokens,validateToken} = require("../JWT");
+//app.use(cookieParser()); // use cookie-parser
+//const {createTokens,validateToken} = require("../JWT");
 const { Op } = require("sequelize");
+const {validateToken} = require("../middlewares/AuthMiddleware");
 
 //used in the user registrtation, manage school users, login page
 
@@ -48,7 +49,24 @@ router.post("/", async (req, res) => {
 router.post("/login", async (req, res) => {
     const {username, password} = req.body;
 
-    const user = await users.findOne({where: {username: username}}); // find the user by username
+   
+
+    const user = await users.findOne({
+      where: {username: username},
+      include:[
+        {
+          attributes:["role_ID","role_name"],
+          model: roles,
+          through: {
+            attributes:[],
+            model: user_roles,
+          },
+          as: "roles", // Alias for the roles association
+        },
+      ],
+    }); // find the user by username
+
+    const userRoles = user.roles.map((role) => role.role_name);
 
     if(!user){
         return res.json({error: "User doesn't exist"}); // if the user doesn't exist
@@ -58,21 +76,29 @@ router.post("/login", async (req, res) => {
         if(!match){
           return res.status(400).json({error: "Wrong username and password combination"}); // if the password doesn't match
         } else{
-            const accessToken = createTokens(user);
-          res.cookie("access-token", accessToken, {
-                maxAge: 60 * 60 * 24 * 30 * 1000, // 30 days
-                httpOnly: true, // to disable accessing the cookie via client side js
-                }).status(200).json({username: username});;// if the password matches
+          
+          const accessToken = sign({username:user.username, id:user.user_ID, schoolId:user.school_ID, roles:userRoles}, "JWTMYsecretResultsManagement"); // create a token
+          //   const accessToken = createTokens(user);
+          // res.cookie("access-token", accessToken, {
+          //       maxAge: 60 * 60 * 24 * 30 * 1000, // 30 days
+          //       httpOnly: true, // to disable accessing the cookie via client side js
+          //       }).status(200).json({username: username});// if the password matches
               //  .json("success")
               // if the password matches
+              res.json({token: accessToken, username: username, id:user.user_ID, schoolId:user.school_ID,roles:userRoles});
+              // res.json(accessToken);
         }
-
+ 
         
        
     }).catch((err) => {
         res.status(500).json(err.message); 
 
     });
+});
+
+router.get("/auth", validateToken, (req, res) => {
+    res.json(req.user);
 });
 
 
