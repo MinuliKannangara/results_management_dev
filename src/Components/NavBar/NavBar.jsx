@@ -10,6 +10,7 @@ import { faBars} from '@fortawesome/free-solid-svg-icons'
 import { AuthContext } from '../../helpers/AuthContext';
 import { Container, Row, Col } from 'react-bootstrap';
 import logo from '../Login/logoForLogin2.png';
+import { useNavigate } from 'react-router-dom';
 
 function NavBar(props) {
 
@@ -66,9 +67,12 @@ function NavBar(props) {
     sideBarItems.push('O/L Results Analysis', 'Scholarship Results Analysis', 'Zonal Subject Results Analysis');
   }
 
+  const navigate = useNavigate();
+
   const logout = () => {
     localStorage.removeItem("accessToken");
     setAuthState({...authState, status:false});
+    navigate('/login'); 
   };
   
   return (
@@ -86,17 +90,18 @@ function NavBar(props) {
           </Button>
         </Col>
 
-        <Col lg={6} sm={12} style={{ paddingLeft: '0px', paddingRight: '0px',paddingTop:"8px"}}>
+        <Col lg={7} sm={12} style={{ paddingLeft: '0px', paddingRight: '0px',paddingTop:"8px"}}>
           <Navbar.Brand id="pagename">{props.PageName}</Navbar.Brand>
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link href={props.Tab1Link}>{props.Tab1}</Nav.Link>
               <Nav.Link href={props.Tab2Link}>{props.Tab2}</Nav.Link>
+              <Nav.Link href={props.Tab3Link}>{props.Tab3}</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Col>
         
-        <Col lg={5} sm={12} className="d-flex justify-content-end" style={{ paddingLeft: '0px', paddingRight: '0px'}}>
+        <Col lg={4} sm={12} className="d-flex justify-content-end" style={{ paddingLeft: '0px', paddingRight: '0px'}}>
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto" >
               {authState.status && (

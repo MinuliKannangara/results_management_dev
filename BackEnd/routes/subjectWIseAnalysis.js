@@ -1,44 +1,47 @@
-const express =require("express");
+const express = require("express");
 const router = express.Router();
-const { NationalExaminationResults, NationalExaminations, School, Subject } = require("../models");
+const { NationalExaminationResults, NationalExaminations, School, Subject, SubjectCategory, OLResults, sequelize } = require("../models");
 const { Op } = require("sequelize");
 const { current } = require("@reduxjs/toolkit");
 
 
+//to get the sat count
 const getSubjectCount = async (division, subject, year) => {
 
-    const count = await NationalExaminationResults.count({
-      include: [
-        {
-          model: School,
-          where: { division },
-        },
-        {
-          model: NationalExaminations,
-          where: { examination_name: 'O/L' },
-        },
-        {
-          model: Subject,
-          where: { subject },
-        },
-      ],
-      where: {
-        year,
+  const count = await OLResults.findAll({
+    attributes: [
+      'OLresult_id',
+      [sequelize.fn('sum', sequelize.col('NumOfSat')), 'totalSat'],
+    ],
+    include: [
+      {
+        attributes: [],
+        model: School,
+        where: { division },
       },
-    });
-    return count;
-  };
+      {
+        attributes: [],
+        model: Subject,
+        where: { subject },
+        
+      },
+    ],
+    where: {
+      year,
+    },
+    group: ['OLresult_id'],
+  });
+  return count;
+};
+
 
   const getSubjectPassedCount = async (division, subject, year) => {
-    const count = await NationalExaminationResults.count({
+    const count = await OLResults.findOne({
+      attributes: ["NumOfPass"],
       include: [
         {
           model: School,
           where: { division },
-        },
-        {
-          model: NationalExaminations,
-          where: { examination_name: 'O/L' },
         },
         {
           model: Subject,
@@ -47,7 +50,6 @@ const getSubjectCount = async (division, subject, year) => {
       ],
       where: {
         year,
-        marks: { [Op.in]: ['A', 'B', 'C', 'D'] },
       },
     });
     return count;
@@ -95,7 +97,7 @@ router.get("/:year", async(req, res)=>{
     }
     catch (error) {
       console.error(error);
-      res.status(500).json({ error: "Failed to fetch the subject wise count." });
+      res.status(500).json({ error: error.message});
     }
   
   

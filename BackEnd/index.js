@@ -69,6 +69,15 @@ app.use("/ZonalSubjectResults", zonalSubjectResultsRouter);
 const EducationOfficeUsersRouter = require("../BackEnd/routes/ManageEduOfficeUsers");
 app.use("/EducationOfficeUsers", EducationOfficeUsersRouter);
 
+const OLResultsRouter = require("./routes/OLResultsRoute");
+app.use("/OLResults", OLResultsRouter);
+
+const ALResultsRouter = require("./routes/ALResultsRoute");
+app.use("/ALResults", ALResultsRouter);
+
+const ScholarshipResultsRouter = require("./routes/ScholarshipResults");
+app.use("/ScholarshipResults", ScholarshipResultsRouter);
+
 
 
 

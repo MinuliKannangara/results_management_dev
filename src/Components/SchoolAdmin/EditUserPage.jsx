@@ -114,8 +114,15 @@ const EditSchoolUser = () => {
     }
   };
 
+  const onClickBack = () => {
+    if (adminRole.includes('School Admin')) {
+      navigate('/Manage School Users');
+    } else if (adminRole.includes('System Admin')) {
+      navigate('/Manage Education Office Users');
+    }
+  };
   const showCheckBox = (role) => {
-    if (role === "School Admin") {
+    if (role.includes("School Admin")) {
       return (
         <div>
           {roleforSchoolAdmin.map((role, index) => (
@@ -131,7 +138,7 @@ const EditSchoolUser = () => {
           ))}
         </div>
       );
-    } else if (role === "System Admin") {
+    } else if (role.includes("System Admin")) {
       return (
         <div>
           {roleforSystemAdmin.map((role, index) => (
@@ -198,7 +205,7 @@ const EditSchoolUser = () => {
           <Button variant="primary" onClick={updateUserDetails}>
             Update
           </Button> <span> </span>
-          <Button variant="primary" onClick={() => navigate("/Manage School Users")}>
+          <Button variant="primary" onClick={onClickBack}>
             Back
           </Button>
           {showAlert && (

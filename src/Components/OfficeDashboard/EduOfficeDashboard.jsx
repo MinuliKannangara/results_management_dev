@@ -20,7 +20,7 @@ const EduOfficeDashboard= () => {
   
 return (
 <div>
-<NavBar PageName="Manage School Users" />
+<NavBar PageName="Zonal Education Office Dashboard" />
 
 </div>
 );

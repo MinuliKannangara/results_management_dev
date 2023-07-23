@@ -56,7 +56,7 @@ const LoginForm = () => {
 
             const roles = response.data.roles;
         if (roles.includes('School Admin')) {
-          navigate('/School Admin Dashboard'); 
+          navigate('/School Dashboard'); 
         } else if (roles.includes('Subject Teacher')) {
           navigate('/School Dashboard');
         } else if (roles.includes('Class Teacher')) {

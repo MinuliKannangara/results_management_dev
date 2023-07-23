@@ -20,12 +20,23 @@ module.exports = (sequelize, DataTypes)=>{
             foreignKey:"subject_ID",
         });
 
+        Subject.hasMany(models.OLResults,{
+            foreignKey:"subject_ID",
+        })
         
         Subject.hasMany(models.SubjectResults,{
             foreignKey:"subject_ID",
         });
 
         Subject.hasMany(models.SubjectCategory,{
+            foreignKey:"subject_ID",
+        });
+
+        Subject.hasMany(models.ALResults,{
+            foreignKey:"subject_ID",
+        });
+
+        Subject.hasMany(models.ScholarshipResults,{
             foreignKey:"subject_ID",
         });
     };

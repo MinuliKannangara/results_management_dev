@@ -29,6 +29,8 @@ import ZonalSubjctResults from './Components/Development Section/SubjectResultsA
 import ManageEducationOfficeUsers from './Components/SystemAdmin/ManageEduOfficeUsers.jsx';
 import EduOfficeDashboard from './Components/OfficeDashboard/EduOfficeDashboard';
 import UploadExaminationResults from './Components/GradeHead/UploadExaminationResults';
+import UploadALExamResults from './Components/GradeHead/UploadALExamResults';
+import UploadScholarshipResults from './Components/GradeHead/UploadScholarshipResults';
 
 
 
@@ -66,12 +68,14 @@ function App() {
   return (
     <AuthContext.Provider value={{authState, setAuthState}}>
       <Routes>
+      <Route path= "/SideBar" element = {<SideBar/>}/>
+      <Route path="/NavBar" element = {<NavBar/>}/>
           {!authState.status ? (
             <>
               <Route path="/login" element={<LoginForm/>} />
       <Route path="/UserRegistration" element={<UserRegistration/>} />
-      <Route path= "/SideBar" element = {<SideBar/>}/>
-      <Route path="/NavBar" element = {<NavBar/>}/>
+      {/* <Route path= "/SideBar" element = {<SideBar/>}/>
+      <Route path="/NavBar" element = {<NavBar/>}/> */}
       <Route path="/School Registration" element={<SchoolRegistration />} />
             </>
           ) : (
@@ -79,8 +83,8 @@ function App() {
               {authState.role.includes('School Admin') && (
             <>
               <Route path="/School Dashboard" element={<SchoolDashboard />} />
-              <Route path="/School Admin Dashboard" element={<SchoolAdminDashboard />} />
-              
+              {/* <Route path="/School Admin Dashboard" element={<SchoolAdminDashboard />} />
+               */}
               <Route path="/Manage School Users" element={<ManageSchoolUsers />} />
             </>
           )}
@@ -104,11 +108,13 @@ function App() {
                <Route path="/Student Performance" element={<StudentPerformance/>} />
                 <Route path="/Prize Holders" element={<PrizeHolders/>}/>
               <Route path ="/School Dashboard" element ={<SchoolDashboard/>}/>
-              <Route path ="/upload National Examination Results" element ={<UploadExaminationResults/>}/>
+              <Route path ="/Upload National Examination Results" element ={<UploadExaminationResults/>}/>
+              <Route path ="/Upload AL Examination Results" element ={<UploadALExamResults/>}/>
+              <Route path ="/Upload Scholarship Results" element ={<UploadScholarshipResults/>}/>
             </>
           ) : null}
 
-{authState.role.includes('Syetem Admin') || authState.role.includes('Development Officer') || authState.role.includes('Planning Officer') ? (
+{authState.role.includes('System Admin') || authState.role.includes('Development Officer') || authState.role.includes('Planning Officer') ? (
             <>
                <Route path="/O/L Results Analysis" element={<OLResults/>}/>
       <Route path="/Scholarship Results Analysis" element={<ScholarshipResults/>}/>

@@ -4,8 +4,8 @@ const {Subject,SubjectCategory,SubjectResults,Student, users} =require("../model
 
 
 router.post("/", async (req, res) => {
-    const student = req.body;
-    const createSubject = await Subject.create(student);
+    const subject = req.body;
+    const createSubject = await Subject.create(subject);
     res.json(createSubject);
   });
 
