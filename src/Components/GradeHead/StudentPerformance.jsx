@@ -47,7 +47,8 @@ return (
 <div>
 {/* <ButtonAppBar PageName="Student Performance" /> */}
 
-<NavBar PageName="Student Performance"/>
+<NavBar PageName="Student Performance"
+showButtons={false}/>
 
 <Container fluid className='div_aca_yr '>
         <Row>

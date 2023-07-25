@@ -1,12 +1,11 @@
 import React, { useEffect, useState,useContext} from 'react';
-import { Container, Row, Col, FormLabel } from 'react-bootstrap';
+import { Container, Row, Col, Form } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import './GreadHead.css';
 import { Button } from 'react-bootstrap';
 import NavBar from '../NavBar/NavBar';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import { current } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { AuthContext } from '../../helpers/AuthContext';
 
@@ -18,6 +17,14 @@ function UploadExaminationResults() {
   const [selectedYear, setSelectedYear] = useState(currentYear);
   const [subjects, setSubjects] = useState([]);
   const [marks, setMarks] = useState([]);
+
+  const initialValues = {
+    satCount:0,
+    passCount:0,
+    school_ID:schoolID,
+    examination_name:"O/L",
+  }
+  const [FormVlaues, setFormValues] = useState(initialValues)
 
   useEffect(() => {
     axios.get('http://localhost:3001/OLResults').then((response) => {
@@ -55,20 +62,44 @@ function UploadExaminationResults() {
     });
   };
 
+  //for the form
+  const handleChange = (e) =>{
+
+    const { name, value } = e.target;
+    setFormValues({ ...FormVlaues, [name]: parseInt(value) });
+  }
+
+  const submitCounts = (e) => {
+    e.preventDefault();
+    axios
+      .post('http://localhost:3001/NationalExaminationDetails/NExamCounts',{
+        counts: FormVlaues,
+        year:selectedYear,
+      })
+      .then((response) => {
+        console.log("Response from server:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
   return (
     <div>
-      <NavBar
+       <NavBar
         PageName="Upload National Examination Results"
         Tab1="O/L Examination Results"
         Tab2="A/L Examination Results"
         Tab3="Grade 5 Scholarship Results"
-        Tab1Link="http://localhost:3000/Upload National Examination Results"
-        Tab2Link="http://localhost:3000/Upload AL Examination Results"
-        Tab3Link="http://localhost:3000/Upload%20Scholarship%20Results"
+        Tab1Link="/Upload National Examination Results"
+        Tab2Link="/Upload AL Examination Results"
+        Tab3Link="/Upload Scholarship Results"
+        showButtons={true}
       />
 
       <Container className="DropdownDiv2">
         <Row>
+        <p className='pTopDiv'>O/L Examination Results</p>
           <Col lg={5} sm={12} className="divAllDropdown">
             <DropdownButton className="customDropdownButton" id="dropdown-basic-button" title={`${selectedYear}`}>
               <Dropdown.Item className="customDropdown" onClick={() => setSelectedYear(currentYear)}>
@@ -146,10 +177,26 @@ function UploadExaminationResults() {
               ))}
             </tbody>
           </Table>
-          <button className="btnAddStudent" onClick={uploadMarks}>
+         
+          <Button variant="outline-primary" size="lg"  onClick={uploadMarks}>
             Upload
-          </button>
+          </Button>
         </Row>
+
+        <Row style={{border:"3px solid black", margin:"13px 4px 13px 4px", padding:"10px"}}>
+          <Form onSubmit={submitCounts}>
+      <Form.Label htmlFor="inputPassword5">Total Sat Count</Form.Label>
+    
+      <Form.Control type="text" placeholder="Enter sat count here.."  name="satCount" onChange={handleChange} />
+      <br />
+      <Form.Label htmlFor="inputPassword5">Total Pass Count</Form.Label>
+    
+      <Form.Control type="text" placeholder="Enter pass count here.." name="passCount" onChange={handleChange} />
+     <br />
+     <Button type="submit" variant="outline-primary">Submit</Button>
+     
+    </Form>
+          </Row>
       </Container>
     </div>
   );

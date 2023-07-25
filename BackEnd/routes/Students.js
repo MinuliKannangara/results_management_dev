@@ -36,7 +36,7 @@ router.delete("/:studentID", async (req, res) => {
 });
 
 
-router.get("/:username/:year",validateToken, async (req,res)=>{
+router.get("/:username/:year", async (req,res)=>{
 
   try{
     const userName = req.params.username;

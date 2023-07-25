@@ -92,8 +92,10 @@ const SchoolDashboard= () => {
   
 return (
 <div>
-<NavBar PageName="School Dashboard"/>
-
+<NavBar PageName="School Dashboard"
+showButtons={false} 
+/>
+{/* 
  <Container fluid className='topContainer'>
     <Row className='justify-content-center'>
     <Row style={{height:"40px"}}>
@@ -136,6 +138,22 @@ return (
 
     </Row>
 
+</Container> */}
+<Container fluid>
+    <Row>
+      <Col lg={6} md={6} sm={12} className='schoolDetailsDiv'>
+      <span>{SchoolDetails.school_name}</span>
+  <br />
+        <strong>Type: {SchoolDetails.type}</strong>
+       <br />
+
+        <strong>Division: {SchoolDetails.division}</strong>
+      
+      </Col>
+      <Col lg={6} md={6} sm={12}>
+frgt
+      </Col>
+    </Row>
 </Container>
 
 <br/>

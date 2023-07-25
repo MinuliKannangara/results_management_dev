@@ -17,7 +17,8 @@ const SchoolAdminDashboard = () => {
   
 return (
 <div>
-<NavBar PageName="School Profile"/>
+<NavBar PageName="School Profile"
+showButtons={false}/>
 
 <Container fluid className='ContainerTiles'>
 

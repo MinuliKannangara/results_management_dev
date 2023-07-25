@@ -31,12 +31,14 @@ import EduOfficeDashboard from './Components/OfficeDashboard/EduOfficeDashboard'
 import UploadExaminationResults from './Components/GradeHead/UploadExaminationResults';
 import UploadALExamResults from './Components/GradeHead/UploadALExamResults';
 import UploadScholarshipResults from './Components/GradeHead/UploadScholarshipResults';
+import ALResults from './Components/Development Section/ALResults';
 
 
 
 function App() {
   const [authState, setAuthState] = useState({
     username: "",
+    className:"",
     userid: 0,
     name:"",
     schoolID: 0,
@@ -57,6 +59,7 @@ function App() {
           schoolID: response.data.schoolId,
           role: response.data.roles,
           name: response.data.name,
+          className:response.data.className,
           status: true,
         });
       }
@@ -117,6 +120,7 @@ function App() {
 {authState.role.includes('System Admin') || authState.role.includes('Development Officer') || authState.role.includes('Planning Officer') ? (
             <>
                <Route path="/O/L Results Analysis" element={<OLResults/>}/>
+               <Route path="/A/L Results Analysis" element={<ALResults/>}/>
       <Route path="/Scholarship Results Analysis" element={<ScholarshipResults/>}/>
       <Route path="/Zonal Subject Results Analysis" element={<ZonalSubjctResults/>}/>
       <Route path="/Zonal Education Office Dashboard" element={<EduOfficeDashboard/>}/>

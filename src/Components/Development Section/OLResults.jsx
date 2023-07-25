@@ -53,17 +53,17 @@ const OLResults = () => {
 
   
 useEffect(() => {
-  fetchDataForYear(currentYear, setMeerigamaCountYear1,  setDivulapitiyaCountYear1, setMinuwangodaCountYear1,setMeerigamaPassedYear1, setDivulapitiyaPassedYear1, setMinuwangodaPassedYear1 );
-  fetchDataForYear(currentYear-1, setMeerigamaCountYear2,  setDivulapitiyaCountYear2, setMinuwangodaCountYear2,setMeerigamaPassedYear2, setDivulapitiyaPassedYear2, setMinuwangodaPassedYear2 );
-  fetchDataForYear(currentYear-2, setMeerigamaCountYear3,  setDivulapitiyaCountYear3, setMinuwangodaCountYear3,setMeerigamaPassedYear3, setDivulapitiyaPassedYear3, setMinuwangodaPassedYear3 );
-  fetchDataForYear(currentYear-3, setMeerigamaCountYear4,  setDivulapitiyaCountYear4, setMinuwangodaCountYear4,setMeerigamaPassedYear4, setDivulapitiyaPassedYear4, setMinuwangodaPassedYear4 );
-  fetchDataForYear(currentYear-4, setMeerigamaCountYear5,  setDivulapitiyaCountYear5, setMinuwangodaCountYear5,setMeerigamaPassedYear5, setDivulapitiyaPassedYear5, setMinuwangodaPassedYear5 );
+  fetchDataForYear(currentYear, setMeerigamaCountYear1,  setDivulapitiyaCountYear1, setMinuwangodaCountYear1,setMeerigamaPassedYear1, setDivulapitiyaPassedYear1, setMinuwangodaPassedYear1,'O_L' );
+  fetchDataForYear(currentYear-1, setMeerigamaCountYear2,  setDivulapitiyaCountYear2, setMinuwangodaCountYear2,setMeerigamaPassedYear2, setDivulapitiyaPassedYear2, setMinuwangodaPassedYear2,'O_L' );
+  fetchDataForYear(currentYear-2, setMeerigamaCountYear3,  setDivulapitiyaCountYear3, setMinuwangodaCountYear3,setMeerigamaPassedYear3, setDivulapitiyaPassedYear3, setMinuwangodaPassedYear3,'O_L');
+  fetchDataForYear(currentYear-3, setMeerigamaCountYear4,  setDivulapitiyaCountYear4, setMinuwangodaCountYear4,setMeerigamaPassedYear4, setDivulapitiyaPassedYear4, setMinuwangodaPassedYear4,'O_L');
+  fetchDataForYear(currentYear-4, setMeerigamaCountYear5,  setDivulapitiyaCountYear5, setMinuwangodaCountYear5,setMeerigamaPassedYear5, setDivulapitiyaPassedYear5, setMinuwangodaPassedYear5,'O_L');
  
 }, []);
   
 
-  const fetchDataForYear = (year, setDataMeerigama, setDataDivulapitiya, setDataMinuangoda, setDataMeerigamaPass, setDataDivulapitiyaPass, setDataMinuwangodaPass) => {
-    fetch(`http://localhost:3001/NationalExaminationDetails/NationalExaminationResults/${year}`)
+  const fetchDataForYear = (year, setDataMeerigama, setDataDivulapitiya, setDataMinuangoda, setDataMeerigamaPass, setDataDivulapitiyaPass, setDataMinuwangodaPass,exam) => {
+    fetch(`http://localhost:3001/NationalExaminationDetails/NationalExaminationResults/${year}/${exam}`)
       .then((res) => res.json())
       .then((data) => {
         setDataMeerigama(data.meerigama);
@@ -86,36 +86,11 @@ return (
 
 <NavBar
 PageName="O/L Results Analysis" 
-Tab1="Division Wise Analysis" 
-Tab2="Subject Wise Analysis" 
-Tab1Link="http://localhost:3000/Manage Student Details"
-Tab2Link="http://localhost:3000/Manage Student Details"
+showButtons={false}
+
 />
 
 
-
-{/* <Container fluid className='divAllDropdown ' style={{backgroundColor:'white'}}>
-        <Row>
-          <Col md={3} sm={6}>
-            <p className='pLables'>Academic Year</p>
-          </Col>
-          <Col md={3} sm={6}>
-            <DropdownButtonForAll 
-            year1={currentYear}
-            year2={currentYear-1}
-            year3={currentYear-2}
-            year4={currentYear-3}
-            year5={currentYear-4}
-            year6={currentYear-5}
-            />
-            
-          </Col>
-        
-        </Row>
-      
-
-
-</Container > */}
       <Container fluid>
             <Row><h3 className='topicsP'>Division Wise Analysis</h3></Row>
       </Container>
@@ -236,7 +211,7 @@ Tab2Link="http://localhost:3000/Manage Student Details"
     
 
 </div>
-);
+); 
 };
 
 export default OLResults;

@@ -3,14 +3,14 @@ import { useContext } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import TemporaryDrawer from '../SideBar/SideBar';
-import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars} from '@fortawesome/free-solid-svg-icons'
 import { AuthContext } from '../../helpers/AuthContext';
 import { Container, Row, Col } from 'react-bootstrap';
-import logo from '../Login/logoForLogin2.png';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function NavBar(props) {
 
@@ -60,11 +60,11 @@ function NavBar(props) {
   }
 
   if (userRole.includes('System Admin')) {
-    sideBarItems.push('Manage Education Office Users', 'O/L Results Analysis', 'Scholarship Results Analysis', 'Zonal Subject Results Analysis');
+    sideBarItems.push('Manage Education Office Users');
   }
 
-  if (userRole.includes('Development Officer') || userRole.includes('Planning Officer')) {
-    sideBarItems.push('O/L Results Analysis', 'Scholarship Results Analysis', 'Zonal Subject Results Analysis');
+  if (userRole.includes('Development Officer') || userRole.includes('Planning Officer') ||userRole.includes('System Admin')) {
+    sideBarItems.push('O/L Results Analysis','A/L Results Analysis', 'Scholarship Results Analysis', 'Zonal Subject Results Analysis');
   }
 
   const navigate = useNavigate();
@@ -74,6 +74,13 @@ function NavBar(props) {
     setAuthState({...authState, status:false});
     navigate('/login'); 
   };
+
+  
+  const handleNavigation = (url) => {
+    navigate(url);
+  };
+
+
   
   return (
   
@@ -94,9 +101,19 @@ function NavBar(props) {
           <Navbar.Brand id="pagename">{props.PageName}</Navbar.Brand>
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href={props.Tab1Link}>{props.Tab1}</Nav.Link>
-              <Nav.Link href={props.Tab2Link}>{props.Tab2}</Nav.Link>
-              <Nav.Link href={props.Tab3Link}>{props.Tab3}</Nav.Link>
+
+          {props.showButtons &&(
+            <>
+             <ButtonGroup aria-label="Basic example">
+      <Button variant="secondary" onClick={() => handleNavigation(props.Tab1Link)}>{props.Tab1}</Button>
+      <Button variant="secondary" onClick={() => handleNavigation(props.Tab2Link)}>{props.Tab2}</Button>
+      <Button variant="secondary" onClick={() => handleNavigation(props.Tab3Link)}>{props.Tab3}</Button>
+    </ButtonGroup>
+            </>
+           
+          )}
+
+          
             </Nav>
           </Navbar.Collapse>
         </Col>

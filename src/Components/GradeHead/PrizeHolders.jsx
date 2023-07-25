@@ -45,7 +45,8 @@ const PrizeHolders = () => {
 return (
 <div>
 {/* <ButtonAppBar PageName="Prize Holders" /> */}
-<NavBar PageName="Prize Holders"/>
+<NavBar PageName="Prize Holders"
+showButtons={false}/>
 
 <Container fluid className='topDiv'>
         <Row>

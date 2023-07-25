@@ -27,6 +27,7 @@ const ManageStudentDetails = () => {
 const {authState} = useContext(AuthContext);
   const CurrentYear = new Date().getFullYear();
   const username = authState.username;
+  const Teacherclassname = authState.className;
   // users school ID
  // const schoolId = 1
   
@@ -42,14 +43,14 @@ const [indexNumber, setIndexNumber] = useState('');
 const [name, setName] = useState('');
 //for the dropdowns
 const [selectedYear, setSelectedYear] = useState(CurrentYear);
-const [selectedClass, setSelectedClass] = useState("");
+// const [selectedClass, setSelectedClass] = useState("");
 
 useEffect(() => {
   axios.get(`http://localhost:3001/studentDetails/${username}/${selectedYear}`)
     .then((response) => {
       if (response.data && response.data.StudentList) {
         setListOfStudents(response.data.StudentList);
-        setSelectedClass(response.data.userClass);
+        //setSelectedClass(response.data.userClass);
       }
     })
     .catch((error) => {
@@ -67,17 +68,12 @@ const submitStudentDetails = (e) => {
     student_name: name,
     year: selectedYear,
    school_ID: authState.schoolID,
-    class_name: selectedClass,
+    class_name: Teacherclassname,
   };
   
 
 
-  axios.post('http://localhost:3001/studentDetails', data,
-  {
-    headers:{
-      accessToken: localStorage.getItem('accessToken'),
-    }
-  })
+  axios.post('http://localhost:3001/studentDetails', data,)
      .then((response) => {
       if(response.data.error) {
         console.log(response.data.error);
@@ -90,7 +86,7 @@ const submitStudentDetails = (e) => {
       .then((response) => {
         if (response.data && response.data.StudentList) {
           setListOfStudents(response.data.StudentList);
-          setSelectedClass(response.data.userClass);
+          //setSelectedClass(response.data.userClass);
         }
       })
       .catch((error) => {
@@ -112,7 +108,7 @@ const deleteStudent = (studentID) => {
     axios.get(`http://localhost:3001/studentDetails/${username}/${selectedYear}`)
     .then((response) => {
       setListOfStudents(response.data.StudentList);
-      setSelectedClass(response.data.userClass);
+      //setSelectedClass(response.data.userClass);
     })
     .catch((error) => {
       console.log(error);
@@ -126,7 +122,8 @@ const deleteStudent = (studentID) => {
     <div>
       {/* <ButtonAppBar PageName="Manage Student Details" classesName="7-A" /> */}
 
-      <NavBar PageName="Manage Student Details" classesName="7-A" />
+      <NavBar PageName="Manage Student Details" classesName = {Teacherclassname}
+      showButtons={false} />
 
       <Container fluid className='divAllDropdown '>
         <Row>

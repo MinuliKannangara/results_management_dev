@@ -122,7 +122,8 @@ const ManageEducationOfficeUsers = () => {
 
   return (
     <div>
-      <NavBar PageName="Manage Education Office Users" />
+      <NavBar PageName="Manage Education Office Users"
+      showButtons={false}/>
 
       <Container fluid >
             <Row>

@@ -77,10 +77,10 @@ router.post("/login", async (req, res) => {
           return res.status(400).json({error: "Wrong username and password combination"}); // if the password doesn't match
         } else{
           
-          const accessToken = sign({username:user.username, id:user.user_ID, schoolId:user.school_ID, roles:userRoles, name:user.name}, "JWTMYsecretResultsManagement"); // create a token
+          const accessToken = sign({username:user.username, id:user.user_ID, schoolId:user.school_ID, roles:userRoles, name:user.name, className:user.class_name}, "JWTMYsecretResultsManagement"); // create a token
           
               // if the password matches
-              res.json({token: accessToken, username: username, id:user.user_ID, schoolId:user.school_ID,roles:userRoles, name:user.name});
+              res.json({token: accessToken, username: username, id:user.user_ID, schoolId:user.school_ID,roles:userRoles, name:user.name, className:user.class_name});
              
         }
  

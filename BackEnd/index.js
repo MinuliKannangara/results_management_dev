@@ -78,6 +78,9 @@ app.use("/ALResults", ALResultsRouter);
 const ScholarshipResultsRouter = require("./routes/ScholarshipResults");
 app.use("/ScholarshipResults", ScholarshipResultsRouter);
 
+const ALSubjectWiseRouter = require("./routes/ALSubjectwise");
+app.use("/ALSubjectWise", ALSubjectWiseRouter);
+
 
 
 

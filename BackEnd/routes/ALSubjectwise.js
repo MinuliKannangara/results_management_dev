@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { NationalExaminationResults, NationalExaminations, School, Subject, SubjectCategory, OLResults, sequelize } = require("../models");
+const { School, Subject,ALResults, sequelize } = require("../models");
 const { Op } = require("sequelize");
 const { current } = require("@reduxjs/toolkit");
 
@@ -8,7 +8,7 @@ const { current } = require("@reduxjs/toolkit");
 
 const getSubjectCount = async (division, subject, year) => {
   try {
-    const count = await OLResults.findOne({
+    const count = await ALResults.findOne({
       attributes: [
         [sequelize.fn('SUM', sequelize.col('NumOfSat')), 'totalSat'],
         [sequelize.col('School.division'), 'division'], // Include the 'division' field from the 'School' table
@@ -42,9 +42,9 @@ const getSubjectCount = async (division, subject, year) => {
 
   const getSubjectPassedCount = async (division, subject, year) => {
     try{
-      const count = await OLResults.findOne({
+      const count = await ALResults.findOne({
         attributes: [
-          [sequelize.fn('SUM', sequelize.col('NumOfPass')), 'totalSat'],
+          [sequelize.fn('SUM', sequelize.col('UniversityQualified')), 'totalSat'],
           [sequelize.col('School.division'), 'division'], // Include the 'division' field from the 'School' table
         ],
         include: [
@@ -81,18 +81,10 @@ router.get("/:year", async(req, res)=>{
 
       const locations = ["Minuwangoda", "Meerigama", "Divulapitiya"];
       const subjects = [
-        "Sinhala",
-        "Religion",
-        "History",
         "Science",
-        "English",
-        "Mathematics",
-        "Business & Accounting Studies",
-        "Geography",
-        "Civic Education",
-        "Enterpreneurship Studies",
-        "Second Language (Sinhala)",
-        "Second Language (Tamil)",
+        "Arts",
+        "Commerce",
+        "Technology",
       ];
 
       const subjectCounts = {};

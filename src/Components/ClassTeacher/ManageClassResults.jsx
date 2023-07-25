@@ -44,7 +44,8 @@ return (
 <div>
   
 {/* <ButtonAppBar PageName="Manage Class Results" /> */}
-<NavBar PageName="Manage Class Results" />
+<NavBar PageName="Manage Class Results" 
+showButtons={false} />
 
 
 

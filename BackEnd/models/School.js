@@ -47,6 +47,10 @@ module.exports = (sequelize, DataTypes)=>{
         School.hasMany(models.ScholarshipResults, {
             foreignKey: "school_ID",
         });
+
+        School.hasMany(models.NationalExamSchoolCounts, {
+            foreignKey: "school_ID",
+        });
     };
 
    

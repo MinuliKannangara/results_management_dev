@@ -51,18 +51,20 @@ function UploadScholarshipResults() {
 
   return (
     <div>
-      <NavBar
+       <NavBar
         PageName="Upload National Examination Results"
         Tab1="O/L Examination Results"
         Tab2="A/L Examination Results"
         Tab3="Grade 5 Scholarship Results"
-        Tab1Link="http://localhost:3000/Upload National Examination Results"
-        Tab2Link="http://localhost:3000/Upload AL Examination Results"
-        Tab3Link="http://localhost:3000/Upload Scholarship Results"
+        Tab1Link="/Upload National Examination Results"
+        Tab2Link="/Upload AL Examination Results"
+        Tab3Link="/Upload Scholarship Results"
+        showButtons={true}
       />
 
       <Container className="DropdownDiv2">
         <Row>
+        <p className='pTopDiv'>Grade 5 Scholarship Results</p>
           <Col lg={5} sm={12} className="divAllDropdown">
             <DropdownButton className="customDropdownButton" id="dropdown-basic-button" title={`${selectedYear}`}>
               <Dropdown.Item className="customDropdown" onClick={() => setSelectedYear(currentYear)}>

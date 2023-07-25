@@ -10,17 +10,26 @@ import { faUserGroup,faLandmark } from '@fortawesome/free-solid-svg-icons'
 import { PieChart, Pie, ResponsiveContainer, Cell } from 'recharts';
 import PieChartForSchool from '../Charts/PieChartForSchools';
 import SchoolDashboardTable from '../Charts/TableSchoolDashboard';
-
-
-
+import BasicDateCalendar from '../OtherComponents/calender';
 
 
 const EduOfficeDashboard= () => {
 
-  
 return (
 <div>
 <NavBar PageName="Zonal Education Office Dashboard" />
+
+<Container fluid>
+    <Row>
+        <Col lg={7} style={{backgroundColor:"red", height:"200px"}}>
+        </Col>
+        <Col lg={5} style={{backgroundColor:"green", height:"400px"}}>
+        </Col>
+    </Row>
+    <Row>
+        
+    </Row>
+</Container>
 
 </div>
 );

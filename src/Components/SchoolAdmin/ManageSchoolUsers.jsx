@@ -30,7 +30,8 @@ const ManageSchoolUsers = () =>{
 
     return(
         <div>
-            <NavBar PageName="Manage School Users" />
+            <NavBar PageName="Manage School Users" 
+            showButtons={false}/>
 
             <Container fluid>
             <Row><p className='subTopicsP'></p></Row>

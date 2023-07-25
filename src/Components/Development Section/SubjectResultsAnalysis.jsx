@@ -51,7 +51,8 @@ const ZonalSubjctResults= () => {
   
 return (
 <div>
-<NavBar PageName="Zonal Subject Results Analysis"/>
+<NavBar PageName="Zonal Subject Results Analysis"
+showButtons={false}/>
 
 
 <Container fluid className="divAllDropdown" style={{marginTop:"50px"}}>
@@ -117,7 +118,7 @@ return (
 
           <Col lg={1} sm={12}>
     <FormLabel htmlFor="class1" className="labelForm">
-     Grade
+     Subject
     </FormLabel>
   </Col>
 

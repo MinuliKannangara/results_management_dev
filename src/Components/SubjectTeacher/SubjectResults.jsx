@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { Container, Row, Col, Button, FormLabel } from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
@@ -6,9 +6,12 @@ import Table from 'react-bootstrap/Table';
 import './SubjectTeacher.css';
 import NavBar from '../NavBar/NavBar';
 import axios from 'axios';
+import { AuthContext } from '../../helpers/AuthContext';
 
 const ManageSubjectResults = () => {
-  const username = 'laksika';
+
+  const {authState} = useContext(AuthContext);
+  const username = authState.username; 
   //const selectedClassw = '7-A';
 
   const CurrentYear = new Date().getFullYear();
@@ -143,7 +146,8 @@ const ManageSubjectResults = () => {
 
   return (
     <div>
-      <NavBar PageName="Manage Subject Results" />
+      <NavBar PageName="Manage Subject Results" 
+      showButtons={false}/>
 
       <Container fluid className="topDiv">
         <p className="pTopDiv">Subject Results</p>

@@ -6,12 +6,7 @@ module.exports = (sequelize, DataTypes)=>{
             primaryKey: true,
             autoIncrement: true,
         },
-
-        UniversityQualified:{
-            type:DataTypes.INTEGER,
-            allowNull:true,
-        },
-        Pass3subjects:{
+        UniversityQualified:{ 
             type:DataTypes.INTEGER,
             allowNull:true,
         },
