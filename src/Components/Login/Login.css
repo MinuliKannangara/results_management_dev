@@ -20,12 +20,11 @@ border-radius: 28px;
     margin: 0px;
  
 }
-form {
+.formLogin {
     margin-top: 10px;
 }
 p{
 
-font-family: 'Source Sans Pro', sans-serif;
 font-weight: 400;
 font-size: 12px;
 /* line-height: 90px; */
@@ -73,7 +72,7 @@ a:hover {
     width: 70%;
     margin-left: 9%;
     margin-top: 30px;
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif; 
 }
 #formBasicPassword{
     position: relative;

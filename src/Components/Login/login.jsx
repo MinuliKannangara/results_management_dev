@@ -86,8 +86,6 @@ const LoginForm = () => {
       });
   };
 
-  
-
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       console.log(formValues);
@@ -116,10 +114,10 @@ const LoginForm = () => {
         </Col>
         <Col sm={6} className="DivRight">
           <h2>LOGIN</h2>
-          <p>
+          <p style={{fontSize:"15px"}}>
             New User? <a href="/UserRegistration"> Create an account</a>{' '}
           </p>
-          <Form className="form" onSubmit={handleSubmit}>
+          <Form className="formLogin" onSubmit={handleSubmit}>
             <Form.Group className="mb-3" controlId="formBasicUsername">
               <Form.Control
                 type="text"

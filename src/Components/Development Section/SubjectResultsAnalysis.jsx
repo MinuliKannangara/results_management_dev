@@ -7,12 +7,6 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
 
-
-
-
-
-
-
 const ZonalSubjctResults= () => {
 
   // static demoUrl = 'https://codesandbox.io/s/pie-chart-with-customized-label-dlhhj';
@@ -57,42 +51,39 @@ showButtons={false}/>
 
 <Container fluid className="divAllDropdown" style={{marginTop:"50px"}}>
 
-<Row>
-  <Col lg={1} sm={12}>
-    <FormLabel htmlFor="class1" className="labelForm">
+<Row >
+  <Col lg={1} sm={12} >
+    <FormLabel htmlFor="class1" className="labelForm PdropdownTopics">
      Grade
     </FormLabel>
   </Col>
 
-  <Col lg={2} sm={12}>
-  <DropdownButton className='customDropdownButton' id="dropdown-basic-button" title={'Grade '+`${selectedGrade}`} >
+  <Col lg={2} sm={12} >
+  <DropdownButton className='customDropdownButton' id="dropdown-basic-button" title={'Grade'+`${selectedGrade}`} >
 
     {grades.map((grade,index) =>(
       <Dropdown.Item className='customDropdown' key={index}  onClick={() => setSelectedGrade(extractNumber(grade))}>{`${grade}`}</Dropdown.Item>
-      
     ))}
   
   </DropdownButton>
   </Col>
-  <Col lg={1} sm={12}>
-    <FormLabel htmlFor="class1" className="labelForm">
+  <Col lg={1} sm={12} >
+    <FormLabel htmlFor="class1" className="labelForm PdropdownTopics">
       Year
     </FormLabel>
   </Col>
-  <Col lg={2} sm={12}>
-  <DropdownButton className='customDropdownButton' id="dropdown-basic-button" title={`${selectedyear}`} >
+  <Col lg={2} sm={12} >
+  <DropdownButton className='customDropdownButton' id="dropdown-basic-button" title={`${selectedyear}`} style={{color:"#000000",width:"300px"}} >
 <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear)}>{CurrentYear}</Dropdown.Item>
 <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear-1)}>{CurrentYear-1}</Dropdown.Item>
 <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear-2)}>{CurrentYear-2}</Dropdown.Item>
 <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear-3)}>{CurrentYear-3}</Dropdown.Item>
 <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear-4)}>{CurrentYear-4}</Dropdown.Item>
-
-
 </DropdownButton>
   </Col>
 
   <Col lg={1} sm={12} >
-            <FormLabel htmlFor="class1" className="labelForm">
+            <FormLabel htmlFor="class1" className="labelForm PdropdownTopics">
               Term
             </FormLabel>
           </Col>
@@ -104,7 +95,7 @@ showButtons={false}/>
             </DropdownButton>
           </Col>
           <Col lg={1} sm={12}>
-            <FormLabel htmlFor="class1" className="labelForm">
+            <FormLabel htmlFor="class1" className="labelForm PdropdownTopics">
               Division
             </FormLabel>
           </Col>
@@ -117,7 +108,7 @@ showButtons={false}/>
           </Col>
 
           <Col lg={1} sm={12}>
-    <FormLabel htmlFor="class1" className="labelForm">
+    <FormLabel htmlFor="class1" className="labelForm PdropdownTopics">
      Subject
     </FormLabel>
   </Col>

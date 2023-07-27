@@ -84,7 +84,7 @@ function NavBar(props) {
   
   return (
   
-    <Navbar expand="lg" className="bg-body-tertiary" style={{ backgroundColor: 'white', padding: 0, borderBottom: '1px solid black', height: 'auto' }}>
+    <Navbar expand="lg" className="bg-body-tertiary" style={{ backgroundColor: '#212529', padding: 0, borderBottom: '1px solid black', height: '60px' }}>
   
       <Row style={{width:"100%"}}>
         {/* <Col lg={3} sm={12} style={{ paddingLeft: '0px', paddingRight: '0px',backgroundColor: 'red' }}>
@@ -92,13 +92,13 @@ function NavBar(props) {
         </Col> */}
 
         <Col lg={1} sm={12} style={{ paddingLeft: '10px', paddingRight: '0px' }}>
-          <Button variant="light" style={{ boxSizing: '7', backgroundColor: '#769FCD', marginTop: '2px',marginLeft:"5px"}} onClick={toggleDrawer('left', true)}>
-            <FontAwesomeIcon icon={faBars} />
+          <Button variant="light" style={{ boxSizing: '7', backgroundColor: '#212529', marginTop: '2px',marginLeft:"15px"}} onClick={toggleDrawer('left', true)}>
+            <FontAwesomeIcon icon={faBars} style={{color:"white"}} />
           </Button>
         </Col>
 
         <Col lg={7} sm={12} style={{ paddingLeft: '0px', paddingRight: '0px',paddingTop:"8px"}}>
-          <Navbar.Brand id="pagename">{props.PageName}</Navbar.Brand>
+          <Navbar.Brand id="pagename" style={{color:"white", marginLeft:"0px"}}>{props.PageName}</Navbar.Brand>
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
 
@@ -123,7 +123,7 @@ function NavBar(props) {
             <Nav className="me-auto" >
               {authState.status && (
                 <>
-                  <Button style={{marginLeft:"1300px",backgroundColor:"#769FCD",borderColor:"#769FCD", color:"black"}} onClick={logout}>Logout</Button>
+                  <Button style={{marginLeft:"320px",backgroundColor:"#212529",borderColor:"white", color:"white",width:"120px",height:"40px",marginTop:"3px", fontWeight:"500"}} onClick={logout}>Logout</Button>
                   <h6>{authState.name}</h6>
                 </>
               )}

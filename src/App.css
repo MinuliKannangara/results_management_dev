@@ -1,6 +1,6 @@
 body{
   font-family: sans-serif;
-  background-color: rgb(242, 242, 242);
+  background-color: rgb(255, 255, 255);
 }
 
 
@@ -24,7 +24,7 @@ body{
 }
 
 .allTables{
-  background-color: #e1e1e1;
+  background-color: #ffffff;
   height: auto;
   width: 98%;
   margin: 1% 1% 1% 1%;
@@ -39,7 +39,7 @@ body{
   
 }
 .subTopicsDiv{
-  background-color: #F5F5F5;
+  background-color: #ffffff;
   height: 30px;
   width: 98%; 
   margin: 1% 1% 0% 1%;
@@ -47,10 +47,14 @@ body{
 }
 
 
-
+.PdropdownTopics{
+ font-size: 20px;
+ font-weight: 600;
+ margin-left: 40px;
+}
 
 .divAllDropdown{
-  background-color: #F5F5F5;
+  background-color: #ffffff;
   height: auto;
   width: 98%;
   margin: 1% 1% 1% 1%;

@@ -161,7 +161,7 @@ const EditSchoolUser = () => {
 
   return (
     <div>
-        <Container>
+        <Container style={{marginTop:"50px"}}>
             <h1>Edit User Details</h1>
         </Container>
       <Container>
