@@ -29,39 +29,45 @@ const ManageSubjectResults = () => {
 
 
   const [rangeValues, setRangeValues] = useState(null);
+
+  //function to find the range analysis
   const findRangeValues =(markArray) =>{
 
     const marksArray = Object.values(markArray);
-    let gtEighty = 0;
-    let btw60and79 = 0;
-    let btw40and59 = 0;
-    let btw20and39 = 0;
-    let lt19 = 0;
+    let greaterThanEighty = 0;
+    let between60and79 = 0;
+    let between40and59 = 0;
+    let between20and39 = 0;
+    let lessthan19 = 0;
     let rangeAnalysis = {}; 
+    let absent = 0;
     for(const mark of marksArray){
       if(mark>=80){
-        gtEighty = gtEighty +1;
+        greaterThanEighty = greaterThanEighty +1;
       }
       else if (mark<=79 && mark>=60){
-        btw60and79 =btw60and79+1;
+        between60and79 =between60and79+1;
       }
       else if (mark<=59 && mark>=40){
-        btw40and59 =btw40and59+1;
+        between40and59 =between40and59+1;
       }
       else if (mark<=39 && mark>=20){
-        btw20and39 =btw20and39+1;
+        between20and39 =between20and39+1;
       }
-      else{
-        lt19 =lt19+1;
+      else if (mark<=19 && mark>=0){
+        lessthan19 =lessthan19+1;
+      } else{
+        absent = absent+1;
       }
       
     }
     rangeAnalysis={
-      gtEighty:gtEighty,
-      btw60and79:btw60and79,
-      btw40and59:btw40and59,
-      btw20and39:btw20and39,
-      lt19:lt19,
+      greaterThanEighty:greaterThanEighty,
+      between60and79:between60and79,
+      between40and59:between40and59,
+      between20and39:between20and39,
+      lessthan19:lessthan19,
+      absent:absent,
     }
     return rangeAnalysis;
   }
@@ -77,9 +83,28 @@ const ManageSubjectResults = () => {
   //when the teacher add new mark or change the mark in the table rows
   const handleMarksChange = (studentID, index, event) => {
     const { textContent } = event.target;
-    const parsedMarks = parseInt(textContent);
+    let parsedMarks;
+
+    
+    if (textContent === "ab") {
+      parsedMarks = -1;
+    } else {
+      parsedMarks = parseInt(textContent);
+      // Check if the parsed marks value is not NaN (not a number)
+      if (isNaN(parsedMarks)) {
+        console.log("Invalid mark: Not a number");
+        return;
+      }
+      // Check if the parsed marks value is within the range of 0 to 100
+      if (parsedMarks < 0 || parsedMarks > 100) {
+        console.log("Invalid mark: Out of range (0 to 100)");
+        return;
+      }
+    }
+  
    // Checks if the parsed marks value is not NaN (not a number). ((validation ensures that only valid numeric values are handled.)
-    if (!isNaN(parsedMarks)) {
+    // if (!isNaN(parsedMarks)) {
+
       setMarks((prevMarks) => {
         const updatedMarks = { ...prevMarks };
   
@@ -126,7 +151,7 @@ const ManageSubjectResults = () => {
             console.log(error);
           });
       }
-    }
+    // }
   };
   
   
@@ -153,14 +178,10 @@ const ManageSubjectResults = () => {
         <p className="pTopDiv">Subject Results</p>
       </Container>
 
-      <Container fluid className="subTopicsDiv">
-        <p className="subTopicsP">Upload Marks</p>
-      </Container>
-
       <Container className="DropdownDiv2">
 
         <Row>
-          <Col lg={1} sm={12}>
+          <Col lg={1} sm={12} >
             <FormLabel htmlFor="class1" className="labelForm">
               Class Name
             </FormLabel>
@@ -184,8 +205,6 @@ const ManageSubjectResults = () => {
   ))}
 </DropdownButton>
 
-
-            
           </Col>
           <Col lg={1} sm={12}>
             <FormLabel htmlFor="class1" className="labelForm">
@@ -253,12 +272,11 @@ const ManageSubjectResults = () => {
       <Container fluid className="allTables ">
         <Row className="TableRoWUp">
           <Col md={3} sm={6}>
-            <p className="pAddStudent">Total Students</p>
+            <p className="pAddStudent" style={{fontSize:"15px", marginLeft:"-4px"}}>Total Students: <b>{StudentList.length}</b></p>
           </Col>
           <Col md={9} sm={6}>
-            <form action="">
-              <input type="text" value={StudentList.length} readOnly />
-            </form>
+             
+    
           </Col>
         </Row>
         <Row className="TableRoWDown">
@@ -317,30 +335,31 @@ const ManageSubjectResults = () => {
             </thead>
             <tbody>
             <tr>
-              <td>0-19</td>
-              <td>{rangeValues && rangeValues.lt19}</td>
-              <td>{rangeValues && `${((rangeValues.lt19 / StudentList.length) * 100).toFixed(2)}%`}</td>
-            </tr>
-            <tr>
-              <td>20-39</td>
-              <td>{rangeValues && rangeValues.btw20and39}</td>
-              <td>{rangeValues && `${((rangeValues.btw20and39/ StudentList.length) * 100).toFixed(2)}%`}</td>
-            </tr>
-            <tr>
-              <td>40-59</td>
-              <td>{rangeValues && rangeValues.btw40and59}</td>
-              <td>{rangeValues && `${((rangeValues.btw40and59 / StudentList.length) * 100).toFixed(2)}%`}</td>
-            </tr>
-            <tr>
-              <td>60-79</td>
-              <td>{rangeValues && rangeValues.btw60and79}</td>
-              <td>{rangeValues && `${((rangeValues.btw60and79 / StudentList.length) * 100).toFixed(2)}%`}</td>
-            </tr>
-            <tr>
-              <td>More than 80</td>
-              <td>{rangeValues && rangeValues.gtEighty}</td>
-              <td>{rangeValues && `${((rangeValues.gtEighty/ StudentList.length) * 100).toFixed(2)}%`}</td>
-            </tr>
+                <td>20-39</td>
+                <td>{rangeValues && rangeValues.between20and39}</td>
+                <td>{rangeValues && `${Math.round((rangeValues.between20and39 / StudentList.length) * 100)}%`}</td>
+              </tr>
+              <tr>
+                <td>40-59</td>
+                <td>{rangeValues && rangeValues.between40and59}</td>
+                <td>{rangeValues && `${Math.round((rangeValues.between40and59 / StudentList.length) * 100)}%`}</td>
+              </tr>
+              <tr>
+                <td>60-79</td>
+                <td>{rangeValues && rangeValues.between60and79}</td>
+                <td>{rangeValues && `${Math.round((rangeValues.between60and79 / StudentList.length) * 100)}%`}</td>
+              </tr>
+              <tr>
+                <td>More than 80</td>
+                <td>{rangeValues && rangeValues.greaterThanEighty}</td>
+                <td>{rangeValues && `${Math.round((rangeValues.greaterThanEighty / StudentList.length) * 100)}%`}</td>
+              </tr>
+              <tr>
+                <td>Absent</td>
+                <td>{rangeValues && rangeValues.absent}</td>
+                <td>{rangeValues && `${Math.round((rangeValues.absent / StudentList.length) * 100)}%`}</td>
+              </tr>
+
           </tbody>
           </Table>
         </Row>

@@ -6,11 +6,11 @@ import './Cards.css';
 function Cards(Props) {
   return (
 
-    <div className="stats">
+    <div className="statss">
                     
     <div className="stat">
-    <div className="stat-title">{Props.DisplayText}</div>
-    <div className="stat-value">{Props.count}</div>
+    <div className="stat-titles">{Props.DisplayText}</div>
+    <div className="stat-values">{Props.count}</div>
     
     </div>
 

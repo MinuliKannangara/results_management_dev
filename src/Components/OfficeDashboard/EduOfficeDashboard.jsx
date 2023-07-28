@@ -2,12 +2,12 @@ import React, { useEffect, useState, PureComponent } from 'react';
 import { Container, Row, Col,FormLabel } from 'react-bootstrap';
 import NavBar from '../NavBar/NavBar';
 import axios from 'axios';
-import BasicDateCalendar from '../OtherComponents/calender';
 import Cards from '../OtherComponents/Cards';
 import LineChart from '../Charts/LineChart';
 import { Padding } from '@mui/icons-material';
 import { current } from '@reduxjs/toolkit';
 import './educationDashboard.css';
+import BasicDateCalendar from '../OtherComponents/calender';
 
 const EduOfficeDashboard= () => {
  
@@ -175,32 +175,32 @@ return (
 
         </Col>
         <Col lg={4} style={{height:"170px"}}>
-      
+            <BasicDateCalendar/>
         </Col>
     </Row>
 
     <Row>
-       <p style={{width:"1000px", marginLeft:"4px", fontSize:"25px", color:"black",marginTop:"10px", fontWeight:"800"}}>National Examination Performances</p> 
+       <p style={{width:"1000px", marginLeft:"4px", fontSize:"25px", color:"black",marginTop:"10px", fontWeight:"500", marginTop:"100px"}}>National Examination Performances</p> 
     </Row>
     <Row>
 
-        <Col lg={4} style={{ height:"600px"}}>
+        <Col lg={4} style={{ height:"350px"}}>
         <h6>OL Results</h6>
-        <div className="cardDashboard">
+        <div className="cardDashboard" style={{height:"280px"}} >
         <LineChart data={OL_Data}/>
         </div>
         </Col>
         
-        <Col lg={4} style={{ height:"400px"}}>
+        <Col lg={4} style={{ height:"350px"}}>
         <h6>AL Results</h6>
-        <div className="cardDashboard">
+        <div className="cardDashboard" style={{height:"280px"}}>
         <LineChart data={AL_Data}/>
         </div>
         </Col>
 
-        <Col lg={4} style={{ height:"400px"}}>
+        <Col lg={4} style={{ height:"350px"}}>
         <h6>Scholarship Results</h6>
-        <div className="cardDashboard">
+        <div className="cardDashboard" style={{height:"280px"}}>
         <LineChart data={Scholarship_Data}/>
         </div>
         </Col>

@@ -99,50 +99,7 @@ return (
 <NavBar PageName="School Dashboard"
 showButtons={false} 
 />
-{/* 
- <Container fluid className='topContainer'>
-    <Row className='justify-content-center'>
-    <Row style={{height:"40px"}}>
-    <p className='PcardsTitle'>School Details</p>
-    </Row>
 
-    <Row style={{ height: "160px", width:"1050px", marginTop:"10px"}}>
-    <Col lg={7} md={4} sm={12} style={{  display: "flex" }}>
-  <div className="container" style={{ marginRight: "2px" }}>
-    <div className="box">
-      <span className="title">{SchoolDetails.school_name}</span>
-      <div>
-        <strong>Type: {SchoolDetails.type}</strong>
-        <strong>Division: {SchoolDetails.division}</strong>
-      </div>
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", position: "absolute", right: "30px" }}>
-    <div style={{ marginBottom: "10px" }}>
-      <DashboardCards studentCount={AllStudentsCount} DisplayText="Total Students" borderColor="3px solid #0E2954" IconName={faUserGroup} />
-    </div>
-    <div>
-      <DashboardCards studentCount={AllClassesCount} DisplayText="Total Classes" borderColor="3px solid #1F6E8C" IconName={faLandmark} />
-    </div>
-  </div>
-    </div>
-
-  </div>
-
- 
-</Col>
-
-
-        <Col lg={4} md={4} sm={12} style={{display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-  
-
-
-</Col>
-
-        
-    </Row>
-
-    </Row>
-
-</Container> */}
 <Container fluid>
     <Row>
       <Col lg={6} md={6} sm={12} className='schoolDetailsDiv'>
@@ -154,77 +111,77 @@ showButtons={false}
 
         <strong style={{fontSize:"18px", fontWeight:"500", marginLeft:"100px"}}>Division: {SchoolDetails.division}</strong>
 
-    
-        <Row style={{marginTop:"50px"}}>
-           
-            <Col lg={1} sm={12}>
-              <FormLabel htmlFor="class1" className="labelForm">
-                Grade
-              </FormLabel>
-            </Col>
-s
-            <Col lg={3} sm={12}>
-              <DropdownButton id="grade-dropdown" title={'Grade ' + `${selectedGrade}`} >
-                {grades.map((grade, index) => (
-                  <Dropdown.Item className='customDropdown' key={index} onClick={() => setSelectedGrade(extractNumber(grade))}>{`${grade}`}</Dropdown.Item>
-                ))}
-              </DropdownButton>
-            </Col>
-            
-            <Col lg={1} sm={12}>
-              <FormLabel htmlFor="class1" className="labelForm">
-                Year
-              </FormLabel>
-            </Col>
-            <Col lg={3} sm={12}>
-              <DropdownButton className='customDropdownButton' id="year-dropdown" title={`${selectedyear}`} >
-                <Dropdown.Item className='customDropdown' onClick={() => setSelectedYear(CurrentYear)}>{CurrentYear}</Dropdown.Item>
-                <Dropdown.Item className='customDropdown' onClick={() => setSelectedYear(CurrentYear - 1)}>{CurrentYear - 1}</Dropdown.Item>
-                <Dropdown.Item className='customDropdown' onClick={() => setSelectedYear(CurrentYear - 2)}>{CurrentYear - 2}</Dropdown.Item>
-                <Dropdown.Item className='customDropdown' onClick={() => setSelectedYear(CurrentYear - 3)}>{CurrentYear - 3}</Dropdown.Item>
-                <Dropdown.Item className='customDropdown' onClick={() => setSelectedYear(CurrentYear - 4)}>{CurrentYear - 4}</Dropdown.Item>
-              </DropdownButton>
-            </Col>
-
-            <Col lg={1} sm={12}>
-              <FormLabel htmlFor="class1" className="labelForm">
-                Term
-              </FormLabel>
-            </Col>
-            <Col lg={3} sm={12}>
-              <DropdownButton className="customDropdownButton" id="term-dropdown" title={`${selectedTerm}`} >
-                <Dropdown.Item className="customDropdown" onClick={() => setSelectedTerm("1st Term")}> 1st Term </Dropdown.Item>
-                <Dropdown.Item className="customDropdown" onClick={() => setSelectedTerm("2nd Term")}> 2nd Term </Dropdown.Item>
-                <Dropdown.Item className="customDropdown" onClick={() => setSelectedTerm("3rd Term")}> 3rd Term </Dropdown.Item>
-              </DropdownButton>
-            </Col>
-          </Row>
+        <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '-15px' }}>
+            <Cards DisplayText="Total Students" count={AllStudentsCount} />
+            <Cards DisplayText="Total Classes" count={AllClassesCount} />
+          </div>
        
       </Col>
       <Col lg={6} md={6} sm={12} className='schoolDetailsDiv' style={{padding:"2px"}}>
-      <div style={{ display: 'flex', justifyContent: 'space-around', marginTop:"0px"}}>
-            <Cards DisplayText="Total Students" count="34" />
-            <Cards DisplayText="Total Cffef" count="3553" />
+      
+          {/* Second set of cards */}
+          
+          <Row style={{marginTop:"50px", marginLeft:"2px"}}>
+           
+           <Col lg={1} sm={12}>
+             <FormLabel htmlFor="class1" className="labelForm">
+               Grade
+             </FormLabel>
+           </Col>
+
+           <Col lg={3} sm={12}>
+             <DropdownButton id="grade-dropdown" title={'Grade ' + `${selectedGrade}`} >
+               {grades.map((grade, index) => (
+                 <Dropdown.Item className='customDropdown' key={index} onClick={() => setSelectedGrade(extractNumber(grade))}>{`${grade}`}</Dropdown.Item>
+               ))}
+             </DropdownButton>
+           </Col>
+           
+           <Col lg={1} sm={12}>
+             <FormLabel htmlFor="class1" className="labelForm">
+               Year
+             </FormLabel>
+           </Col>
+           <Col lg={3} sm={12}>
+             <DropdownButton className='customDropdownButton' id="year-dropdown" title={`${selectedyear}`} >
+               <Dropdown.Item className='customDropdown' onClick={() => setSelectedYear(CurrentYear)}>{CurrentYear}</Dropdown.Item>
+               <Dropdown.Item className='customDropdown' onClick={() => setSelectedYear(CurrentYear - 1)}>{CurrentYear - 1}</Dropdown.Item>
+               <Dropdown.Item className='customDropdown' onClick={() => setSelectedYear(CurrentYear - 2)}>{CurrentYear - 2}</Dropdown.Item>
+               <Dropdown.Item className='customDropdown' onClick={() => setSelectedYear(CurrentYear - 3)}>{CurrentYear - 3}</Dropdown.Item>
+               <Dropdown.Item className='customDropdown' onClick={() => setSelectedYear(CurrentYear - 4)}>{CurrentYear - 4}</Dropdown.Item>
+             </DropdownButton>
+           </Col>
+
+           <Col lg={1} sm={12}>
+             <FormLabel htmlFor="class1" className="labelForm">
+               Term
+             </FormLabel>
+           </Col>
+           <Col lg={3} sm={12}>
+             <DropdownButton className="customDropdownButton" id="term-dropdown" title={`${selectedTerm}`} >
+               <Dropdown.Item className="customDropdown" onClick={() => setSelectedTerm("1st Term")}> 1st Term </Dropdown.Item>
+               <Dropdown.Item className="customDropdown" onClick={() => setSelectedTerm("2nd Term")}> 2nd Term </Dropdown.Item>
+               <Dropdown.Item className="customDropdown" onClick={() => setSelectedTerm("3rd Term")}> 3rd Term </Dropdown.Item>
+             </DropdownButton>
+           </Col>
+         </Row>
+      
+         <div style={{ display: 'flex', justifyContent: 'space-around', marginTop:"0px"}}>
+            <Cards DisplayText="Total Students" count={TotalStudentsOfGrade} />
+            <Cards DisplayText="Total Classes" count={ClassCountOfSelectedGrade} />
           </div>
 
-          {/* Second set of cards */}
-          <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '-15px' }}>
-            <Cards DisplayText="Total Students" count="34" />
-            <Cards DisplayText="Total Classes" count="34" />
-          </div>
-      
-      
       </Col>
     </Row>
 </Container>
 
 <br/>
-
+{/* 
 <Container fluid className="divAllDropdown" style={{marginTop:"50px"}}>
 
 
 </Container>
- 
+  */}
 
 
 

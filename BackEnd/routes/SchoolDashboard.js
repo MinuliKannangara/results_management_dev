@@ -7,36 +7,7 @@ const Sequelize = require('sequelize');
 const sequelize = new Sequelize("results_management_system", "root", 1234, {
     host: 'localhost',
     dialect: 'mysql',
-    // Additional configurations...
   });
-
-//   const getSubjectSatCount = async (SchoolID, subject, year, grade, term) => {
-
-//     const count = await SubjectResults.count({
-//       include: [
-//         {
-//           model: Student,
-//           where: { 
-//             class_name: { [Op.like]: `${grade}-%` },
-//             school_ID: SchoolID,
-//             year: year },
-//         },
-//         {
-//           model: Subject,
-//           where: { subject: subject },
-//         },
-//         // {
-//         //     model: SubjectCategory,
-//         //     where: { name:categoryName },
-//         // }
-//       ],
-//       where: {
-//         year: year,
-//         term: term,
-//       },
-//     });
-//     return count;
-//   };
 
 //function to get the range values for the subject range analysis
   const getSubjectRangeAnalysisCounts = async (range, subject, year, schoolID, grade,term) => {
@@ -239,6 +210,8 @@ router.get("/:username/:grade/:year/:term", async (req, res) => {
         school_ID:user.school_ID,
       }
     })
+
+
     //counts for the entire school
     const AllStudentCount = await Student.count({
       where: {
@@ -345,9 +318,7 @@ if (subCategory) {
         subjectCounts: subjectCounts,
         subjectList:subjectList,
         SchoolDetails:SchoolDetails,
-        
-
-        
+  
     });
   } catch (error) {
     console.error(error);

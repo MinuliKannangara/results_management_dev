@@ -34,7 +34,7 @@ function UploadExaminationResults() {
 
   useEffect(() => {
     setMarks(subjects.map((subject) => ({ subject_ID: subject.subject_ID, A: 0, B: 0, C: 0, S: 0, W: 0, Absent: 0,sat: 0 , pass: 0})));
-  }, [subjects]);
+  }, [subjects,currentYear]);
 
   const handleMarksChange = (subjectID, type, value) => {
     setMarks((prevMarks) => {
@@ -70,7 +70,7 @@ function UploadExaminationResults() {
   }
 
   const submitCounts = (e) => {
-    e.preventDefault();
+  
     axios
       .post('http://localhost:3001/NationalExaminationDetails/NExamCounts',{
         counts: FormVlaues,
@@ -99,7 +99,7 @@ function UploadExaminationResults() {
 
       <Container className="DropdownDiv2">
         <Row>
-        <p className='pTopDiv'>O/L Examination Results</p>
+        <p className='pTopDiv' style={{marginLeft:"500px"}}>O/L Examination Results</p>
           <Col lg={5} sm={12} className="divAllDropdown">
             <DropdownButton className="customDropdownButton" id="dropdown-basic-button" title={`${selectedYear}`}>
               <Dropdown.Item className="customDropdown" onClick={() => setSelectedYear(currentYear)}>

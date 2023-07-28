@@ -9,16 +9,16 @@ export default class Example extends PureComponent {
     const { data } = this.props;
     const customYAxisTicks = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]; // Custom Y-axis ticks from 10% to 100%
     return (
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="100%" height="100%" margin={{ top: 30, right: 50, left: 30, bottom: 20 }}>
         <LineChart
           width={500}
           height={300}
           data={data}
           margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
+            top: 30,
+            right: 50,
+            left: 10,
+            bottom: 20,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
@@ -26,7 +26,7 @@ export default class Example extends PureComponent {
           <YAxis ticks={customYAxisTicks} domain={[0, 100]} />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="Percentage" stroke="#010048" activeDot={{ r: 8 }} />
+          <Line type="monotone" dataKey="Percentage" stroke="#8338ec" activeDot={{ r: 8 }} />
         </LineChart>
       </ResponsiveContainer>
     );

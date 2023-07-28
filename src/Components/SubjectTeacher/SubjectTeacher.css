@@ -8,7 +8,8 @@
 .DropdownDiv2{
   height: auto;
   max-width: 98%;
-  background-color: #e1e1e1;
+  background-color: #ffffff;
+  padding-left: 15px;
 }
 .dropdownSubjects{
     width: 50%;
