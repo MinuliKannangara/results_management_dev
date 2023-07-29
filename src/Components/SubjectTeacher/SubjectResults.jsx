@@ -5,6 +5,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Table from 'react-bootstrap/Table';
 import './SubjectTeacher.css';
 import NavBar from '../NavBar/NavBar';
+import Alert from 'react-bootstrap/Alert';
 import axios from 'axios';
 import { AuthContext } from '../../helpers/AuthContext';
 
@@ -26,6 +27,8 @@ const ManageSubjectResults = () => {
   const [selectedTerm, setSelectedTerm] = useState('1st Term');
   const [selectedClass, setSelectedClass] = useState('7-A');
   const [selectedSubjectID, setselectedSubjectID] = useState(0);
+
+  const [showAlert, setShowAlert] = useState(false);
 
 
   const [rangeValues, setRangeValues] = useState(null);
@@ -92,12 +95,13 @@ const ManageSubjectResults = () => {
       parsedMarks = parseInt(textContent);
       // Check if the parsed marks value is not NaN (not a number)
       if (isNaN(parsedMarks)) {
-        console.log("Invalid mark: Not a number");
+        setShowAlert(true);
         return;
       }
       // Check if the parsed marks value is within the range of 0 to 100
       if (parsedMarks < 0 || parsedMarks > 100) {
         console.log("Invalid mark: Out of range (0 to 100)");
+        setShowAlert(true);
         return;
       }
     }
@@ -127,31 +131,28 @@ const ManageSubjectResults = () => {
   
       // Check if the mark already exists for the student
       if (Marks.hasOwnProperty(studentID) && Marks[studentID][index]) {
-        // Use axios.put for updating the existing mark
+
         axios
           .put("http://localhost:3001/subject/SubjectResults", data)
           .then((response) => {
-            // Handle the response if needed
             console.log(response.data);
           })
           .catch((error) => {
-            // Handle the error if needed
             console.log(error);
           });
       } else {
-        // Use axios.post for adding a new mark
         axios
           .post("http://localhost:3001/subject/SubjectResults", data)
           .then((response) => {
-            // Handle the response if needed
             console.log(response.data);
           })
           .catch((error) => {
-            // Handle the error if needed
             console.log(error);
           });
       }
-    // }
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 60);
   };
   
   
@@ -190,8 +191,10 @@ const ManageSubjectResults = () => {
           <Col lg={5} sm={12}>
           <DropdownButton
   className="customDropdownButton"
-  id="dropdown-basic-button"
+  id="dropdown-button-dark-example1"
+  variant="outline-success"
   title={`${selectedClass}`}
+  bg="light"
 >
   {/* use Set data structure to get the distinct values of the class names */}
   {[...new Set(classNameList.map((classes) => classes.class_name))].map((className) => (
@@ -215,6 +218,7 @@ const ManageSubjectResults = () => {
             <DropdownButton
               className="customDropdownButton"
               id="dropdown-basic-button"
+              variant="outline-success"
               title={`${selectedSubject}`}
             >
               {subjectList.map((index,subject) => (
@@ -241,7 +245,7 @@ const ManageSubjectResults = () => {
             </FormLabel>
           </Col>
           <Col lg={5} sm={12}>
-          <DropdownButton className='customDropdownButton' id="dropdown-basic-button" title={`${selectedYear}`} >
+          <DropdownButton className='customDropdownButton' id="dropdown-basic-button" title={`${selectedYear}`} variant="outline-success" >
       <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear)}>{CurrentYear}</Dropdown.Item>
       <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear-1)}>{CurrentYear-1}</Dropdown.Item>
       <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear-2)}>{CurrentYear-2}</Dropdown.Item>
@@ -257,7 +261,7 @@ const ManageSubjectResults = () => {
             </FormLabel>
           </Col>
           <Col lg={5} sm={12}>
-            <DropdownButton className="customDropdownButton" id="dropdown-basic-button" title={`${selectedTerm}`}>
+            <DropdownButton className="customDropdownButton" id="dropdown-basic-button" title={`${selectedTerm}`} variant="outline-success">
             <Dropdown.Item className="customDropdown" onClick={() => setSelectedTerm("1st Term")}> 1st Term </Dropdown.Item>
             <Dropdown.Item className="customDropdown" onClick={() => setSelectedTerm("2nd Term")}> 2nd Term </Dropdown.Item>
             <Dropdown.Item className="customDropdown" onClick={() => setSelectedTerm("3rd Term")}> 3rd Term </Dropdown.Item>
@@ -275,11 +279,16 @@ const ManageSubjectResults = () => {
             <p className="pAddStudent" style={{fontSize:"15px", marginLeft:"-4px"}}>Total Students: <b>{StudentList.length}</b></p>
           </Col>
           <Col md={9} sm={6}>
-             
+      
     
           </Col>
         </Row>
         <Row className="TableRoWDown">
+        {showAlert && (
+        <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
+          Invalid mark! Please enter a valid numeric value between 0 and 100.
+        </Alert>
+      )}
           <Table striped bordered hover variant="light">
             <thead>
               <tr>
@@ -303,23 +312,29 @@ const ManageSubjectResults = () => {
         }
       >
         {Marks[student.student_ID] ? Marks[student.student_ID][0] : ''}
+        
       </td>
                 </tr>
               ))}
             </tbody>
           </Table>
+
+          
         </Row>
       </Container>
-
+{/* 
       <Container fluid className="subTopicsDiv">
         <p className="subTopicsP">Range Analysis</p>
-      </Container>
+      </Container> */}
 
       <Container fluid className="allTables">
+        <Row>
+        <p className="subTopicsP" style={{marginBottom:"0px"}}>Range Analysis</p>
+        </Row>
         <Row className="TableRoWUp">
           <Col lg={10} sm={12}></Col>
           <Col lg={2} sm={12}>
-            <Button className="btnViewResults" onClick={() => handleCalculateValues(Marks)}>
+            <Button variant="success" className="btnViewResults" onClick={() => handleCalculateValues(Marks)}>
               Calculate Values
             </Button>
           </Col>

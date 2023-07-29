@@ -26,24 +26,62 @@ router.post("/", async (req, res) => {
         pass,
       } = result;
 
-      await ScholarshipResults.create({
-        Count0_5: Count0_5,
-        Count6_24: Count6_24,
-        Count25_49: Count25_49,
-        Count50_69: Count50_69,
-        Count70_99: Count70_99,
-        Count100_124: Count100_124,
-        Count125_150: Count125_150,
-        Count151_175: Count151_175,
-        Count175_200: Count175_200,
-        MaximumMark: MaximumMark,
-        MinimumMark: MinimumMark,
-        Absent: Absent,
-        NumOfSat: sat,
-        NumOfPass: pass,
-        year: year,
-        school_ID: schoolID,
+      const existingRecord = await ScholarshipResults.findOne({
+        where:{
+          school_ID: schoolID,
+          year:year,
+        }
       });
+
+      if(existingRecord){
+
+        const meregedMarks = {
+          Count0_5: Count0_5 || existingRecord.Count0_5,
+          Count6_24: Count6_24 || existingRecord.Count6_24,
+          Count25_49: Count25_49 || existingRecord.Count25_49,
+          Count50_69: Count50_69 || existingRecord.Count50_69,
+          Count70_99: Count70_99 || existingRecord.Count70_99,
+          Count100_124: Count100_124 || existingRecord.Count100_124,
+          Count125_150: Count125_150 || existingRecord.Count125_150,
+          Count151_175: Count151_175 || existingRecord.Count151_175,
+          Count175_200: Count175_200 || existingRecord.Count175_200,
+          PassCount: pass || existingRecord.PassCount,
+          MaximumMark: MaximumMark || existingRecord.MaximumMark,
+          MinimumMark: MinimumMark || existingRecord.MinimumMark,
+          absent: Absent || existingRecord.absent,
+          NumOfSat: sat || existingRecord.NumOfSat,
+        };
+
+        await ScholarshipResults.update(
+          meregedMarks,
+          {
+            where:{
+              school_ID: schoolID,
+              year:year,
+            }
+          }
+        );  
+        
+      } else{
+        await ScholarshipResults.create({
+          Count0_5: Count0_5,
+          Count6_24: Count6_24,
+          Count25_49: Count25_49,
+          Count50_69: Count50_69,
+          Count70_99: Count70_99,
+          Count100_124: Count100_124,
+          Count125_150: Count125_150,
+          Count151_175: Count151_175,
+          Count175_200: Count175_200,
+          MaximumMark: MaximumMark,
+          MinimumMark: MinimumMark,
+          absent: Absent,
+          NumOfSat: sat,
+          PassCount: pass,
+          year: year,
+          school_ID: schoolID,
+        });
+      }
     }
 
     res.json({ message: "Data uploaded successfully!" });
@@ -52,6 +90,22 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.get("/:schoolID/:selectedYear", async(req, res)=>{
+  try{
+      const results = await ScholarshipResults.findAll({
+          attributes: ['Count0_5','Count6_24','Count25_49','Count50_69','Count70_99','Count100_124','Count125_150','Count175_200','PassCount','MaximumMark','MinimumMark','Absent','NumOfSat'],
+          where:{
+            school_ID: req.params.schoolID,
+            year: req.params.selectedYear
+          }
+
+      })
+      res.json (results);
+  }catch(err){
+      res.json({message:err});
+  }
+  
+});
 
   
 

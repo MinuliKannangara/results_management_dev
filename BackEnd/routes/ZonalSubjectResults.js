@@ -5,7 +5,7 @@ const { School,Student,SubjectResults,Subject,SubjectCategory } = require("../mo
 
 //function to get the range values for the subject range analysis
 const getSubjectRangeAnalysisCounts = async (range, subject, year, schoolID, grade,term) => {
-    if(range == 1){
+    if(range === 1){
         const count0To19 = await SubjectResults.count({
             include: [
               {
@@ -34,7 +34,7 @@ const getSubjectRangeAnalysisCounts = async (range, subject, year, schoolID, gra
           });
           return count0To19;
     }
-    else if(range == 2){
+    else if(range === 2){
         const count20To39 = await SubjectResults.count({
             include: [
               {
@@ -64,7 +64,7 @@ const getSubjectRangeAnalysisCounts = async (range, subject, year, schoolID, gra
           return count20To39;
 
     }
-    else if(range == 3){
+    else if(range === 3){
         const count40To59 = await SubjectResults.count({
             include: [
               {
@@ -91,7 +91,7 @@ const getSubjectRangeAnalysisCounts = async (range, subject, year, schoolID, gra
           return count40To59;
 
     }
-    else if(range == 4){
+    else if(range === 4){
         const count60To79 = await SubjectResults.count({
             include: [
               {
@@ -118,7 +118,7 @@ const getSubjectRangeAnalysisCounts = async (range, subject, year, schoolID, gra
           return count60To79;
 
     }
-    else if(range == 5){
+    else if(range === 5){
         const count80To100 = await SubjectResults.count({
             include: [
               {
@@ -145,7 +145,7 @@ const getSubjectRangeAnalysisCounts = async (range, subject, year, schoolID, gra
           return count80To100;
 
     }
-    else if(range == 6){
+    else if(range === 6){
         const absentCount = await SubjectResults.count({
             include: [
               {
@@ -220,7 +220,7 @@ if (subCategory) {
     const studentCounts = {};
 
     for(const school of SchoolList){
-        studentCounts[school] = {};
+        studentCounts[school.school_name] = {}; 
         const Count0To19 = await getSubjectRangeAnalysisCounts(1,subject,year,school.school_ID,grade,Selectedterm);
         const Count20To39 = await getSubjectRangeAnalysisCounts(2,subject,year,school.school_ID,grade,Selectedterm);
         const Count40To59 = await getSubjectRangeAnalysisCounts(3,subject,year,school.school_ID,grade,Selectedterm);

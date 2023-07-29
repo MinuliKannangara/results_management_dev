@@ -59,7 +59,7 @@ showButtons={false}/>
   </Col>
 
   <Col lg={2} sm={12} >
-  <DropdownButton className='customDropdownButton' id="dropdown-basic-button" title={'Grade'+`${selectedGrade}`} >
+  <DropdownButton className='customDropdownButton' variant="outline-success" id="dropdown-basic-button" title={'Grade'+`${selectedGrade}`} >
 
     {grades.map((grade,index) =>(
       <Dropdown.Item className='customDropdown' key={index}  onClick={() => setSelectedGrade(extractNumber(grade))}>{`${grade}`}</Dropdown.Item>
@@ -73,7 +73,7 @@ showButtons={false}/>
     </FormLabel>
   </Col>
   <Col lg={2} sm={12} >
-  <DropdownButton className='customDropdownButton' id="dropdown-basic-button" title={`${selectedyear}`} style={{color:"#000000",width:"300px"}} >
+  <DropdownButton className='customDropdownButton' variant="outline-success" id="dropdown-basic-button" title={`${selectedyear}`} style={{color:"#000000",width:"300px"}} >
 <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear)}>{CurrentYear}</Dropdown.Item>
 <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear-1)}>{CurrentYear-1}</Dropdown.Item>
 <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear-2)}>{CurrentYear-2}</Dropdown.Item>
@@ -88,7 +88,7 @@ showButtons={false}/>
             </FormLabel>
           </Col>
           <Col lg={2} sm={12}>
-            <DropdownButton className="customDropdownButton" id="dropdown-basic-button" title={`${selectedTerm}`}>
+            <DropdownButton className="customDropdownButton" variant="outline-success" id="dropdown-basic-button" title={`${selectedTerm}`}>
             <Dropdown.Item className="customDropdown" onClick={() => setSelectedTerm("1st Term")}> 1st Term </Dropdown.Item>
             <Dropdown.Item className="customDropdown" onClick={() => setSelectedTerm("2nd Term")}> 2nd Term </Dropdown.Item>
             <Dropdown.Item className="customDropdown" onClick={() => setSelectedTerm("3rd Term")}> 3rd Term </Dropdown.Item>
@@ -100,7 +100,7 @@ showButtons={false}/>
             </FormLabel>
           </Col>
           <Col lg={2} sm={12}>
-            <DropdownButton className="customDropdownButton" id="dropdown-basic-button" title={`${selectedDivision}`}>
+            <DropdownButton className="customDropdownButton" variant="outline-success" id="dropdown-basic-button" title={`${selectedDivision}`}>
             <Dropdown.Item className="customDropdown" onClick={() => setSelectedDivision("Minuwangoda")}>Minuwangoda</Dropdown.Item>
             <Dropdown.Item className="customDropdown" onClick={() => setSelectedDivision("Divulapitiya")}>Divulapitiya</Dropdown.Item>
             <Dropdown.Item className="customDropdown" onClick={() => setSelectedDivision("Meerigama")}>Meerigama</Dropdown.Item>
@@ -114,7 +114,7 @@ showButtons={false}/>
   </Col>
 
   <Col lg={2} sm={12}>
-  <DropdownButton className='customDropdownButton' id="dropdown-basic-button" title={selectedSubject} >
+  <DropdownButton className='customDropdownButton' variant="outline-success" id="dropdown-basic-button" title={selectedSubject} >
 
     {subjectList.map((subjects,index) =>(
       <Dropdown.Item className='customDropdown' key={index}  onClick={() => setselectedSubject(subjects.subject)}>{subjects.subject}</Dropdown.Item>

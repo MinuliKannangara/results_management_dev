@@ -4,8 +4,6 @@ import Table from 'react-bootstrap/Table';
 import './GreadHead.css';
 import { Button } from 'react-bootstrap';
 import NavBar from '../NavBar/NavBar';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
 import axios from 'axios';
 import { AuthContext } from '../../helpers/AuthContext';
 
@@ -14,8 +12,8 @@ function UploadALExamResults() {
   const {authState} = useContext(AuthContext);
   const schoolID = authState.schoolID;
 
-  const [selectedYear, setSelectedYear] = useState(currentYear);
   const [subjects, setSubjects] = useState([]);
+  const [existingResults, setExistingResults] = useState([]);
   const [marks, setMarks] = useState([]);
 
   const initialValues = {
@@ -27,8 +25,9 @@ function UploadALExamResults() {
   const [FormVlaues, setFormValues] = useState(initialValues)
 
   useEffect(() => {
-    axios.get('http://localhost:3001/ALResults').then((response) => {
-      setSubjects(response.data);
+    axios.get(`http://localhost:3001/ALResults/${schoolID}/${currentYear}`).then((response) => {
+      setSubjects(response.data.subjectList);
+      setExistingResults(response.data.Results)
     });
   }, []);
 
@@ -46,6 +45,21 @@ function UploadALExamResults() {
   };
 
   const uploadMarks = () => {
+
+     // Validate marks before uploading
+  for (const mark of marks) {
+    if (
+      mark.UniversityQualified < 0 ||
+      mark.A_ForAllSubjects < 0 ||
+      mark.FailedAllSubjects < 0 ||
+      mark.Absent < 0 ||
+      mark.sat < 0
+    ) {
+      alert("Invalid marks entered. Marks cannot be negative.");
+      return;
+    }
+  }
+
     const results = subjects.map((subject) => ({
       subjectID: subject.subject_ID,
       ...marks.find((mark) => mark.subject_ID === subject.subject_ID),
@@ -54,13 +68,28 @@ function UploadALExamResults() {
     console.log("Data to be uploaded:", results);
 
     axios.post('http://localhost:3001/ALResults', {
-      year: selectedYear,
+      year: currentYear,
       schoolID: schoolID,
       results: results,
     }).then((response) => {
-      console.log("Response from server:", response.data);
-    });
-  };
+      if (!response.data.error) {
+        // Update button style and text for success
+        document.getElementById("btn").classList.remove("btn-outline-primary");
+        document.getElementById("btn").classList.add("btn-outline-success");
+        document.getElementById("btn").innerHTML = "Submitted";
+         } else {
+           document.getElementById("btn").classList.remove("btn-outline-primary");
+       document.getElementById("btn").classList.add("btn-outline-danger");
+       document.getElementById("btn").innerHTML = "Check data and Retry";
+         }
+       })
+       .catch((error) => {
+        console.error("Error:", error);
+      });
+
+ };
+
+
 
   //for the form
   const handleChange = (e) =>{
@@ -71,10 +100,20 @@ function UploadALExamResults() {
 
   const submitCounts = (e) => {
     e.preventDefault();
+
+    // validation
+  if (FormVlaues.satCount <= 0 || FormVlaues.passCount <= 0) {
+    alert("Please enter valid values for Sat Count and Pass Count.");
+    return;
+  } else if(FormVlaues.satCount<FormVlaues.passCount){
+    alert("Invalid Inputs")
+  }
+
     axios
       .post('http://localhost:3001/NationalExaminationDetails/NExamCounts',{
         counts: FormVlaues,
-        year:selectedYear,
+        year:currentYear,
+        examName:"A/L",
       })
       .then((response) => {
         console.log("Response from server:", response.data);
@@ -98,28 +137,12 @@ function UploadALExamResults() {
       />
 
 
-      <Container className="DropdownDiv2">
-        <Row>
-        <p className='pTopDiv'>A/L Examination Results</p>
-          <Col lg={5} sm={12} className="divAllDropdown">
-           
-            <DropdownButton className="customDropdownButton" id="dropdown-basic-button" title={`${selectedYear}`}>
-              <Dropdown.Item className="customDropdown" onClick={() => setSelectedYear(currentYear)}>
-                {currentYear}
-              </Dropdown.Item>
-              <Dropdown.Item className="customDropdown" onClick={() => setSelectedYear(currentYear - 1)}>
-                {currentYear - 1}
-              </Dropdown.Item>
-              <Dropdown.Item className="customDropdown" onClick={() => setSelectedYear(currentYear - 2)}>
-                {currentYear - 2}
-              </Dropdown.Item>
-            </DropdownButton>
-          </Col>
-        </Row>
-      </Container>
-
       <Container fluid className="div_aca_yr divAddStudentTable">
+        <Row>
+        <p className='pTopDiv' style={{marginLeft:"500px"}}>A/L Examination Results</p>
+        </Row>
         <Row className="TableRoWUp">
+       
           <Col md={2} sm={6}></Col>
         </Row>
         <Row className="TableRoWDown">
@@ -133,7 +156,6 @@ function UploadALExamResults() {
                 <th>Failed in All subjects</th>
                 <th>Absent</th> 
                 <th>Number Of Sat</th>
-                <th>Number Of Pass</th>
               </tr>
             </thead>
             <tbody>
@@ -144,34 +166,99 @@ function UploadALExamResults() {
                   <td
                     contentEditable="true"
                     onBlur={(event) => handleMarksChange(subject.subject_ID, 'UniversityQualified', parseInt(event.target.textContent))}
-                  ></td>
+                  >
+                     {
+            existingResults.length > 0 &&
+            existingResults.map((results) => {
+              if (results.subject_ID === subject.subject_ID) {
+                return results.UniversityQualified;
+              } else {
+                return null;
+              }
+            })
+          }
+                  </td>
                   <td
                     contentEditable="true"
                     onBlur={(event) => handleMarksChange(subject.subject_ID, 'A_ForAllSubjects', parseInt(event.target.textContent))}
-                  ></td>
+                  >
+                     {
+                      existingResults.length > 0 &&
+                      existingResults.map((results) =>{
+                        if(results.subject_ID === subject.subject_ID){
+                          return results.A_ForAllSubjects;
+                        } else {
+                          return null;
+                        }
+                      })
+                    }
+                  </td>
                   <td
                     contentEditable="true"
                     onBlur={(event) => handleMarksChange(subject.subject_ID, 'FailedAllSubjects', parseInt(event.target.textContent))}
-                  ></td>
+                  >
+                     {
+                      existingResults.length > 0 &&
+                      existingResults.map((results) =>{
+                        if(results.subject_ID === subject.subject_ID){
+                          return results.FailedAllSubjects;
+                        } else {
+                          return null;
+                        }
+                      })
+                    }
+                  </td>
                   <td
                     contentEditable="true"
                     onBlur={(event) => handleMarksChange(subject.subject_ID, 'Absent', parseInt(event.target.textContent))}
-                  ></td>
+                  >
+                     {
+                      existingResults.length > 0 &&
+                      existingResults.map((results) =>{
+                        if(results.subject_ID === subject.subject_ID){
+                          return results.absent;
+                        } else {
+                          return null;
+                        }
+                      })
+                    }
+                  </td>
                   <td
                   contentEditable="true"
                   onBlur={(event) => handleMarksChange(subject.subject_ID, 'sat', parseInt(event.target.textContent))}
-                  ></td>
-                  <td
+                  >
+                     {
+                      existingResults.length > 0 &&
+                      existingResults.map((results) =>{
+                        if(results.subject_ID === subject.subject_ID){
+                          return results.NumOfSat;
+                        } else {
+                          return null;
+                        }
+                      })
+                    }
+                  </td>
+                  {/* <td
                   contentEditable="true"
                   onBlur={(event) => handleMarksChange(subject.subject_ID, 'pass', parseInt(event.target.textContent))}
-                  ></td>
+                  >
+                     {
+                      existingResults.map((results) =>{
+                        if(results.subject_ID === subject.subject_ID){
+                          return results.A_ForAllSubjects;
+                        } else {
+                          return null;
+                        }
+                      })
+                    }
+                  </td> */}
                 </tr>
               ))}
             </tbody>
           </Table>
-          <button className="btnAddStudent" onClick={uploadMarks}>
+          <Button variant="outline-primary" size="lg" id='btn' onClick={uploadMarks}>
             Upload
-          </button>
+          </Button>
         </Row>
 
         
@@ -179,13 +266,17 @@ function UploadALExamResults() {
           <Form onSubmit={submitCounts}>
       <Form.Label htmlFor="inputPassword5">Total Sat Count</Form.Label>
     
-      <Form.Control type="text" placeholder="Enter sat count here.."  name="satCount" onChange={handleChange} />
+      <Form.Control type="number" placeholder="Enter sat count here.."  name="satCount" onChange={handleChange} />
+      {FormVlaues.satCount <= 0 && <p className="error-message">Sat Count must be greater than 0.</p>}
+
       <br />
       <Form.Label htmlFor="inputPassword5">Total Pass Count</Form.Label>
     
-      <Form.Control type="text" placeholder="Enter pass count here.." name="passCount" onChange={handleChange} />
+      <Form.Control type="number" placeholder="Enter pass count here.." name="passCount" onChange={handleChange} />
+      {FormVlaues.passCount <= 0 && <p className="error-message">Pass Count must be greater than 0.</p>}
+
      <br />
-     <Button type="submit" variant="outline-primary">Submit</Button>
+     <Button type="submit" variant="outline-primary" >Submit</Button>
      
     </Form>
           </Row>

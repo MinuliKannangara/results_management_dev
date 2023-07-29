@@ -8,12 +8,37 @@ const { Op, literal } = require("sequelize");
 
 router.post("/NExamCounts", async (req, res) => {
   try {
-    const { counts, year } = req.body;
-    const uploadedCounts = await NationalExamSchoolCounts.create({
+    const { counts, year,examName } = req.body;
+
+    const existingRecord = await NationalExamSchoolCounts.findOne({
+      where:{
+        year: year,
+        school_ID: counts.school_ID,
+        examination_name: examName,
+      }
+    })
+
+    if(existingRecord){
+       await NationalExamSchoolCounts.update(
+        {
+          satCount: counts.satCount,
+          passCount: counts.passCount,
+        },
+        {
+          where:{
+            year: year,
+            school_ID: counts.school_ID,
+            examination_name: examName,
+          }
+        }
+       )
+    } else {
+ const uploadedCounts = await NationalExamSchoolCounts.create({
       ...counts,
       year: year,
     });
     res.json(uploadedCounts);
+    } 
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({ error: "Failed to upload counts." });

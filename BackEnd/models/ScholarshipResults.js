@@ -72,13 +72,6 @@ module.exports = (sequelize, DataTypes)=>{
     });
 
     ScholarshipResults.associate = (models) => {
-        
-           
-        ScholarshipResults.belongsTo(models.Subject,{
-                foreignKey:"subject_ID",
-                onDelete: 'CASCADE',
-                onUpdate: 'CASCADE'
-            });
 
             ScholarshipResults.belongsTo(models.School,{
                 foreignKey:"school_ID",

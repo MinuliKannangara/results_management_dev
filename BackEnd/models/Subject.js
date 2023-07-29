@@ -36,9 +36,6 @@ module.exports = (sequelize, DataTypes)=>{
             foreignKey:"subject_ID",
         });
 
-        Subject.hasMany(models.ScholarshipResults,{
-            foreignKey:"subject_ID",
-        });
     };
 
     return Subject;

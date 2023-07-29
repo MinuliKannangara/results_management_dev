@@ -14,8 +14,6 @@ function UploadExaminationResults() {
   const {authState} = useContext(AuthContext);
   const schoolID = authState.schoolID;
 
-  const [selectedYear, setSelectedYear] = useState(currentYear);
-
   //to get data from the database
   const [subjects, setSubjects] = useState([]);
   const [storedResults, setStoredResults] = useState([]);
@@ -29,16 +27,15 @@ function UploadExaminationResults() {
     school_ID:schoolID,
     examination_name:"O/L",
   }
-  const [FormVlaues, setFormValues] = useState(initialValues)
+  const [FormVlaues, setFormValues] = useState(initialValues);
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/OLResults/${schoolID}/${selectedYear}`).then((response) => {
+    axios.get(`http://localhost:3001/OLResults/${schoolID}/${currentYear}`).then((response) => {
       setSubjects(response.data.subjectList);
       setStoredResults(response.data.results);
     });
-  }, [selectedYear]);
+  }, []);
 
-console.log("stored results",storedResults);
 
   useEffect(() => {
     setMarks(subjects.map((subject) => ({ subject_ID: subject.subject_ID, A: 0, B: 0, C: 0, S: 0, W: 0, Absent: 0,sat: 0 , pass: 0})));
@@ -54,6 +51,23 @@ console.log("stored results",storedResults);
   };
 
   const uploadMarks = () => {
+ 
+// Validate marks before uploading
+for (const mark of marks) {
+  if (
+    mark.A < 0 ||
+    mark.B < 0 ||
+    mark.C < 0 ||
+    mark.S < 0 ||
+    mark.W < 0 ||
+    mark.Absent < 0 ||
+    mark.sat < 0 ||
+    mark.pass < 0
+  ) {
+    alert("Invalid marks entered. Marks cannot be negative.");
+    return;
+  }
+}
     const results = subjects.map((subject) => ({
       subjectID: subject.subject_ID,
       ...marks.find((mark) => mark.subject_ID === subject.subject_ID),
@@ -62,12 +76,24 @@ console.log("stored results",storedResults);
     console.log("Data to be uploaded:", results);
 
     axios.post('http://localhost:3001/OLResults', {
-      year: selectedYear,
+      year: currentYear,
       schoolID: schoolID,
       results: results,
     }).then((response) => {
-      console.log("Response from server:", response.data);
-    });
+      if (!response.data.error) {
+        // Update button style and text for success
+        document.getElementById("btn").classList.remove("btn-outline-primary");
+        document.getElementById("btn").classList.add("btn-outline-success");
+        document.getElementById("btn").innerHTML = "Submitted";
+         } else {
+           document.getElementById("btn").classList.remove("btn-outline-primary");
+       document.getElementById("btn").classList.add("btn-outline-danger");
+       document.getElementById("btn").innerHTML = "Check data and Retry";
+         }
+       })
+       .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   //for the form
@@ -78,11 +104,20 @@ console.log("stored results",storedResults);
   }
 
   const submitCounts = (e) => {
-  
+    e.preventDefault();
+      // validation
+  if (FormVlaues.satCount <= 0 || FormVlaues.passCount <= 0) {
+    alert("Please enter valid values for Sat Count and Pass Count.");
+    return;
+  } else if(FormVlaues.satCount<FormVlaues.passCount){
+    alert("Invalid Inputs")
+  }
+
     axios
       .post('http://localhost:3001/NationalExaminationDetails/NExamCounts',{
         counts: FormVlaues,
-        year:selectedYear,
+        year:currentYear,
+        examName: "O/L",
       })
       .then((response) => {
         console.log("Response from server:", response.data);
@@ -105,26 +140,10 @@ console.log("stored results",storedResults);
         showButtons={true}
       />
 
-      <Container className="DropdownDiv2">
+      <Container fluid className="div_aca_yr divAddStudentTable">
         <Row>
         <p className='pTopDiv' style={{marginLeft:"500px"}}>O/L Examination Results</p>
-          <Col lg={5} sm={12} className="divAllDropdown">
-            <DropdownButton className="customDropdownButton" id="dropdown-basic-button" title={`${selectedYear}`}>
-              <Dropdown.Item className="customDropdown" onClick={() => setSelectedYear(currentYear)}>
-                {currentYear}
-              </Dropdown.Item>
-              <Dropdown.Item className="customDropdown" onClick={() => setSelectedYear(currentYear - 1)}>
-                {currentYear - 1}
-              </Dropdown.Item>
-              <Dropdown.Item className="customDropdown" onClick={() => setSelectedYear(currentYear - 2)}>
-                {currentYear - 2}
-              </Dropdown.Item>
-            </DropdownButton>
-          </Col>
         </Row>
-      </Container>
-
-      <Container fluid className="div_aca_yr divAddStudentTable">
         <Row className="TableRoWUp">
           <Col md={2} sm={6}></Col>
         </Row>
@@ -153,7 +172,7 @@ console.log("stored results",storedResults);
                     contentEditable="true"
                     onBlur={(event) => handleMarksChange(subject.subject_ID, 'A', parseInt(event.target.textContent))}
                   >
-                     {/* {storedResults.length >0? storedResults}  */}
+                    
                       {
                         storedResults.map((result) => {
                           if (result.subject_ID === subject.subject_ID) {
@@ -239,7 +258,7 @@ console.log("stored results",storedResults);
             </tbody>
           </Table>
          
-          <Button variant="outline-primary" size="lg"  onClick={uploadMarks}>
+          <Button variant="outline-primary" size="lg" id='btn'  onClick={uploadMarks}>
             Upload
           </Button>
         </Row>
@@ -247,12 +266,14 @@ console.log("stored results",storedResults);
         <Row style={{border:"3px solid black", margin:"13px 4px 13px 4px", padding:"10px"}}>
           <Form onSubmit={submitCounts}>
       <Form.Label htmlFor="inputPassword5">Total Sat Count</Form.Label>
-    
-      <Form.Control type="text" placeholder="Enter sat count here.."  name="satCount" onChange={handleChange} />
+
+      <Form.Control type="number" placeholder="Enter sat count here.."  name="satCount" onChange={handleChange} />
+      {FormVlaues.satCount <= 0 && <p className="error-message">Sat Count must be greater than 0.</p>}
       <br />
       <Form.Label htmlFor="inputPassword5">Total Pass Count</Form.Label>
     
-      <Form.Control type="text" placeholder="Enter pass count here.." name="passCount" onChange={handleChange} />
+      <Form.Control type="number" placeholder="Enter pass count here.." name="passCount" onChange={handleChange} />
+      {FormVlaues.passCount <= 0 && <p className="error-message">Pass Count must be greater than 0.</p>}
      <br />
      <Button type="submit" variant="outline-primary">Submit</Button>
      
