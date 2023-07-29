@@ -15,7 +15,12 @@ function UploadExaminationResults() {
   const schoolID = authState.schoolID;
 
   const [selectedYear, setSelectedYear] = useState(currentYear);
+
+  //to get data from the database
   const [subjects, setSubjects] = useState([]);
+  const [storedResults, setStoredResults] = useState([]);
+
+  //to store the marks filled by the user
   const [marks, setMarks] = useState([]);
 
   const initialValues = {
@@ -27,10 +32,13 @@ function UploadExaminationResults() {
   const [FormVlaues, setFormValues] = useState(initialValues)
 
   useEffect(() => {
-    axios.get('http://localhost:3001/OLResults').then((response) => {
-      setSubjects(response.data);
+    axios.get(`http://localhost:3001/OLResults/${schoolID}/${selectedYear}`).then((response) => {
+      setSubjects(response.data.subjectList);
+      setStoredResults(response.data.results);
     });
-  }, []);
+  }, [selectedYear]);
+
+console.log("stored results",storedResults);
 
   useEffect(() => {
     setMarks(subjects.map((subject) => ({ subject_ID: subject.subject_ID, A: 0, B: 0, C: 0, S: 0, W: 0, Absent: 0,sat: 0 , pass: 0})));
@@ -144,35 +152,88 @@ function UploadExaminationResults() {
                   <td
                     contentEditable="true"
                     onBlur={(event) => handleMarksChange(subject.subject_ID, 'A', parseInt(event.target.textContent))}
-                  ></td>
+                  >
+                     {/* {storedResults.length >0? storedResults}  */}
+                      {
+                        storedResults.map((result) => {
+                          if (result.subject_ID === subject.subject_ID) {
+                            return result.A_Passes;
+                          } else {
+                            return null; // or any other fallback value
+                          }
+                        })
+                      }
+                     
+                  </td>
                   <td
                     contentEditable="true"
                     onBlur={(event) => handleMarksChange(subject.subject_ID, 'B', parseInt(event.target.textContent))}
-                  ></td>
+                  >
+                    {storedResults.map((result) =>{
+                      if (result.subject_ID === subject.subject_ID){
+                        return result.B_Passes                     }
+                    })}
+                  </td>
                   <td
                     contentEditable="true"
                     onBlur={(event) => handleMarksChange(subject.subject_ID, 'C', parseInt(event.target.textContent))}
-                  ></td>
+                  >
+                    {storedResults.map((result) =>{
+                      if(result.subject_ID === subject.subject_ID){
+                        return result.C_Passes
+                      }
+                    })}
+                  </td>
                   <td
                     contentEditable="true"
                     onBlur={(event) => handleMarksChange(subject.subject_ID, 'S', parseInt(event.target.textContent))}
-                  ></td>
+                  >
+                     {storedResults.map((result) =>{
+                      if(result.subject_ID === subject.subject_ID){
+                        return result.S_Passes
+                      }
+                    })}
+                  </td>
                   <td
                     contentEditable="true"
                     onBlur={(event) => handleMarksChange(subject.subject_ID, 'W', parseInt(event.target.textContent))}
-                  ></td>
+                  >
+                      {storedResults.map((result) =>{
+                      if(result.subject_ID === subject.subject_ID){
+                        return result.W_Passes
+                      }
+                    })}
+                  </td>
                   <td
                     contentEditable="true"
                     onBlur={(event) => handleMarksChange(subject.subject_ID, 'Absent', parseInt(event.target.textContent))}
-                  ></td>
+                  >
+                      {storedResults.map((result) =>{
+                      if(result.subject_ID === subject.subject_ID){
+                        return result.absent
+                      }
+                    })}
+                  </td>
                   <td
                   contentEditable="true"
                   onBlur={(event) => handleMarksChange(subject.subject_ID, 'sat', parseInt(event.target.textContent))}
-                  ></td>
+                  >
+                      {storedResults.map((result) =>{
+                      if(result.subject_ID === subject.subject_ID){
+                        return result.NumOfSat
+                      }
+                    })}
+                  </td>
                   <td
                   contentEditable="true"
                   onBlur={(event) => handleMarksChange(subject.subject_ID, 'pass', parseInt(event.target.textContent))}
-                  ></td>
+                  >
+                      {storedResults.map((result) =>{
+                      if(result.subject_ID === subject.subject_ID){
+                        return result.NumOfPass
+                      }
+                    })}
+                  </td>
                 </tr>
               ))}
             </tbody>

@@ -51,6 +51,10 @@ router.get("/", async(req, res)=>{
                 }
             ],
         });
+
+        // const Results = await ALResults.findAll({
+
+        // })
         res.json(subjectList);
     }catch(err){
         res.json({message:err});
