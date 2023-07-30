@@ -1,14 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect,useRef } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { Button } from 'react-bootstrap';
 import NavBar from '../NavBar/NavBar';
-import { Dropdown } from 'react-bootstrap';
 import './OLResults.css';
-import axios, { Axios } from 'axios';
 import DivisionWiseTable from '../Charts/DivWiseTable';
-import DropdownButtonForAll from '../OtherComponents/Dropdown';
-import SubjectWiseTable from '../Charts/SubjectWiseTable';
 import SubjectWiseAL from './SubjectWiseAL';
+import DivWiseBarChart from '../Charts/BarChartDivWise';
+import { useReactToPrint } from 'react-to-print';	
+import '../OtherComponents/DownloadButton.css';
 
 const ALResults = () => {
   const currentYear = new Date().getFullYear();
@@ -82,6 +80,77 @@ useEffect(() => {
   };
 
 
+//for the bar chart
+  const setData = (year) => {
+    const calculatePercentage = (numerator, denominator) => {
+      if (denominator === 0) {
+        return '0'; // Return '0%' if denominator is 0 to avoid displaying NaN in the chart
+      }
+      const percentage = Math.floor((numerator / denominator) * 100);
+      return percentage;
+    };
+
+    let data = []; // Array to store data for the bar chart
+    if(year===currentYear){
+       data = [
+        { name: 'Meerigama', value: calculatePercentage(meerigamaPassedYear1, meerigamaCountYear1) },
+        { name: 'Divulapitiya', value: calculatePercentage(divulapitiyaPassedYear1, divulapitiyaCountYear1) },
+        { name: 'Minuwangoda', value: calculatePercentage(minuwangodaPassedYear1, minuwangodaCountYear1) },
+      ];
+    } else if(year===currentYear-1){
+       data = [
+        { name: 'Meerigama', value: calculatePercentage(meerigamaPassedYear2, meerigamaCountYear2) },
+        { name: 'Divulapitiya', value: calculatePercentage(divulapitiyaPassedYear2, divulapitiyaCountYear2) },
+        { name: 'Minuwangoda', value: calculatePercentage(minuwangodaPassedYear2, minuwangodaCountYear2) },
+      ];
+    } else if(year===currentYear-2){
+       data = [
+        { name: 'Meerigama', value: calculatePercentage(meerigamaPassedYear3, meerigamaCountYear3) },
+        { name: 'Divulapitiya', value: calculatePercentage(divulapitiyaPassedYear3, divulapitiyaCountYear3) },
+        { name: 'Minuwangoda', value: calculatePercentage(minuwangodaPassedYear3, minuwangodaCountYear3) },
+      ];
+    } else if(year===currentYear-3){
+       data = [
+        { name: 'Meerigama', value: calculatePercentage(meerigamaPassedYear4, meerigamaCountYear4) },
+        { name: 'Divulapitiya', value: calculatePercentage(divulapitiyaPassedYear4, divulapitiyaCountYear4) },
+        { name: 'Minuwangoda', value: calculatePercentage(minuwangodaPassedYear4, minuwangodaCountYear4) },
+      ];
+    } else if(year===currentYear-4){
+       data = [
+        { name: 'Meerigama', value: calculatePercentage(meerigamaPassedYear5, meerigamaCountYear5) },
+        { name: 'Divulapitiya', value: calculatePercentage(divulapitiyaPassedYear5, divulapitiyaCountYear5) },
+        { name: 'Minuwangoda', value: calculatePercentage(minuwangodaPassedYear5, minuwangodaCountYear5) },
+      ];
+    }
+
+    // Filter out data with '0%' values to avoid showing bars for data not available
+    const filteredData = data.filter((entry) => entry.value !== '0');
+  
+    return filteredData;
+  };
+
+//   const customStyles = `
+//   body {
+//     padding: 0 !important;
+//   }
+  
+
+// `;
+
+  
+  const componentPDF = useRef();
+
+  const generatePDF = useReactToPrint({
+    content: () => componentPDF.current,
+    documentTitle: 'A/L Results- Division Wise Analysis',
+    // onAfterPrint: () => alert('Printed'),
+    //pageStyle: customStyles, // Pass the custom styles to the PDF
+  });
+
+
+  
+
+
 return (
 <div>
 
@@ -90,15 +159,17 @@ PageName="A/L Results Analysis"
 showButtons={false}
 />
 
-
-      <Container fluid>
+<div ref={componentPDF}>
+<Container fluid>
             <Row><h3 className='topicsP'>Division Wise Analysis</h3></Row>
       </Container>
-
-      <Container fluid>
+     
+      <Container fluid  >
+     
             <Row>
                   <Col lg={6} md={8} sm={6} className='divColumns'>
-                    <h3 className='tableTopicH3'>{currentYear}</h3>
+                    <div style={{marginLeft:'70px'}}>
+                    <h4 className='tableTopicH3'>{currentYear}</h4>
                     <DivisionWiseTable 
                     minuwangoda={minuwangodaCountYear1} 
                     meerigama={meerigamaCountYear1} 
@@ -107,11 +178,12 @@ showButtons={false}
                     minuangodaPassCount={minuwangodaPassedYear1}
                     divulapitiyaPassCount={divulapitiyaPassedYear1}
                     />
-
+                    </div>
                   </Col>
-                  <Col lg={6} md={8} sm={6} className='divColumns'>
+                  <Col lg={6} md={8} sm={6} className='divColumns' style={{paddingLeft:"120px",paddingTop:"30px"}}>
 
-              
+
+                  <DivWiseBarChart data={setData(currentYear)} />
               
                   </Col>
                  
@@ -119,7 +191,8 @@ showButtons={false}
 
             <Row>
                   <Col lg={6} md={8} sm={6} className='divColumns'>
-                    <h3 className='tableTopicH3'>{currentYear-1}</h3>
+                  <div style={{marginLeft:'70px'}}>
+                    <h4 className='tableTopicH3'>{currentYear-1}</h4>
                     <DivisionWiseTable 
                     minuwangoda={minuwangodaCountYear2} 
                     meerigama={meerigamaCountYear2} 
@@ -128,19 +201,20 @@ showButtons={false}
                     minuangodaPassCount={minuwangodaPassedYear2}
                     divulapitiyaPassCount={divulapitiyaPassedYear2}
                     />
-
+                    </div>
                   </Col>
-                  <Col lg={6} md={8} sm={6} className='divColumns'>
+                  <Col lg={6} md={8} sm={6} className='divColumns' style={{paddingLeft:"120px",paddingTop:"30px"}}>
 
-              
-              
-                  </Col>
+                  <DivWiseBarChart data={setData(currentYear-1)} />
+
+</Col>
                  
             </Row>
 
             <Row>
                   <Col lg={6} md={8} sm={6} className='divColumns'>
-                    <h3 className='tableTopicH3'>{currentYear-2}</h3>
+                  <div style={{marginLeft:'70px'}}>
+                    <h4 className='tableTopicH3'>{currentYear-2}</h4>
                     <DivisionWiseTable 
                     minuwangoda={minuwangodaCountYear3} 
                     meerigama={meerigamaCountYear3} 
@@ -149,11 +223,11 @@ showButtons={false}
                     minuangodaPassCount={minuwangodaPassedYear3}
                     divulapitiyaPassCount={divulapitiyaPassedYear3}
                     />
-
+                    </div>
                   </Col>
-                  <Col lg={6} md={8} sm={6} className='divColumns'>
+                  <Col lg={6} md={8} sm={6} className='divColumns' style={{paddingLeft:"120px",paddingTop:"30px"}}>
 
-              
+                  <DivWiseBarChart data={setData(currentYear-2)}/>
               
                   </Col>
                  
@@ -161,7 +235,8 @@ showButtons={false}
 
             <Row>
                   <Col lg={6} md={8} sm={6} className='divColumns'>
-                    <h3 className='tableTopicH3'>{currentYear-4}</h3>
+                  <div style={{marginLeft:'70px'}}>
+                    <h4 className='tableTopicH3'>{currentYear-3}</h4>
                     <DivisionWiseTable 
                     minuwangoda={minuwangodaCountYear4} 
                     meerigama={meerigamaCountYear4} 
@@ -170,11 +245,11 @@ showButtons={false}
                     minuangodaPassCount={minuwangodaPassedYear4}
                     divulapitiyaPassCount={divulapitiyaPassedYear4}
                     />
-
+                    </div>
                   </Col>
-                  <Col lg={6} md={8} sm={6} className='divColumns'>
+                  <Col lg={6} md={8} sm={6} className='divColumns' style={{paddingLeft:"120px",paddingTop:"30px"}}>
 
-              
+                  <DivWiseBarChart data={setData(currentYear-3)}/>
               
                   </Col>
                  
@@ -182,7 +257,8 @@ showButtons={false}
 
             <Row>
                   <Col lg={6} md={8} sm={6} className='divColumns'>
-                    <h3 className='tableTopicH3'>{currentYear-5}</h3>
+                  <div style={{marginLeft:'70px'}}>
+                    <h4 className='tableTopicH3'>{currentYear-4}</h4>
                     <DivisionWiseTable 
                     minuwangoda={minuwangodaCountYear5} 
                     meerigama={meerigamaCountYear5} 
@@ -191,25 +267,26 @@ showButtons={false}
                     minuangodaPassCount={minuwangodaPassedYear5}
                     divulapitiyaPassCount={divulapitiyaPassedYear5}
                     />
-
+                    </div>
                   </Col>
-                  <Col lg={6} md={8} sm={6} className='divColumns'>
+                  <Col lg={6} md={8} sm={6} className='divColumns' style={{paddingLeft:"120px",paddingTop:"30px"}}>
 
-              
+                  <DivWiseBarChart data={setData(currentYear-4)}/>
               
                   </Col>
                  
             </Row>
-      </Container>
+      </Container>   
+</div>
 
-      <Container fluid>
+<Row>
+<button onClick={generatePDF} className="buttonDownload" style={{width:"140px",marginLeft:"1330px",height:"40px"}}>Generate PDF</button> 
+</Row>    
+<Container fluid>
+      <div style={{marginLeft:'70px'}}>
         <SubjectWiseAL/>
+        </div>
       </Container>
-
-
-
-    
-
 </div>
 );
 };

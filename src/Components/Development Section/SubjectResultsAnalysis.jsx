@@ -1,4 +1,4 @@
-import React, { useEffect, useState, PureComponent } from 'react';
+import React, { useEffect, useState, PureComponent,useRef } from 'react';
 import { Container, Row, Col,FormLabel } from 'react-bootstrap';
 // import './SchoolDashboard.css';
 import NavBar from '../NavBar/NavBar';
@@ -6,6 +6,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import axios from 'axios';
 import Table from 'react-bootstrap/Table';
+import { useReactToPrint } from 'react-to-print';
+import DownloadPDFButton from '../OtherComponents/ZonalSubjectPDF';
 
 const ZonalSubjctResults= () => {
 
@@ -19,6 +21,14 @@ const ZonalSubjctResults= () => {
         return number;
       };
     
+      
+  const componentPDF = useRef();
+
+  // const generatePDF = useReactToPrint({
+  //   content: () => componentPDF.current,
+  //   documentTitle: 'MemberID',
+  //   onAfterPrint: () => alert('Printed')
+  // });
     
   //to send the details to the database
   const [selectedGrade, setSelectedGrade] = useState('6');
@@ -129,7 +139,10 @@ showButtons={false}/>
 </Row>
 </Container>
 
-<Container fluid>
+<Container fluid ref={componentPDF}>
+  <Row style={{marginLeft:"1300px"}}>
+  <DownloadPDFButton values={{ division: selectedDivision, grade: selectedGrade, year: selectedyear, term: selectedTerm, subject: selectedSubject, table : {...studentCounts} }} />
+  </Row>
         <Row>
           <Table striped bordered hover size="sm" style={{ width: '100%' }}>
           <thead>
@@ -160,6 +173,7 @@ showButtons={false}/>
             </tbody>
           </Table>
         </Row>
+        {/* <button onClick={generatePDF}>Generate PDF</button> */}
       </Container>
  
 

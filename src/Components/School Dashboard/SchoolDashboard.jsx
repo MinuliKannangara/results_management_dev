@@ -56,7 +56,7 @@ const SchoolDashboard= () => {
     const subjectData = subjectCounts[subjectName];
   
     if (!subjectData) {
-      return []; // Return an empty array or handle the error condition appropriately
+      return []; // Return an empty array
     }
   
     const data = [
@@ -176,13 +176,6 @@ showButtons={false}
 </Container>
 
 <br/>
-{/* 
-<Container fluid className="divAllDropdown" style={{marginTop:"50px"}}>
-
-
-</Container>
-  */}
-
 
 
 <Container fluid>

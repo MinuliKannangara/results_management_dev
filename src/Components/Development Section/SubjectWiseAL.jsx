@@ -60,7 +60,7 @@ return (
          <Row>
          {Subjects.map((subject, index) => (
         <Col lg={6} md={8} sm={6} className='divColumns' key={index}>
-          <h3 className='tableTopicH3'>{subject}</h3>
+          <h4 className='tableTopicH3'>{subject}</h4>
           <SubjectWiseTable
           minuwangodaSatYear1={subjectCounts1?.[`${subject}`]?.Minuwangoda?.satCount || 0}
           minuwangodaPassYear1={subjectCounts1?.[`${subject}`]?.Minuwangoda?.passCount || 0}
