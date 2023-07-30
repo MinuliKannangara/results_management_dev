@@ -11,7 +11,6 @@ const StudentPerformance = () => {
 
   const {authState} = useContext(AuthContext);
   const CurrentYear = new Date().getFullYear();
-  // const school = 'ascsdh';
   const schoolID = authState.schoolID;
 
   //for the grade dropdown
@@ -67,7 +66,7 @@ showButtons={false}/>
           </Col>
 
           <Col lg={5} sm={12}>
-          <DropdownButton className='customDropdownButton' id="dropdown-basic-button" title={'Grade '+`${selectedGrade}`} >
+          <DropdownButton className='customDropdownButton' variant="outline-success" id="dropdown-basic-button" title={'Grade '+`${selectedGrade}`} >
 
             {grades.map((grade,index) =>(
               <Dropdown.Item className='customDropdown' key={index}  onClick={() => setSelectedGrade(extractNumber(grade))}>{`${grade}`}</Dropdown.Item>
@@ -78,6 +77,19 @@ showButtons={false}/>
 
             
           </Col>
+          <Col lg={1} sm={12}>
+            <FormLabel htmlFor="class1" className="labelForm">
+              Term
+            </FormLabel>
+          </Col>
+          <Col lg={5} sm={12}>
+            <DropdownButton className="customDropdownButton" variant="outline-success" id="dropdown-basic-button" title={`${selectedTerm}`}>
+            <Dropdown.Item className="customDropdown" onClick={() => setSelectedTerm("1st Term")}> 1st Term </Dropdown.Item>
+            <Dropdown.Item className="customDropdown" onClick={() => setSelectedTerm("2nd Term")}> 2nd Term </Dropdown.Item>
+            <Dropdown.Item className="customDropdown" onClick={() => setSelectedTerm("3rd Term")}> 3rd Term </Dropdown.Item>
+            </DropdownButton>
+          </Col>
+         
          
      
         </Row>
@@ -89,7 +101,7 @@ showButtons={false}/>
             </FormLabel>
           </Col>
           <Col lg={5} sm={12}>
-          <DropdownButton className='customDropdownButton' id="dropdown-basic-button" title={`${selectedYear}`} >
+          <DropdownButton className='customDropdownButton' variant="outline-success" id="dropdown-basic-button" title={`${selectedYear}`} >
       <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear)}>{CurrentYear}</Dropdown.Item>
       <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear-1)}>{CurrentYear-1}</Dropdown.Item>
       <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear-2)}>{CurrentYear-2}</Dropdown.Item>
@@ -99,21 +111,7 @@ showButtons={false}/>
     
     </DropdownButton>
           </Col>
-          <Col lg={1} sm={12}>
-            <FormLabel htmlFor="class1" className="labelForm">
-              Term
-            </FormLabel>
-          </Col>
-          <Col lg={5} sm={12}>
-            <DropdownButton className="customDropdownButton" id="dropdown-basic-button" title={`${selectedTerm}`}>
-            <Dropdown.Item className="customDropdown" onClick={() => setSelectedTerm("1st Term")}> 1st Term </Dropdown.Item>
-            <Dropdown.Item className="customDropdown" onClick={() => setSelectedTerm("2nd Term")}> 2nd Term </Dropdown.Item>
-            <Dropdown.Item className="customDropdown" onClick={() => setSelectedTerm("3rd Term")}> 3rd Term </Dropdown.Item>
-            </DropdownButton>
-          </Col>
-          <Col lg={2} sm={12}>
-            
-          </Col>
+     
         </Row>
       </Container>
 

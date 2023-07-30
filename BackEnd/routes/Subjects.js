@@ -21,6 +21,40 @@ router.post("/", async (req, res) => {
     res.json(createSubjectResults);
   })
 
+  router.get("/subjectLists", async (req,res) =>{
+    const grd6_9subjectList = await Subject.findAll({
+      attributes:['subject'],
+      include:{
+        attributes:[],
+        model:SubjectCategory,
+        where:{
+          name:'grade 6-9'
+        }
+      }
+    });
+    const OLsubjectList = await Subject.findAll({
+      attributes:['subject'],
+      include:{
+        attributes:[],
+        model:SubjectCategory,
+        where:{
+          name:'O/L'
+        }
+      }
+    });
+    const ALsubjectList = await Subject.findAll({
+      attributes:['subject'],
+      include:{
+        attributes:[],
+        model:SubjectCategory,
+        where:{
+          name:'A/L'
+        }
+      }
+    });
+    res.json({grd6_9subjectList,OLsubjectList,ALsubjectList});
+  })
+
   router.put("/SubjectResults", async (req, res) => {
     const subjectResults = req.body;
     const updateSubjectResults = await SubjectResults.update(subjectResults, {

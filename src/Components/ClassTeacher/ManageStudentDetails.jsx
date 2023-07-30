@@ -131,7 +131,7 @@ const deleteStudent = (studentID) => {
             <p className='pLables'>Academic Year</p>
           </Col>
           <Col md={3} sm={6}>
-          <DropdownButton className='customDropdownButton' id="dropdown-basic-button" title={`${selectedYear}`} >
+          <DropdownButton className='customDropdownButton' variant="outline-success" id="dropdown-basic-button" title={`${selectedYear}`} >
       <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear)}>{CurrentYear}</Dropdown.Item>
       <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear-1)}>{CurrentYear-1}</Dropdown.Item>
       <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear-2)}>{CurrentYear-2}</Dropdown.Item>
@@ -179,11 +179,12 @@ const deleteStudent = (studentID) => {
             <p className='pAddStudent'>Total Students</p>
           </Col>
           <Col md={9}>
-            <form action="">
-              <input type="text"
-              value={listOfStudents.length} readOnly />
-            </form>
-            
+          <input type="text" 
+              style={{width:'10%', alignItems:'left', border:'none', 
+              backgroundColor:'transparent', color:'#000000', fontSize:'20px', fontWeight:'bold'}}
+              value={listOfStudents.length}readOnly 
+               />
+         
           </Col>
 
         </Row>
@@ -247,9 +248,7 @@ const deleteStudent = (studentID) => {
             
           </Col>
           <Col lg={4} sm={12}>
-          <Form>
-          <Button variant="primary"  className='btnCrudGroup'>Clear</Button>{' '}
-          </Form>
+          
             
           </Col>
         </Row>

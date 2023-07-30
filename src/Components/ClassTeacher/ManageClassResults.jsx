@@ -39,6 +39,8 @@ const [selectedTerm, setSelectedTerm] = useState('1st Term');
     .catch((error) => {console.log(error)});
    },[enteredUsername,selectedYear, selectedTerm]);
 
+   
+  const [searchQuery, setSearchQuery] = useState('');
 
 return (
 <div>
@@ -86,7 +88,7 @@ showButtons={false} />
           </Col>
 
           <Col md={3} sm={6} lg={3}>
-          <DropdownButton className='customDropdownButton' id="dropdown-basic-button" title={`${selectedYear}`}>
+          <DropdownButton className='customDropdownButton' variant="outline-success" id="dropdown-basic-button" title={`${selectedYear}`}>
       <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear)}>{CurrentYear}</Dropdown.Item>
       <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear-1)}>{CurrentYear-1}</Dropdown.Item>
       <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear-2)}>{CurrentYear-2}</Dropdown.Item>
@@ -98,7 +100,7 @@ showButtons={false} />
             
            </Col>
            <Col md={3} sm={6} lg={3}>
-           <DropdownButton className='customDropdownButton' id="dropdown-basic-button" title={`${selectedTerm}`}>
+           <DropdownButton className='customDropdownButton' variant="outline-success" id="dropdown-basic-button" title={`${selectedTerm}`}>
     <Dropdown.Item className='customDropdown' onClick={() => setSelectedTerm("1st Term")}>1st Term</Dropdown.Item>
     <Dropdown.Item className='customDropdown' onClick={() => setSelectedTerm("2nd Term")}>2nd Term</Dropdown.Item>
     <Dropdown.Item className='customDropdown' onClick={() => setSelectedTerm("3rd Term")}>3rd Term</Dropdown.Item>
@@ -106,7 +108,12 @@ showButtons={false} />
             
            </Col>
           <Col md={4} sm={6} lg={2}>
-           <p className='pAddStudent'> add a search bar</p>
+          <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search by name"
+        />
             
           </Col>
          
@@ -129,7 +136,11 @@ showButtons={false} />
     </tr>
   </thead>
   <tbody>
-    {nameList.map((name, index) => (
+    {nameList
+      .filter((name) =>
+        name.student_name.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    .map((name, index) => (
       <tr key={index}>
         <td>{index + 1}</td>
         <td>{name.index_number}</td>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext,useRef } from 'react';
 import { Container, Row, Col,FormLabel } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import './GreadHead.css';
@@ -8,6 +8,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import axios from 'axios';
 import { AuthContext } from '../../helpers/AuthContext';
+import { useReactToPrint } from 'react-to-print';			
+import '../OtherComponents/DownloadButton.css';
 
 
 const PrizeHolders = () => {
@@ -41,6 +43,26 @@ const PrizeHolders = () => {
   }, [selectedGrade, selectedyear]);
 
    
+  const customStyles = `
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    padding: 20px;
+    font-size: 14px;
+  }
+  .pdf-container {
+    width: 100%; /* Set the width to 100% of the PDF page */
+    margin: 20px; /* Add your desired margins here */
+  }
+  /* Add any other custom styles for the PDF here */
+`;
+const componentPDF = useRef();
+
+const generatePDF = useReactToPrint({
+  content: () => componentPDF.current,
+  documentTitle: 'A/L Results- Division Wise Analysis',
+  pageStyle: customStyles, 
+});
 
 return (
 <div>
@@ -48,7 +70,7 @@ return (
 <NavBar PageName="Prize Holders"
 showButtons={false}/>
 
-<Container fluid className='topDiv'>
+<Container fluid className='topDiv' ref={componentPDF}>
         <Row>
          <p className='pTopDiv'>Prize Holders List</p>
         </Row>
@@ -64,7 +86,7 @@ showButtons={false}/>
           </Col>
 
           <Col lg={5} sm={12}>
-          <DropdownButton className='customDropdownButton' id="dropdown-basic-button" title={'Grade '+`${selectedGrade}`} >
+          <DropdownButton className='customDropdownButton' variant="outline-success" id="dropdown-basic-button" title={'Grade '+`${selectedGrade}`} >
 
             {grades.map((grade,index) =>(
               <Dropdown.Item className='customDropdown' key={index}  onClick={() => setSelectedGrade(extractNumber(grade))}>{`${grade}`}</Dropdown.Item>
@@ -79,7 +101,7 @@ showButtons={false}/>
             </FormLabel>
           </Col>
           <Col lg={5} sm={12}>
-          <DropdownButton className='customDropdownButton' id="dropdown-basic-button" title={`${selectedyear}`} >
+          <DropdownButton className='customDropdownButton' variant="outline-success" id="dropdown-basic-button" title={`${selectedyear}`} >
       <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear)}>{CurrentYear}</Dropdown.Item>
       <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear-1)}>{CurrentYear-1}</Dropdown.Item>
       <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear-2)}>{CurrentYear-2}</Dropdown.Item>
@@ -89,8 +111,6 @@ showButtons={false}/>
     
     </DropdownButton>
           </Col>
-         
-     
           
         </Row>
       </Container>
@@ -154,6 +174,10 @@ showButtons={false}/>
            
         </Row>
       </Container>
+      <Row>
+
+      <button onClick={generatePDF} className="buttonDownload" style={{width:"140px",marginLeft:"1330px",height:"40px"}}>Generate PDF</button> 
+      </Row>
 </div>
 );
 };

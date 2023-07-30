@@ -1,18 +1,16 @@
-import React, { useEffect, useState, PureComponent ,useContext} from 'react';
+import React, { useEffect, useState, PureComponent ,useContext,useRef} from 'react';
 import { Container, Row, Col,FormLabel } from 'react-bootstrap';
 import './SchoolDashboard.css';
 import NavBar from '../NavBar/NavBar';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import axios from 'axios';
-import DashboardCards from '../OtherComponents/dashboardCards';
-import { faUserGroup,faLandmark } from '@fortawesome/free-solid-svg-icons'
-// import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
-import { PieChart, Pie, ResponsiveContainer, Cell } from 'recharts';
 import PieChartForSchool from '../Charts/PieChartForSchools';
 import SchoolDashboardTable from '../Charts/TableSchoolDashboard';
 import { AuthContext } from '../../helpers/AuthContext';
 import Cards from '../OtherComponents/Cards';
+import { useReactToPrint } from 'react-to-print';			
+import '../OtherComponents/DownloadButton.css';
 
 
 
@@ -93,6 +91,26 @@ const SchoolDashboard= () => {
   }, [selectedGrade, selectedyear, selectedTerm]);
 
 
+  const customStyles = `
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    padding: 20px;
+    font-size: 14px;
+  }
+  .pdf-container {
+    width: 100%; /* Set the width to 100% of the PDF page */
+    margin: 20px; /* Add your desired margins here */
+  }
+  /* Add any other custom styles for the PDF here */
+`;
+const componentPDF = useRef();
+
+const generatePDF = useReactToPrint({
+  content: () => componentPDF.current,
+  documentTitle: 'A/L Results- Division Wise Analysis',
+  pageStyle: customStyles, 
+});
   
 return (
 <div>
@@ -177,17 +195,23 @@ showButtons={false}
 
 <br/>
 
+<Row>
 
-<Container fluid>
+      <button onClick={generatePDF} className="buttonDownload" style={{width:"140px",marginLeft:"1330px",height:"40px"}}>Generate PDF</button> 
+      </Row>
+<Container fluid ref={componentPDF}>
     <Row className='justify-content-center'>
-    <Row style={{  height: "20px", width:"1550px", marginTop:"10px", position:"relative"}}>
-    <p className='PcardsTitle'>Subject Wise Analysis</p>
+
+    <Row style={{  height: "50px", width:"1550px", marginTop:"10px", position:"relative"}}>
+    {/* <p className='PcardsTitle'>Subject Wise Analysis</p> */}
+    <h3 className="tableTopicH3">Subject Wise Analysis</h3>
+    
         
     </Row>
 
     {subjectList.map((subject, index) => (
       <Row key={index} style={{ height: "400px", width: "1550px", marginTop: "10px" }}>
-        <h3 className='tableTopicH3'>{subject.subject}</h3>
+        <h4 className='tableTopicH3'>{subject.subject}</h4>
         <Col lg={6} md={4} sm={12} style={{backgroundColor: "rgb(242, 242, 242)", display: "flex", justifyContent: "center", alignItems: "center"}}>
           
         <SchoolDashboardTable
