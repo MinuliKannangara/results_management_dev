@@ -15,11 +15,6 @@ router.post("/", async (req, res) => {
     res.json(createSubjectCategory);
   });
 
-  router.post("/SubjectResults", async (req, res) =>{
-    const subjectResults = req.body;
-    const createSubjectResults = await SubjectResults.create(subjectResults);
-    res.json(createSubjectResults);
-  })
 
   router.get("/subjectLists", async (req,res) =>{
     const grd6_9subjectList = await Subject.findAll({
@@ -55,18 +50,66 @@ router.post("/", async (req, res) => {
     res.json({grd6_9subjectList,OLsubjectList,ALsubjectList});
   })
 
-  router.put("/SubjectResults", async (req, res) => {
-    const subjectResults = req.body;
-    const updateSubjectResults = await SubjectResults.update(subjectResults, {
-      where: { 
+
+  // router.post("/SubjectResults", async (req, res) =>{
+  //   const subjectResults = req.body;
+  //   const createSubjectResults = await SubjectResults.create(subjectResults);
+  //   res.json(createSubjectResults);
+  // })
+
+  // router.put("/SubjectResults", async (req, res) => {
+  //   const subjectResults = req.body;
+  //   const updateSubjectResults = await SubjectResults.update(subjectResults, {
+  //     where: { 
+  //       student_ID: subjectResults.student_ID,
+  //       subject_ID: subjectResults.subject_ID,
+  //       year: subjectResults.year,
+  //       term: subjectResults.term,
+  //     },
+  //   });
+  //   res.json(updateSubjectResults);
+  // });
+
+
+  router.post("/SubjectResults", async (req, res) =>{
+    try{
+      const subjectResults = req.body;
+
+    const existingRecord = await SubjectResults.findOne({
+      where: {
         student_ID: subjectResults.student_ID,
         subject_ID: subjectResults.subject_ID,
         year: subjectResults.year,
         term: subjectResults.term,
       },
     });
-    res.json(updateSubjectResults);
-  });
+
+    if (existingRecord) {
+      // Update the marks for the existing record
+     const updatedResults= await SubjectResults.update(
+        
+          {marks:subjectResults.marks}
+        ,
+        {
+          where: {
+            student_ID: subjectResults.student_ID,
+            subject_ID: subjectResults.subject_ID,
+            year: subjectResults.year,
+            term: subjectResults.term,
+          },
+        }
+      );
+      res.json(updatedResults);
+      } else{
+        const createSubjectResults = await SubjectResults.create(subjectResults);
+        res.json(createSubjectResults);
+      }
+    }catch(error){
+      console.error(error);
+      res.status(500).json(error.message);
+    }
+  })
+
 
  //used for the manage the subject results page
 
@@ -148,7 +191,6 @@ router.post("/", async (req, res) => {
        category = "O/L";
      } else {
        category = "A/L";
-       // al-bio, al-maths, al-arts, al-commerce dannaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
      }
  
      const listOfSubjects = await Subject.findAll({

@@ -52,7 +52,6 @@ const getSubjectResults = async (indexNumber, subjectName, year, term) => {
         category = "O/L";
       } else {
         category = "A/L";
-        //al-bio, al-maths, al-arts, al-commerce dannaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
       }
   
       const subjectNames = await Subject.findAll({
@@ -78,6 +77,7 @@ const getSubjectResults = async (indexNumber, subjectName, year, term) => {
         ],
         where: {
           class_name: classOfUser.class_name,
+          year: year,
         },
       });
   

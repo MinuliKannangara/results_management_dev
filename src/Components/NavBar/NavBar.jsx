@@ -44,7 +44,7 @@ function NavBar(props) {
   }
 
   if (userRole.includes('Class Teacher')) {
-    sideBarItems.push( 'Manage Student Details', 'Manage Class Results');
+    sideBarItems.push( 'Manage Student Details', 'Manage Class Results', 'Report Cards'	);
   }
   
   if (userRole.includes('Subject Teacher')) {
@@ -52,7 +52,7 @@ function NavBar(props) {
   }
   
   if (userRole.includes('Grade Head') || userRole.includes('Sectional Head')) {
-    sideBarItems.push('Student Performance', 'Prize Holders', 'upload National Examination Results');
+    sideBarItems.push('Student Performance', 'Prize Holders', 'upload National Examination Results','Subject Wise Performance');
   }
 
   if (userRole.includes('Development Officer') || userRole.includes('Planning Officer') || userRole.includes('System Admin')) {

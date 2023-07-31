@@ -67,7 +67,7 @@ showButtons={false} />
           <form action="">
              <label className='pAddStudent'>Total Students :</label>
               <input type="text" 
-              style={{width:'10%', alignItems:'left', border:'none', 
+              style={{width:'12%', alignItems:'left', border:'none', 
               backgroundColor:'transparent', color:'#000000', fontSize:'20px', fontWeight:'bold'}}
               value={nameList.length} readOnly 
                />
@@ -132,7 +132,7 @@ showButtons={false} />
       ))}
       <th>Total</th>
       <th>Average</th>
-      <th>Rank</th>
+      {/* <th>Rank</th> */}
     </tr>
   </thead>
   <tbody>
@@ -163,21 +163,26 @@ showButtons={false} />
     }, 0)}
 </td>
 
-      <td>
-      <td>
-  {Object.values(resultOfStudents[name.index_number] || {}).length > 0
-    ? (Object.values(resultOfStudents[name.index_number] || {})
+    
+<td>
+  {Object.values(resultOfStudents[name.index_number] || {}).length > 0 ? (
+    Math.round(
+      Object.values(resultOfStudents[name.index_number] || {})
         .reduce((total, marks) => {
           if (Array.isArray(marks)) {
             return total + marks.reduce((sum, mark) => sum + mark, 0);
           }
           return total;
         }, 0) /
-        Object.values(resultOfStudents[name.index_number] || {}).length)
-    : 0}
+        Object.values(resultOfStudents[name.index_number] || {}).length
+    )
+  ) : (
+    0
+  )}
 </td>
-      </td>
-        <td>Rank Value</td>
+
+      
+        {/* <td>Rank Value</td> */}
       </tr>
     ))}
   </tbody>

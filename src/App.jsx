@@ -32,6 +32,8 @@ import UploadExaminationResults from './Components/GradeHead/UploadExaminationRe
 import UploadALExamResults from './Components/GradeHead/UploadALExamResults';
 import UploadScholarshipResults from './Components/GradeHead/UploadScholarshipResults';
 import ALResults from './Components/Development Section/ALResults';
+import SubjectWisePerformance from './Components/GradeHead/SubjectPerformances';
+import GenrateReportCards from './Components/ClassTeacher/GenerateReportCards';
 
 
 
@@ -96,6 +98,7 @@ function App() {
               <Route path="/Manage Student Details" element={<ManageStudentDetails />} />
               <Route path="/Manage Class Results" element={<ManageClassResults />} />
               <Route path ="/School Dashboard" element ={<SchoolDashboard/>}/>
+              <Route path ="/Report Cards" element ={<GenrateReportCards/>}/>
             </>
           ) : null}
 
@@ -114,6 +117,7 @@ function App() {
               <Route path ="/Upload National Examination Results" element ={<UploadExaminationResults/>}/>
               <Route path ="/Upload AL Examination Results" element ={<UploadALExamResults/>}/>
               <Route path ="/Upload Scholarship Results" element ={<UploadScholarshipResults/>}/>
+              <Route path ="/Subject Wise Performance" element ={<SubjectWisePerformance/>}/>
             </>
           ) : null}
 

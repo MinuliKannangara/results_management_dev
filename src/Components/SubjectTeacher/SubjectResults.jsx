@@ -130,18 +130,31 @@ const ManageSubjectResults = () => {
       };
   
       // Check if the mark already exists for the student
-      if (Marks.hasOwnProperty(studentID) && Marks[studentID][index]) {
+//       if (Marks.hasOwnProperty(studentID) && Marks[studentID][index]) {
+// console.log("Update mark");
+//         axios
+//           .put("http://localhost:3001/subject/SubjectResults", data)
+//           .then((response) => {
+//             console.log("updated");
+//             console.log(response.data);
+//           })
+//           .catch((error) => {
+//             console.log(error);
+//           });
+//       } else {
+//         console.log("New mark");
+//         axios
+//           .post("http://localhost:3001/subject/SubjectResults", data)
+//           .then((response) => {
+//             console.log("giya");
+//             console.log(response.data);
+//           })
+//           .catch((error) => {
+//             console.log(error);
+//           });
+//       }
 
-        axios
-          .put("http://localhost:3001/subject/SubjectResults", data)
-          .then((response) => {
-            console.log(response.data);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      } else {
-        axios
+          axios
           .post("http://localhost:3001/subject/SubjectResults", data)
           .then((response) => {
             console.log(response.data);
@@ -149,7 +162,6 @@ const ManageSubjectResults = () => {
           .catch((error) => {
             console.log(error);
           });
-      }
       setTimeout(() => {
         setShowAlert(false);
       }, 60);
@@ -349,6 +361,11 @@ const ManageSubjectResults = () => {
               </tr>
             </thead>
             <tbody>
+            <tr>
+                <td>0-19</td>
+                <td>{rangeValues && rangeValues.lessthan19}</td>
+                <td>{rangeValues && `${Math.round((rangeValues.between20and39 / StudentList.length) * 100)}%`}</td>
+              </tr>
             <tr>
                 <td>20-39</td>
                 <td>{rangeValues && rangeValues.between20and39}</td>

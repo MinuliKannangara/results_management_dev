@@ -307,9 +307,6 @@ if (subCategory) {
     }
 
 
-
-      
-      
     res.json({
         AllStudentsCount: AllStudentCount,
         AllClassesCount: distinctClassesCount,
@@ -317,8 +314,7 @@ if (subCategory) {
         TotalStudentsOfGrade:totalStudentsOfGrade,
         subjectCounts: subjectCounts,
         subjectList:subjectList,
-        SchoolDetails:SchoolDetails,
-  
+        SchoolDetails:SchoolDetails,  
     });
   } catch (error) {
     console.error(error);

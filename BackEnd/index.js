@@ -84,6 +84,11 @@ app.use("/ALSubjectWise", ALSubjectWiseRouter);
 const dashboardRouter = require("./routes/DashboadData");
 app.use("/dashboard", dashboardRouter);
 
+const subjectPerformanceRouter = require("./routes/SubjectPerformance");
+app.use("/subjectPerformance", subjectPerformanceRouter);
+
+const reportCardsRouter = require("./routes/ReportCards");
+app.use("/reportCard", reportCardsRouter);
 
 
 
