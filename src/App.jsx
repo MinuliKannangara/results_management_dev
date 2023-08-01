@@ -34,6 +34,9 @@ import UploadScholarshipResults from './Components/GradeHead/UploadScholarshipRe
 import ALResults from './Components/Development Section/ALResults';
 import SubjectWisePerformance from './Components/GradeHead/SubjectPerformances';
 import GenrateReportCards from './Components/ClassTeacher/GenerateReportCards';
+import SubjectWiseAL from './Components/Development Section/SubjectWiseAL';
+import ALResultsData from './Components/Development Section/ALSubjectData';
+import ScholarshipResultsData from './Components/Development Section/ScholarshipData';
 
 
 
@@ -128,6 +131,9 @@ function App() {
       <Route path="/Scholarship Results Analysis" element={<ScholarshipResults/>}/>
       <Route path="/Zonal Subject Results Analysis" element={<ZonalSubjctResults/>}/>
       <Route path="/Zonal Education Office Dashboard" element={<EduOfficeDashboard/>}/>
+      <Route path ="/Subject Wise AL" element ={<SubjectWiseAL/>}/>
+      <Route path ="/ALSubjectData" element ={<ALResultsData/>}/>
+      <Route path = "/ScholarshipData" element = {<ScholarshipResultsData/>}/>
             </>
           ) : null}
 

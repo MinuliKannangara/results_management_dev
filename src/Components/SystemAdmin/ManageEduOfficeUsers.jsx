@@ -167,11 +167,11 @@ const ManageEducationOfficeUsers = () => {
 
       <Container fluid>
         <Row>
-          <Col lg={3} md={3}>
+          <Col lg={2} md={3}>
             <Cards DisplayText="Total Users" count={AllUsersCount} />
           </Col>
 
-          <Col lg={9} md={9}>
+          <Col lg={10} md={9}>
             <Container fluid>
               <Row>
                 <Col lg={8} md={8} sm={12}>

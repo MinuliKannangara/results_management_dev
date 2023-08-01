@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes)=>{
             type:DataTypes.INTEGER,
             allowNull:true,
         },
-        Count175_200:{
+        Count176_200:{
             type:DataTypes.INTEGER,
             allowNull:true,
         },

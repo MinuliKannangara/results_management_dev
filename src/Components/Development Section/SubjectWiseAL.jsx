@@ -6,6 +6,7 @@ import './OLResults.css';
 import axios, { Axios } from 'axios';
 import DropdownButtonForAll from '../OtherComponents/Dropdown';
 import SubjectWiseTable from '../Charts/SubjectWiseTable';
+import NavBar from '../NavBar/NavBar';
 
 
 
@@ -48,7 +49,19 @@ const SubjectWiseAL = () => {
  
 
 return (
+  
 <div>
+<NavBar
+        PageName="A/L Results Analysis"
+        Tab1="Division Wise Analysis"
+        Tab2="Subject Wise Analysis"
+        Tab3="Subject Wise Data"
+        Tab1Link="/A/L Results Analysis"
+        Tab2Link="/Subject Wise AL"
+        Tab3Link="/ALSubjectData"
+        showButtons={true}
+      />
+
 
     {/* subject wise analysis */}
       <Container fluid>

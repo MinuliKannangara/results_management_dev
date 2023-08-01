@@ -18,7 +18,6 @@ import {useNavigate} from 'react-router-dom';
 
 import axios, { Axios } from 'axios';
 
-
 const ManageStudentDetails = () => {
 
 const {authState} = useContext(AuthContext);

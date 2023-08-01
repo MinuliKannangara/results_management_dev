@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
 
   router.get("/subjectLists", async (req,res) =>{
     const grd6_9subjectList = await Subject.findAll({
-      attributes:['subject'],
+      attributes:['subject','subject_ID'],
       include:{
         attributes:[],
         model:SubjectCategory,
@@ -28,7 +28,7 @@ router.post("/", async (req, res) => {
       }
     });
     const OLsubjectList = await Subject.findAll({
-      attributes:['subject'],
+      attributes:['subject','subject_ID'],
       include:{
         attributes:[],
         model:SubjectCategory,
@@ -38,7 +38,7 @@ router.post("/", async (req, res) => {
       }
     });
     const ALsubjectList = await Subject.findAll({
-      attributes:['subject'],
+      attributes:['subject','subject_ID'],
       include:{
         attributes:[],
         model:SubjectCategory,

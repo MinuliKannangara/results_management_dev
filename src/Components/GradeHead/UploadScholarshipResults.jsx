@@ -160,10 +160,11 @@ function UploadScholarshipResults() {
                 <th>6-24</th>
                 <th>25-49</th>
                 <th>50-69</th>
+                <th>70-99</th>
                 <th>100-124</th>
                 <th>125-150</th>
                 <th>151-175</th>
-                <th>175-200</th>
+                <th>176-200</th>
                 <th>Maximum Mark</th>
                 <th>Minimum Mark</th>
                 <th>Absent</th>
@@ -194,9 +195,13 @@ function UploadScholarshipResults() {
                 <td contentEditable="true" onBlur={(event) => handleMarksChange('Count125_150', parseInt(event.target.textContent))}>
                   {storedResults.length > 0 && storedResults[0].Count125_150}
                 </td>
-                <td contentEditable="true" onBlur={(event) => handleMarksChange('Count175_200', parseInt(event.target.textContent))}>
-                  {storedResults.length > 0 && storedResults[0].Count175_200}
+                <td contentEditable="true" onBlur={(event) => handleMarksChange('Count151_175', parseInt(event.target.textContent))}>
+                  {storedResults.length > 0 && storedResults[0].Count151_175}
                 </td>
+                <td contentEditable="true" onBlur={(event) => handleMarksChange('Count176_200', parseInt(event.target.textContent))}>
+                  {storedResults.length > 0 && storedResults[0].Count176_200}
+                </td>
+                
                 <td contentEditable="true" onBlur={(event) => handleMarksChange('MaximumMark', parseInt(event.target.textContent))}>
                   {storedResults.length > 0 && storedResults[0].MaximumMark}
                 </td>

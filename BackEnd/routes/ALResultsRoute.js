@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {ALResults,SubjectCategory,Subject} = require("../models");
+const {ALResults,SubjectCategory,Subject,School} = require("../models");
 
 
 
@@ -99,6 +99,37 @@ router.get("/:schoolID/:selectedYear", async(req, res)=>{
         res.json({message:err});
     }
     
+});
+
+
+router.get("/zeoAL/:selectedYear/:division/:selectedSubject", async(req, res)=>{
+  try{
+      const schoolList = await School.findAll({
+          attributes: ['school_ID','school_name'],
+          where:{division:req.params.division}
+      });
+
+      const Results = await ALResults.findAll({
+        
+            attributes:["UniversityQualified","subject_ID","A_ForAllSubjects","FailedAllSubjects","absent","NumOfSat"],
+            include: [
+              {
+                attributes: ['school_ID','school_name'],
+                model:School,
+                where:{division:req.params.division}
+              }
+            ],
+            where:{
+              year: req.params.selectedYear,
+              subject_ID: req.params.selectedSubject
+            }
+
+      })
+      res.json({schoolList,Results});
+  }catch(err){
+      res.json(err.message);
+  }
+  
 });
 
 module.exports = router;

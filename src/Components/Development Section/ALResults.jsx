@@ -129,15 +129,6 @@ useEffect(() => {
     return filteredData;
   };
 
-//   const customStyles = `
-//   body {
-//     padding: 0 !important;
-//   }
-  
-
-// `;
-
-  
   const componentPDF = useRef();
 
   const generatePDF = useReactToPrint({
@@ -153,11 +144,22 @@ useEffect(() => {
 
 return (
 <div>
-
+{/* 
 <NavBar
 PageName="A/L Results Analysis" 
 showButtons={false}
-/>
+/> */}
+<NavBar
+        PageName="A/L Results Analysis"
+        Tab1="Division Wise Analysis"
+        Tab2="Subject Wise Analysis"
+        Tab3="Subject Wise Data"
+        Tab1Link="/A/L Results Analysis"
+        Tab2Link="/Subject Wise AL"
+        Tab3Link="/ALSubjectData"
+        showButtons={true}
+      />
+
 
 <div ref={componentPDF}>
 <Container fluid>
@@ -282,11 +284,11 @@ showButtons={false}
 <Row>
 <button onClick={generatePDF} className="buttonDownload" style={{width:"140px",marginLeft:"1330px",height:"40px"}}>Generate PDF</button> 
 </Row>    
-<Container fluid>
+{/* <Container fluid>
       <div style={{marginLeft:'70px'}}>
         <SubjectWiseAL/>
         </div>
-      </Container>
+      </Container> */}
 </div>
 );
 };

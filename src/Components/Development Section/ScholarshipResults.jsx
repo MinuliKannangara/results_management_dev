@@ -274,7 +274,16 @@ const ScholarshipResults = () => {
 
   return (
     <div>
-      <NavBar PageName="Scholarship Results Analysis" showButtons={false} />
+    
+      <NavBar
+        PageName="Scholarship Results Analysis"
+        Tab1="Division Wise Analysis"
+        Tab2="Data"
+        Tab1Link="/Scholarship Results Analysis"
+        Tab2Link="/ScholarshipData"
+        showButtons={true}
+      />
+
 
       <div ref={componentPDF}>
         <Container fluid>

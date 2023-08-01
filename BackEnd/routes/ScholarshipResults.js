@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {ScholarshipResults} = require("../models");
+const {ScholarshipResults,School} = require("../models");
 
 
 router.post("/", async (req, res) => {
@@ -18,12 +18,11 @@ router.post("/", async (req, res) => {
         Count100_124,
         Count125_150,
         Count151_175,
-        Count175_200,
+        Count176_200,
         MaximumMark,
         MinimumMark,
         Absent,
         sat,
-        pass,
       } = result;
 
       const existingRecord = await ScholarshipResults.findOne({
@@ -44,8 +43,7 @@ router.post("/", async (req, res) => {
           Count100_124: Count100_124 || existingRecord.Count100_124,
           Count125_150: Count125_150 || existingRecord.Count125_150,
           Count151_175: Count151_175 || existingRecord.Count151_175,
-          Count175_200: Count175_200 || existingRecord.Count175_200,
-          PassCount: pass || existingRecord.PassCount,
+          Count176_200: Count176_200 || existingRecord.Count176_200,
           MaximumMark: MaximumMark || existingRecord.MaximumMark,
           MinimumMark: MinimumMark || existingRecord.MinimumMark,
           absent: Absent || existingRecord.absent,
@@ -72,12 +70,11 @@ router.post("/", async (req, res) => {
           Count100_124: Count100_124,
           Count125_150: Count125_150,
           Count151_175: Count151_175,
-          Count175_200: Count175_200,
+          Count175_200: Count176_200,
           MaximumMark: MaximumMark,
           MinimumMark: MinimumMark,
           absent: Absent,
           NumOfSat: sat,
-          PassCount: pass,
           year: year,
           school_ID: schoolID,
         });
@@ -101,6 +98,34 @@ router.get("/:schoolID/:selectedYear", async(req, res)=>{
 
       })
       res.json (results);
+  }catch(err){
+      res.json({message:err});
+  }
+  
+});
+
+//for the education office
+router.get("/zeoScholarship/:division/:selectedYear", async(req, res)=>{
+  try{
+    const schoolList = await School.findAll({
+      attributes: ['school_ID','school_name'],
+      where:{division:req.params.division}
+  });
+      const results = await ScholarshipResults.findAll({
+          attributes: ['Count0_5','Count6_24','Count25_49','Count50_69','Count70_99','Count100_124','Count125_150','Count151_175','Count176_200','PassCount','MaximumMark','MinimumMark','Absent','NumOfSat'],
+          include: [
+            {
+              attributes: ['school_ID','school_name'],
+              model:School,
+              where:{division:req.params.division}
+            }
+          ],
+          where:{
+            year: req.params.selectedYear
+          }
+
+      })
+      res.json ({schoolList,results});
   }catch(err){
       res.json({message:err});
   }

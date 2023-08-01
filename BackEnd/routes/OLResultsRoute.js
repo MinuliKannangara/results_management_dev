@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {OLResults,SubjectCategory,Subject} = require("../models");
+const {OLResults,SubjectCategory,Subject,School} = require("../models");
 
 
 router.post("/", async (req, res) => {
@@ -107,5 +107,42 @@ router.get("/:schoolID/:selectedYear", async(req, res)=>{
     
 });
 
+
+//for the development section 
+
+router.get("/ZEO/:selectedYear/:division", async(req, res)=>{
+  try{
+      const subjectList = await Subject.findAll({
+          attributes: ['subject_ID','subject'],
+          include: [
+              {
+                  attributes: [],
+                  model: SubjectCategory,
+                  where:{name:"O/L"}
+              }
+          ],
+      });
+
+      const results = await OLResults.findAll({
+          attributes: ['subject_ID','A_Passes','B_Passes','C_Passes','S_Passes','W_Passes','absent','NumOfSat','NumOfPass','year'],
+         
+          include: [
+            {
+              attributes: ['school_ID','school_name'],
+              model:School,
+              where:{division:req.params.division}
+            }
+          ],
+          where:{
+            year: req.params.selectedYear
+          },
+      })
+
+      res.json ({subjectList,results});
+  }catch(err){
+      res.json(err.message);
+  }
+  
+});
 module.exports = router;
 
