@@ -10,16 +10,13 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faPenToSquare, faTrash,faNewspaper} from '@fortawesome/free-solid-svg-icons'
 import NavBar from '../NavBar/NavBar';
 import { AuthContext } from '../../helpers/AuthContext';
+import {useNavigate} from 'react-router-dom';
 
 
 import axios, { Axios } from 'axios';
-
-
-
-
 
 
 const ManageStudentDetails = () => {
@@ -28,11 +25,8 @@ const {authState} = useContext(AuthContext);
   const CurrentYear = new Date().getFullYear();
   const username = authState.username;
   const Teacherclassname = authState.className;
-  // users school ID
- // const schoolId = 1
-  
+  let navigate = useNavigate();
 
-    //const username = localStorage.getItem('user');
 
  
 //for the get method
@@ -197,6 +191,7 @@ const deleteStudent = (studentID) => {
           <th>Index Number</th>
           <th>Name</th>
           <th>Action</th>
+          <th>Report Card</th>
       
         </tr>
       </thead>
@@ -221,6 +216,14 @@ const deleteStudent = (studentID) => {
               </Button>
               
               </td>
+              <td> 
+              <Button variant="outline-primary" style={{ fontSize: "15px", marginLeft: "2px", marginRight:"2px" }}
+               onClick={() =>{ navigate(`/Report Cards/${index.index_number}/${index.student_name}`)}}>
+              <FontAwesomeIcon icon={faNewspaper} />
+              </Button>
+              
+              </td>
+
               
             </tr>
           })

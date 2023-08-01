@@ -98,7 +98,7 @@ function App() {
               <Route path="/Manage Student Details" element={<ManageStudentDetails />} />
               <Route path="/Manage Class Results" element={<ManageClassResults />} />
               <Route path ="/School Dashboard" element ={<SchoolDashboard/>}/>
-              <Route path ="/Report Cards" element ={<GenrateReportCards/>}/>
+              <Route path ="/Report Cards/:indexNumber/:studentName" element ={<GenrateReportCards/>}/>
             </>
           ) : null}
 

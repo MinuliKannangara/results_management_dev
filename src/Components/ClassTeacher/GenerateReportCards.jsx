@@ -1,13 +1,14 @@
-import React, { useEffect, useState, useContext} from 'react';
+import React, { useEffect, useState, useContext,useRef} from 'react';
 import './ManageStudentDetails.css';
 import { Container, Row, Col } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
-import { Formik, Form } from "formik";
-import { Button } from 'react-bootstrap';
 import NavBar from '../NavBar/NavBar';
 import axios from 'axios';
 import { AuthContext } from '../../helpers/AuthContext';
-import { Height } from '@mui/icons-material';
+import { useReactToPrint } from 'react-to-print';			
+import '../OtherComponents/DownloadButton.css';
+import { useParams } from 'react-router-dom';
+
 
 const GenrateReportCards = () => {
 
@@ -18,7 +19,11 @@ const GenrateReportCards = () => {
   const classesName = authState.className;
   const CurrentYear = new Date().getFullYear();
 
-  const indexNumber=1125;
+
+  let { indexNumber, student_name } = useParams(); // Get indexNumber and student_name from the URL params
+  let decodedStudentName = decodeURIComponent(student_name);
+
+  console.log(student_name);
 
 const [subjectList, setSubjectList] = useState([]);
 const [term1Results, setTerm1Results] = useState([]);
@@ -44,9 +49,6 @@ const [schoolName, setSchoolName] = useState('');
     .catch((error) => {console.log(error)});
    },[enteredUsername,CurrentYear, indexNumber]);
 
-   
-  const [searchQuery, setSearchQuery] = useState('');
-console.log(subjectList);
 
 
 const calculateTotalMarks = (results) => {
@@ -58,6 +60,29 @@ const calculateTotalMarks = (results) => {
     const totalMarks = marksArray.reduce((total, mark) => total + mark, 0);
     return marksArray.length > 0 ? totalMarks / marksArray.length : 0;
   };
+
+    
+  const customStyles = `
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    padding: 20px;
+    font-size: 14px;
+  }
+  .pdf-container {
+    width: 100%; /* Set the width to 100% of the PDF page */
+    margin: 20px; /* Add your desired margins here */
+  }
+  /* Add any other custom styles for the PDF here */
+`;
+const componentPDF = useRef();
+
+const generatePDF = useReactToPrint({
+  content: () => componentPDF.current,
+  documentTitle: 'Report Card',
+  pageStyle: customStyles, 
+});
+
 return (
 <div>
   
@@ -67,9 +92,10 @@ showButtons={false} />
 
 
 
-<Container style={{margin:"50px 5px 5px 160px", width:"1200px"}} >
+<Container style={{margin:"50px 5px 5px 160px", width:"1200px"}}  ref={componentPDF}>
 
     <Row style={{height:"100px", backgroundColor:"#14213d", alignItems:"center", paddingLeft:"400px"}}>
+  
     <h4 style={{ fontSize: "30px", fontWeight: "bold", color: "white" }}>Report Card</h4>
 
             <h3 style={{fontSize: "24px", fontWeight: "400", color: "white" }}>{schoolName}</h3>
@@ -77,8 +103,8 @@ showButtons={false} />
 
     <Row style={{height:"200px", alignItems:"center"}}>
         <div style={{marginLeft:"-118px"}}>
-        <p style={{color: "#14213d", fontSize:"18px", marginTop:"0px"}}>Student Name : </p>
-        <p style={{color: "#14213d", fontSize:"18px", marginTop:"0px"}}>Index Number: </p>
+        <p style={{color: "#14213d", fontSize:"18px", marginTop:"0px"}}> Student Name: {decodedStudentName} </p>
+        <p style={{color: "#14213d", fontSize:"18px", marginTop:"0px"}}>Index Number: {indexNumber} </p>
         <p style={{color: "#14213d", fontSize:"18px",marginTop:"0px"}}>Class Name : {classesName}</p>
         </div>
   
@@ -130,6 +156,10 @@ showButtons={false} />
         <Row style={{height:"1px", backgroundColor:"#14213d", alignItems:"center", marginBottom:"5px"}}>
     </Row>
       </Container>
+      <Row>
+
+<button onClick={generatePDF} className="buttonDownload" style={{width:"140px",marginLeft:"1330px",height:"40px"}}>Generate PDF</button> 
+</Row>
 
 </div>
 );
