@@ -278,7 +278,7 @@ const ScholarshipResults = () => {
       <NavBar
         PageName="Scholarship Results Analysis"
         Tab1="Division Wise Analysis"
-        Tab2="Data"
+        Tab2="Summary"
         Tab1Link="/Scholarship Results Analysis"
         Tab2Link="/ScholarshipData"
         showButtons={true}

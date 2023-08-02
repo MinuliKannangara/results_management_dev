@@ -1,6 +1,4 @@
 import React, { useEffect, useState, useContext } from 'react';
-//import React from 'react';
-import ButtonAppBar from '../NavBar/NavBarwrong';
 import './ManageStudentDetails.css';
 import { Container, Row, Col } from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -43,7 +41,6 @@ useEffect(() => {
     .then((response) => {
       if (response.data && response.data.StudentList) {
         setListOfStudents(response.data.StudentList);
-        //setSelectedClass(response.data.userClass);
       }
     })
     .catch((error) => {
@@ -56,6 +53,24 @@ useEffect(() => {
 // for the ADD button
 const submitStudentDetails = (e) => {
   e.preventDefault();
+   // Validate inputs before submitting
+   if (isNaN(parseInt(indexNumber)) || parseInt(indexNumber) <= 0) {
+    alert("Invalid index number. Index number must be a positive number.");
+    document.getElementById("btn").classList.remove("btn-outline-primary");
+    document.getElementById("btn").classList.add("btn-outline-danger");
+    document.getElementById("btn").innerHTML = "Invalid Input ";
+    setTimeout(() => {
+      document.getElementById("btn").classList.remove("btn-outline-danger");
+      document.getElementById("btn").classList.add("btn-outline-primary");
+      document.getElementById("btn").innerHTML = "Submit";
+    }, 2000);
+    return;
+  }
+
+  if (name.trim() === "") {
+    alert("Invalid student name. Student name cannot be empty.");
+    return;
+  }
   const data = {
     index_number: parseInt(indexNumber),
     student_name: name,
@@ -120,10 +135,18 @@ const deleteStudent = (studentID) => {
 
       <Container fluid className='divAllDropdown '>
         <Row>
+        <p className='pAddStudent' style={{fontSize:"27px", marginLeft:"550px"}}>Register New Students</p>
+         
+        </Row>
+      </Container>
+
+      
+      <Container fluid className=' divAddStudent'>
+      <Row>
           <Col md={3} sm={6}>
-            <p className='pLables'>Academic Year</p>
+            <p className='pLables' style={{marginLeft:"10px"}}>Year</p>
           </Col>
-          <Col md={3} sm={6}>
+          <Col md={3} sm={6} style={{marginLeft:"-300px"}}>
           <DropdownButton className='customDropdownButton' variant="outline-success" id="dropdown-basic-button" title={`${selectedYear}`} >
       <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear)}>{CurrentYear}</Dropdown.Item>
       <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear-1)}>{CurrentYear-1}</Dropdown.Item>
@@ -137,13 +160,9 @@ const deleteStudent = (studentID) => {
          
          
         </Row>
-      </Container>
-
-      
-      <Container fluid className=' divAddStudent'>
         <Form  onSubmit={submitStudentDetails}>
         <Row>
-        <p className='pAddStudent'>Add New Students</p>
+      
           <Col md={4} >
             <FloatingLabel controlId="floatingInputGrid" label="Enter Index Number">
               <Form.Control type="text" placeholder="Enter index number" value={indexNumber} onChange={(e) => setIndexNumber(e.target.value)} required />
@@ -183,7 +202,7 @@ const deleteStudent = (studentID) => {
         </Row>
         <Row className='TableRoWDown'>
         
-            <Table striped bordered hover variant="light">
+            <Table variant="light">
       <thead>
         <tr>
           <th style={{width:"10px"}}>#</th>

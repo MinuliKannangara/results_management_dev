@@ -40,7 +40,7 @@ router.get("/:username/:year", async (req,res)=>{
 
   try{
     const userName = req.params.username;
-   // const userName = req.user.username; //get the username from the token
+
     
     const classOFUser = await users.findOne({
       where: {
@@ -72,8 +72,36 @@ router.get("/:username/:year", async (req,res)=>{
       res.status(500).json({ error: "Failed to fetch the data" });
   }
   
-})
+});
 
+router.get("/suggestName/:indexNumber/:username", async (req, res) => {
+  try {
+    const userName = req.params.username;
+
+    const classOFUser = await users.findOne({
+      where: {
+        username: userName,
+      },
+    });
+
+    const Findstudent = await Student.findOne({
+      attributes: ['student_ID', 'index_number', 'student_name'],
+      where: {
+        school_ID: classOFUser.school_ID,
+        index_number: req.params.indexNumber,
+      },
+    });
+
+    // Check if the student with the given index number exists in the same school as the user
+    if (Findstudent) {
+      res.json( Findstudent.student_name);
+    } else {
+      res.json({ name: null }); // Return null if no matching student found
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 
 

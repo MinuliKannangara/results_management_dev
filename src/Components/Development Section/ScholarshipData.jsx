@@ -49,7 +49,7 @@ return (
 <NavBar
         PageName="Scholarship Data"
         Tab1="Division Wise Analysis"
-        Tab2="Data"
+        Tab2="Summary"
         Tab1Link="/Scholarship Results Analysis"
         Tab2Link="/ScholarshipData"
         showButtons={true}
@@ -59,7 +59,7 @@ return (
 
 <div ref={componentPDF}>
 <Container fluid>
-            <Row><h3 className='topicsP'>Scholarship Data</h3></Row>
+            <Row><h3 className='topicsP'>Scholarship Results Summary</h3></Row>
         </Container>
 
 <Container className="DropdownDiv2">

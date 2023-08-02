@@ -13,7 +13,7 @@ import {
   FloatingLabel,
 } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faUserPlus,faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import "./registerOfficeUser.css";
 import Cards from "../OtherComponents/Cards";
@@ -88,6 +88,8 @@ const ManageEducationOfficeUsers = () => {
         console.error("Error fetching roles:", error);
       });
 
+
+
       axios
       .get("http://localhost:3001/subject/subjectLists")
       .then((response) => {
@@ -107,6 +109,22 @@ const ManageEducationOfficeUsers = () => {
         console.error("Error fetching roles:", error);
       });
   }, []);
+
+        
+  const deleteUsers = (username) => {
+    axios
+      .delete(`http://localhost:3001/schoolUsers/${username}`)
+      .then((response) => {
+        setUserDetails(
+          userDetails.filter((val) => {
+            return val.username != username;
+          })
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
    // fetch user details after adding a new user
    const fetchUserDetails = () => {
@@ -228,6 +246,12 @@ const ManageEducationOfficeUsers = () => {
                             >
                               <FontAwesomeIcon icon={faPenToSquare} />
                             </Button>
+
+                            <Button variant="outline-primary" style={{ fontSize: "15px", marginLeft: "2px", marginRight:"2px" }}
+              onClick={() => deleteUsers(user.username)}
+              >
+              <FontAwesomeIcon  icon={faTrash} />
+              </Button>
                           </td>
                         </tr>
                       ))}

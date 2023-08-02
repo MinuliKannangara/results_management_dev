@@ -195,6 +195,9 @@ const UserRegistration = () => {
             <p className='PnewUser' style={{marginLeft:'18%'}}>
             Alreadey have an account? <a href="/login">Login here</a>
           </p>
+          <p className='PnewUser' style={{marginLeft:'18%'}}>
+            School Account: <a href="/School Registration">Create School Account</a>
+          </p>
           </Col>
         </Form>
       </Row>

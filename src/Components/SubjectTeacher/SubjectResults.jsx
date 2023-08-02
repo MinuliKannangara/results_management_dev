@@ -13,7 +13,6 @@ const ManageSubjectResults = () => {
 
   const {authState} = useContext(AuthContext);
   const username = authState.username; 
-  //const selectedClassw = '7-A';
 
   const CurrentYear = new Date().getFullYear();
 
@@ -25,7 +24,7 @@ const ManageSubjectResults = () => {
   const [selectedYear, setSelectedYear] = useState(CurrentYear);
   const [selectedSubject, setSelectedSubject] = useState('History');
   const [selectedTerm, setSelectedTerm] = useState('1st Term');
-  const [selectedClass, setSelectedClass] = useState('7-A');
+  const [selectedClass, setSelectedClass] = useState('');
   const [selectedSubjectID, setselectedSubjectID] = useState(0);
 
   const [showAlert, setShowAlert] = useState(false);
@@ -153,11 +152,12 @@ const ManageSubjectResults = () => {
 //             console.log(error);
 //           });
 //       }
-
+console.log(data);
           axios
           .post("http://localhost:3001/subject/SubjectResults", data)
           .then((response) => {
             console.log(response.data);
+            console.log("giya");
           })
           .catch((error) => {
             console.log(error);
@@ -169,11 +169,15 @@ const ManageSubjectResults = () => {
   
   
   useEffect(() => {
+    axios.get(`http://localhost:3001/classDetails/getClasses/${username}`).then((response) => {
+      setClassNameList(response.data);
+    });
+
     axios
       .get(`http://localhost:3001/subject/SubjectDetails/${selectedYear}/${selectedClass}/${username}/${selectedSubject}/${selectedTerm}`)
       .then((response) => {
         setStudentList(response.data.studentNames);
-        setClassNameList(response.data.classes);
+        // setClassNameList(response.data.classes);
         setSubjectList(response.data.subjectNames);
         setMarks(response.data.subjectResults);
       })

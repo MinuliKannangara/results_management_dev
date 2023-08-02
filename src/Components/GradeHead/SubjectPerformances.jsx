@@ -127,16 +127,16 @@ const SubjectWisePerformance = () => {
     font-size: 14px;
   }
   .pdf-container {
-    width: 100%; /* Set the width to 100% of the PDF page */
-    margin: 20px; /* Add your desired margins here */
+    width: 100%; 
+    margin: 20px; 
   }
-  /* Add any other custom styles for the PDF here */
+ 
 `;
 const componentPDF = useRef();
 
 const generatePDF = useReactToPrint({
   content: () => componentPDF.current,
-  documentTitle: 'A/L Results- Division Wise Analysis',
+  documentTitle: 'Subject Performance Throughout the Previous Five Years',
   pageStyle: customStyles, 
 });
 
@@ -148,11 +148,11 @@ showButtons={false}/>
 
 <div ref={componentPDF}>
 <Row>
-         <p className='pTopDiv'>Range Wise</p>
+         <p className='pTopDiv' style={{marginLeft:"430px", fontSize:"25px", marginBottom:"20px", fontWeight:"400"}}>Performance throughout the previous five years</p>
         </Row>
 
 
-      <Container className="DropdownDiv2" fluid  >
+      <Container className="DropdownDiv2" >
 
         <Row>
           <Col lg={1} sm={12}>
@@ -161,7 +161,7 @@ showButtons={false}/>
             </FormLabel>
           </Col>
 
-          <Col lg={3} sm={12}>
+          <Col lg={5} sm={12}>
           <DropdownButton className='customDropdownButton' variant="outline-success" id="dropdown-basic-button" title={'Grade '+`${selectedGrade}`} >
 
             {grades.map((grade,index) =>(
@@ -171,28 +171,13 @@ showButtons={false}/>
           
           </DropdownButton>
           </Col>
-          {/* <Col lg={1} sm={12}>
-            <FormLabel htmlFor="class1" className="labelForm">
-              Year
-            </FormLabel>
-          </Col>
-          <Col lg={3} sm={12}>
-          <DropdownButton className='customDropdownButton' variant="outline-success" id="dropdown-basic-button" title={`${selectedyear}`} >
-      <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear)}>{CurrentYear}</Dropdown.Item>
-      <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear-1)}>{CurrentYear-1}</Dropdown.Item>
-      <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear-2)}>{CurrentYear-2}</Dropdown.Item>
-      <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear-3)}>{CurrentYear-3}</Dropdown.Item>
-      <Dropdown.Item className='customDropdown'  onClick={() => setSelectedYear(CurrentYear-4)}>{CurrentYear-4}</Dropdown.Item>
       
-    
-    </DropdownButton>
-          </Col> */}
           <Col lg={1} sm={12}>
             <FormLabel htmlFor="class1" className="labelForm">
               Subject
             </FormLabel>
           </Col>
-          <Col lg={3} sm={12}>
+          <Col lg={5} sm={12}>
           <DropdownButton
               className='customDropdownButton'
               variant="outline-success"

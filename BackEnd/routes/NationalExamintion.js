@@ -41,7 +41,7 @@ router.post("/NExamCounts", async (req, res) => {
     } 
   } catch (error) {
     console.error("Error:", error);
-    res.status(500).json({ error: "Failed to upload counts." });
+    res.status(500).json(error.message);
   }
 });
 

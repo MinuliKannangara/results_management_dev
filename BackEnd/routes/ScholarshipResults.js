@@ -70,7 +70,7 @@ router.post("/", async (req, res) => {
           Count100_124: Count100_124,
           Count125_150: Count125_150,
           Count151_175: Count151_175,
-          Count175_200: Count176_200,
+          Count176_200: Count176_200,
           MaximumMark: MaximumMark,
           MinimumMark: MinimumMark,
           absent: Absent,
@@ -90,7 +90,7 @@ router.post("/", async (req, res) => {
 router.get("/:schoolID/:selectedYear", async(req, res)=>{
   try{
       const results = await ScholarshipResults.findAll({
-          attributes: ['Count0_5','Count6_24','Count25_49','Count50_69','Count70_99','Count100_124','Count125_150','Count175_200','PassCount','MaximumMark','MinimumMark','Absent','NumOfSat'],
+          attributes: ['Count0_5','Count6_24','Count25_49','Count50_69','Count70_99','Count100_124','Count125_150','Count151_175','Count176_200','PassCount','MaximumMark','MinimumMark','Absent','NumOfSat'],
           where:{
             school_ID: req.params.schoolID,
             year: req.params.selectedYear

@@ -53,21 +53,36 @@ function UploadScholarshipResults() {
   const uploadMarks = async () => {
 
     for (const [key, value] of Object.entries(marks)) {
-      if (value < 0) {
-        alert("Invalid marks entered. Marks cannot be negative.");
+      if (isNaN(value)||value < 0) {
+        
+        document.getElementById("btn").classList.remove("btn-outline-primary");
+        document.getElementById("btn").classList.add("btn-outline-danger");
+        document.getElementById("btn").innerHTML = "Invalid Mark";
+        setTimeout(() => {
+          document.getElementById("btn").classList.remove("btn-outline-danger");
+          document.getElementById("btn").classList.add("btn-outline-primary");
+          document.getElementById("btn").innerHTML = "Submit";
+        }, 2000);
         return;
+        
       }
-
+  
       if (key === "MaximumMark" || key === "MinimumMark") {
         if (value < 0 || value > 200) {
-          alert(`Invalid ${key}. ${key} must be between 0 and 200.`);
+          document.getElementById("btn").classList.remove("btn-outline-primary");
+          document.getElementById("btn").classList.add("btn-outline-danger");
+          document.getElementById("btn").innerHTML = key+" must be between 0 and 200 ";
+          setTimeout(() => {
+            document.getElementById("btn").classList.remove("btn-outline-danger");
+            document.getElementById("btn").classList.add("btn-outline-primary");
+            document.getElementById("btn").innerHTML = "Submit";
+          }, 2000);
           return;
         }
       }
     }
-
-    
   
+
     console.log("Data to be uploaded:", marks);
 
    await axios.post('http://localhost:3001/ScholarshipResults', {
@@ -76,18 +91,26 @@ function UploadScholarshipResults() {
       results: [marks], // Wrap marks in an array as it represents a single entry
     }).then((response) => {
       if (!response.data.error) {
-         // Update button style and text for success
+     
          document.getElementById("btn").classList.remove("btn-outline-primary");
          document.getElementById("btn").classList.add("btn-outline-success");
          document.getElementById("btn").innerHTML = "Submitted";
+         setTimeout(() => {
+          document.getElementById("btn").classList.remove("btn-outline-success");
+          document.getElementById("btn").classList.add("btn-outline-primary");
+          document.getElementById("btn").innerHTML = "Submit";
+        }, 3000);
           } else {
             document.getElementById("btn").classList.remove("btn-outline-primary");
         document.getElementById("btn").classList.add("btn-outline-danger");
         document.getElementById("btn").innerHTML = "Check data and Retry";
+          setTimeout(() => {
+          document.getElementById("btn").classList.remove("btn-outline-success");
+          document.getElementById("btn").classList.add("btn-outline-primary");
+          document.getElementById("btn").innerHTML = "Submit";
+        }, 3000);
           }
         })
-   
- 
   };
 
    //for the form
@@ -101,10 +124,25 @@ function UploadScholarshipResults() {
     e.preventDefault();
       // validation
   if (FormVlaues.satCount <= 0 || FormVlaues.passCount <= 0) {
-    alert("Please enter valid values for Sat Count and Pass Count.");
+      
+    document.getElementById("btn2").classList.remove("btn-outline-primary");
+    document.getElementById("btn2").classList.add("btn-outline-danger");
+    document.getElementById("btn2").innerHTML = "Please enter valid values for Sat Count and Pass Count";
+    setTimeout(() => {
+      document.getElementById("btn2").classList.remove("btn-outline-danger");
+      document.getElementById("btn2").classList.add("btn-outline-primary");
+      document.getElementById("btn2").innerHTML = "Submit";
+    }, 3000);
     return;
   } else if(FormVlaues.satCount<FormVlaues.passCount){
-    alert("Invalid Inputs")
+    document.getElementById("btn2").classList.remove("btn-outline-primary");
+    document.getElementById("btn2").classList.add("btn-outline-danger");
+    document.getElementById("btn2").innerHTML = "Invalid Inputs";
+    setTimeout(() => {
+      document.getElementById("btn2").classList.remove("btn-outline-danger");
+      document.getElementById("btn2").classList.add("btn-outline-primary");
+      document.getElementById("btn2").innerHTML = "Submit";
+    }, 3000);
   }
 
     axios
@@ -115,10 +153,15 @@ function UploadScholarshipResults() {
       })
       .then((response) => {
         if (!response.data.error) {
-          // Update button style and text for success
+    
           document.getElementById("btn2").classList.remove("btn-outline-primary");
           document.getElementById("btn2").classList.add("btn-outline-success");
           document.getElementById("btn2").innerHTML = "Submitted";
+          setTimeout(() => {
+            document.getElementById("btn2").classList.remove("btn-outline-success");
+            document.getElementById("btn2").classList.add("btn-outline-primary");
+            document.getElementById("btn2").innerHTML = "Submit";
+          }, 2000);
            } else {
              document.getElementById("btn2").classList.remove("btn-outline-primary");
          document.getElementById("btn2").classList.add("btn-outline-danger");

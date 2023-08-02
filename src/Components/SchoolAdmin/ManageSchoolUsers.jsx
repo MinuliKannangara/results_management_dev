@@ -28,6 +28,21 @@ const ManageSchoolUsers = () =>{
           });
       }, []);
 
+      const deleteUsers = (username) => {
+        axios
+          .delete(`http://localhost:3001/schoolUsers/${username}`)
+          .then((response) => {
+            setUserDetails(
+              userDetails.filter((val) => {
+                return val.username != username;
+              })
+            );
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      };
+
     return(
         <div>
             <NavBar PageName="Manage School Users" 
@@ -66,6 +81,7 @@ const ManageSchoolUsers = () =>{
                     <FontAwesomeIcon icon={faPenToSquare} />
                     </Button>
               <Button variant="outline-primary" style={{ fontSize: "15px", marginLeft: "2px", marginRight:"2px" }}
+              onClick={() => deleteUsers(user.username)}
               >
               <FontAwesomeIcon  icon={faTrash} />
               </Button>

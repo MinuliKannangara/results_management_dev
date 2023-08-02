@@ -126,7 +126,7 @@ const DownloadPDFButton = ({ values }) => {
 
   return (
     <div style={{ marginTop: "10px" }}>
-      <Button onClick={handleClick} className="buttonDownload">
+      <Button onClick={handleClick} className="buttonDownload" style={{}}>
         Download
       </Button>
     </div>

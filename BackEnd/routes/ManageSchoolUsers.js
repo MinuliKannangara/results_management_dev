@@ -133,4 +133,15 @@ router.get("/:userName", async (req, res) => {
 });
 
 
+
+    router.delete("/:userName", async (req, res) => {  
+      const USERNAME = req.params.userName;
+      await users.destroy({
+        where: {
+          username: USERNAME,
+        },
+      });
+      res.json("Student deleted");
+  });
+
 module.exports = router;

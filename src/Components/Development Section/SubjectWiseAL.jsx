@@ -55,7 +55,7 @@ return (
         PageName="A/L Results Analysis"
         Tab1="Division Wise Analysis"
         Tab2="Subject Wise Analysis"
-        Tab3="Subject Wise Data"
+        Tab3="Summary"
         Tab1Link="/A/L Results Analysis"
         Tab2Link="/Subject Wise AL"
         Tab3Link="/ALSubjectData"

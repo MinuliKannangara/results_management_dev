@@ -37,6 +37,9 @@ import GenrateReportCards from './Components/ClassTeacher/GenerateReportCards';
 import SubjectWiseAL from './Components/Development Section/SubjectWiseAL';
 import ALResultsData from './Components/Development Section/ALSubjectData';
 import ScholarshipResultsData from './Components/Development Section/ScholarshipData';
+import OLResultsData from './Components/Development Section/OLResultsData';
+import SubjectWiseAnalysisOL from './Components/Development Section/SubjectWiseOL';
+import AddStudents from './Components/ClassTeacher/AddStudent';
 
 
 
@@ -98,10 +101,11 @@ function App() {
           )}
            {authState.role.includes('School Admin') || authState.role.includes('Class Teacher') ? (
             <>
-              <Route path="/Manage Student Details" element={<ManageStudentDetails />} />
+              <Route path="/Register New Students" element={<ManageStudentDetails />} />
               <Route path="/Manage Class Results" element={<ManageClassResults />} />
               <Route path ="/School Dashboard" element ={<SchoolDashboard/>}/>
               <Route path ="/Report Cards/:indexNumber/:studentName" element ={<GenrateReportCards/>}/>
+              <Route path ="/Add Students" element ={<AddStudents/>}/>
             </>
           ) : null}
 
@@ -134,6 +138,10 @@ function App() {
       <Route path ="/Subject Wise AL" element ={<SubjectWiseAL/>}/>
       <Route path ="/ALSubjectData" element ={<ALResultsData/>}/>
       <Route path = "/ScholarshipData" element = {<ScholarshipResultsData/>}/>
+      <Route path = "/SubjectWiseAnalysisOL" element = {<SubjectWiseAnalysisOL/>}/>
+      <Route path = "/OLResultsData" element = {<OLResultsData/>}/>
+
+      
             </>
           ) : null}
 

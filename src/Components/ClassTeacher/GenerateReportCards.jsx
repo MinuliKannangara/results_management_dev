@@ -20,7 +20,7 @@ const GenrateReportCards = () => {
   const CurrentYear = new Date().getFullYear();
 
 
-  let { indexNumber, student_name } = useParams(); // Get indexNumber and student_name from the URL params
+  let { indexNumber, student_name } = useParams(); 
   let decodedStudentName = decodeURIComponent(student_name);
 
   console.log(student_name);
@@ -58,9 +58,10 @@ const calculateTotalMarks = (results) => {
   const calculateAverageMarks = (results) => {
     const marksArray = Object.values(results).filter((mark) => typeof mark === 'number');
     const totalMarks = marksArray.reduce((total, mark) => total + mark, 0);
-    return marksArray.length > 0 ? totalMarks / marksArray.length : 0;
+    const averageMarks = marksArray.length > 0 ? totalMarks / marksArray.length : 0;
+    return Number(averageMarks.toFixed(2)); // Round to two decimal points and convert back to a number
   };
-
+  
     
   const customStyles = `
   body {
@@ -91,14 +92,13 @@ return (
 showButtons={false} />
 
 
-
 <Container style={{margin:"50px 5px 5px 160px", width:"1200px"}}  ref={componentPDF}>
 
-    <Row style={{height:"100px", backgroundColor:"#14213d", alignItems:"center", paddingLeft:"400px"}}>
+    <Row style={{height:"100px", backgroundColor:"#14213d", alignItems:"center"}}>
   
-    <h4 style={{ fontSize: "30px", fontWeight: "bold", color: "white" }}>Report Card</h4>
+    <h4 style={{ fontSize: "30px", fontWeight: "bold", color: "white" , paddingLeft:"450px" }}>Report Card</h4>
 
-            <h3 style={{fontSize: "24px", fontWeight: "400", color: "white" }}>{schoolName}</h3>
+            <h3 style={{fontSize: "24px", fontWeight: "400", color: "white", paddingLeft:"310px" }}>{schoolName}</h3>
     </Row>
 
     <Row style={{height:"200px", alignItems:"center"}}>

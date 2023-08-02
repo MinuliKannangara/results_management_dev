@@ -9,7 +9,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import axios, { Axios } from 'axios';
 import Table from 'react-bootstrap/Table';
 
-const ALResultsData = () => {
+const OLResultsData = () => {
     const CurrentYear = new Date().getFullYear();
 
   const componentPDF = useRef();
@@ -26,7 +26,7 @@ const ALResultsData = () => {
     const [subjects, setSubjects] = useState([]);
     const [existingResults, setResults] = useState([]);
     const [schools, setschools] = useState([]);
-    const [alSubjects, setAlSubjects] = useState([]);
+    const [OlSubjects, setOlSubjects] = useState([]);
     const [selectedSubject, setSelectedSubject] = useState();
 
 
@@ -34,7 +34,7 @@ const ALResultsData = () => {
         axios
         .get("http://localhost:3001/subject/subjectLists")
         .then((response) => {
-          setAlSubjects(response.data.ALsubjectList);
+          setOlSubjects(response.data.OLsubjectList);
         })
         .catch((error) => {
           console.error("Error fetching roles:", error);
@@ -42,8 +42,9 @@ const ALResultsData = () => {
     }, []);
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/ALResults/zeoAL/${selectedYear}/${division}/${selectedSubject}`).then((response) => {
-        setResults(response.data.Results);
+    axios.get(`http://localhost:3001/OLResults/ZEO/${selectedYear}/${division}/${selectedSubject}`).then((response) => {
+
+        setResults(response.data.results || []);
         setschools(response.data.schoolList);
       });
 
@@ -58,20 +59,20 @@ return (
 <div>
 
 <NavBar
-        PageName="A/L Results Analysis"
+        PageName="O/L Results Analysis"
         Tab1="Division Wise Analysis"
         Tab2="Subject Wise Analysis"
         Tab3="Summary"
-        Tab1Link="/A/L Results Analysis"
-        Tab2Link="/Subject Wise AL"
-        Tab3Link="/ALSubjectData"
+        Tab1Link="/O/L Results Analysis"
+        Tab2Link="/SubjectWiseAnalysisOL"
+        Tab3Link="/OLResultsData"
         showButtons={true}
       />
 
 
 <div ref={componentPDF}>
 <Container fluid>
-            <Row><h3 className='topicsP'>A/L Results Summary</h3></Row>
+            <Row><h3 className='topicsP'>O/L Results Summary</h3></Row>
         </Container>
 
 <Container className="DropdownDiv2">
@@ -95,8 +96,8 @@ return (
             </FormLabel>
           </Col>
           <Col lg={3} sm={12}>
-          <DropdownButton className='customDropdownButton' variant="outline-success" id="dropdown-basic-button" title={alSubjects.find((subject) => subject.subject_ID === selectedSubject)?.subject || 'Arts'} >
-            {alSubjects.map((subject, index) => (   
+          <DropdownButton className='customDropdownButton' variant="outline-success" id="dropdown-basic-button" title={OlSubjects.find((subject) => subject.subject_ID === selectedSubject)?.subject || 'Arts'} >
+            {OlSubjects.map((subject, index) => (   
                 <Dropdown.Item className='customDropdown' key={index} onClick={() => setSelectedSubject(subject.subject_ID)}>{subject.subject}</Dropdown.Item>
             ))} 
     </DropdownButton>
@@ -127,13 +128,16 @@ return (
 <Table striped bordered hover variant="light">
             <thead>
               <tr>
-                <th>#</th>
+              <th>#</th>
                 <th>School</th>
-                <th>Qualified for Universitie Entrance(Passed in 3 Subjects)</th>
-                <th>Obtained 3 A's</th>
-                <th>Failed in All subjects</th>
+                <th>A passes</th>
+                <th>B passes</th>
+                <th>C passes</th>
+                <th>S passes</th>
+                <th>W passes</th>
                 <th>Absent</th> 
-                <th>Number Of Sat</th>
+                <th> Number Of Sat</th>
+                <th>Number Of Pass</th>
               </tr>
             </thead>
             <tbody>
@@ -146,7 +150,7 @@ return (
             existingResults.length > 0 &&
             existingResults.map((results) => {
               if (results.School.school_ID === school.school_ID) {
-                return results.UniversityQualified;
+                return results.A_Passes;
               } else {
                 return null;
               }
@@ -160,7 +164,7 @@ return (
                       existingResults.length > 0 &&
                       existingResults.map((results) =>{
                         if(results.School.school_ID === school.school_ID){
-                          return results.A_ForAllSubjects;
+                          return results.B_Passes;
                         } else {
                           return null;
                         }
@@ -174,7 +178,7 @@ return (
                       existingResults.length > 0 &&
                       existingResults.map((results) =>{
                         if(results.School.school_ID === school.school_ID){
-                          return results.FailedAllSubjects;
+                          return results.C_Passes;
                         } else {
                           return null;
                         }
@@ -188,7 +192,7 @@ return (
                       existingResults.length > 0 &&
                       existingResults.map((results) =>{
                         if(results.School.school_ID === school.school_ID){
-                          return results.absent;
+                          return results.S_Passes;
                         } else {
                           return null;
                         }
@@ -202,13 +206,55 @@ return (
                       existingResults.length > 0 &&
                       existingResults.map((results) =>{
                         if(results.School.school_ID === school.school_ID){
-                          return results.NumOfSat;
+                          return results.W_Passes;
                         } else {
                           return null;
                         }
                       })
                     }
                   </td>
+                  <td
+                
+                >
+                   {
+                    existingResults.length > 0 &&
+                    existingResults.map((results) =>{
+                      if(results.School.school_ID === school.school_ID){
+                        return results.absent;
+                      } else {
+                        return null;
+                      }
+                    })
+                  }
+                </td>
+                <td
+                
+                >
+                   {
+                    existingResults.length > 0 &&
+                    existingResults.map((results) =>{
+                      if(results.School.school_ID === school.school_ID){
+                        return results.NumOfSat;
+                      } else {
+                        return null;
+                      }
+                    })
+                  }
+                </td>
+                <td
+                
+                >
+                   {
+                    existingResults.length > 0 &&
+                    existingResults.map((results) =>{
+                      if(results.School.school_ID === school.school_ID){
+                        return results.NumOfPass;
+                      } else {
+                        return null;
+                      }
+                    })
+                  }
+                </td>
                 
                 </tr>
               ))}
@@ -237,4 +283,4 @@ return (
 );
 };
 
-export default ALResultsData;
+export default OLResultsData;

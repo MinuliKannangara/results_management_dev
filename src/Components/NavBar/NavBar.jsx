@@ -36,7 +36,7 @@ function NavBar(props) {
   let sideBarItems = []; //array to assign
 
   if (userRole.includes('School Admin')) {
-    sideBarItems.push('School Admin Dashboard', 'Manage School Users', 'Student Performance', 'Prize Holders');
+    sideBarItems.push('Manage School Users', 'Student Performance', 'Prize Holders');
   }
   
   if (userRole.includes('Class Teacher') || userRole.includes('Subject Teacher') || userRole.includes('Grade Head') || userRole.includes('Sectional Head') || userRole.includes('School Admin')) {
@@ -44,7 +44,7 @@ function NavBar(props) {
   }
 
   if (userRole.includes('Class Teacher')) {
-    sideBarItems.push( 'Manage Student Details', 'Manage Class Results', 'Report Cards'	);
+    sideBarItems.push( 'Register New Students', 'Manage Class Results', 'Add Students'	);
   }
   
   if (userRole.includes('Subject Teacher')) {
@@ -52,7 +52,7 @@ function NavBar(props) {
   }
   
   if (userRole.includes('Grade Head') || userRole.includes('Sectional Head')) {
-    sideBarItems.push('Student Performance', 'Prize Holders', 'upload National Examination Results','Subject Wise Performance');
+    sideBarItems.push('Prize Holders', 'upload National Examination Results','Subject Wise Performance');
   }
 
   if (userRole.includes('Development Officer') || userRole.includes('Planning Officer') || userRole.includes('System Admin')) {
@@ -84,7 +84,7 @@ function NavBar(props) {
   
   return (
   
-    <Navbar expand="lg" className="bg-body-tertiary" style={{ backgroundColor: '#212529', padding: 0, borderBottom: '1px solid black', height: '60px' }}>
+    <Navbar expand="lg" className="bg-body-tertiary" style={{ backgroundColor: '#212529', padding: 0, borderBottom: '1px solid black', height: '70px' }}>
   
       <Row style={{width:"100%"}}>
         {/* <Col lg={3} sm={12} style={{ paddingLeft: '0px', paddingRight: '0px',backgroundColor: 'red' }}>

@@ -110,18 +110,13 @@ router.get("/:schoolID/:selectedYear", async(req, res)=>{
 
 //for the development section 
 
-router.get("/ZEO/:selectedYear/:division", async(req, res)=>{
+router.get("/ZEO/:selectedYear/:division/:selectedSubject", async(req, res)=>{
   try{
-      const subjectList = await Subject.findAll({
-          attributes: ['subject_ID','subject'],
-          include: [
-              {
-                  attributes: [],
-                  model: SubjectCategory,
-                  where:{name:"O/L"}
-              }
-          ],
-      });
+    const schoolList = await School.findAll({
+      attributes: ['school_ID','school_name'],
+      where:{division:req.params.division}
+  });
+
 
       const results = await OLResults.findAll({
           attributes: ['subject_ID','A_Passes','B_Passes','C_Passes','S_Passes','W_Passes','absent','NumOfSat','NumOfPass','year'],
@@ -130,15 +125,17 @@ router.get("/ZEO/:selectedYear/:division", async(req, res)=>{
             {
               attributes: ['school_ID','school_name'],
               model:School,
-              where:{division:req.params.division}
+              where:{division:req.params.division,
+              }
             }
           ],
           where:{
-            year: req.params.selectedYear
+            year: req.params.selectedYear,
+            subject_ID: req.params.selectedSubject
           },
       })
 
-      res.json ({subjectList,results});
+      res.json ({schoolList,results});
   }catch(err){
       res.json(err.message);
   }

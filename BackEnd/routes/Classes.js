@@ -129,4 +129,24 @@ const getSubjectResults = async (indexNumber, subjectName, year, term) => {
 
 // });
 
+router.get("/getClasses/:username", async(req, res)=>{
+    try{
+      const classOfUser = await users.findOne({
+        where: {
+          username: req.params.username,
+        },
+      });
+        const classes = await users.findAll({
+            attributes: ['class_name'],
+            where:{
+              school_ID: classOfUser.school_ID,
+            }
+        })
+        res.json (classes);
+    }catch(err){
+        res.json({message:err});
+    }
+    
+});
+
 module.exports = router;

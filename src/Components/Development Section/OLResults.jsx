@@ -153,10 +153,16 @@ return (
 <div>
 
 <NavBar
-PageName="O/L Results Analysis" 
-showButtons={false}
+        PageName="O/L Results Analysis"
+        Tab1="Division Wise Analysis"
+        Tab2="Subject Wise Analysis"
+        Tab3="Summary"
+        Tab1Link="/O/L Results Analysis"
+        Tab2Link="/SubjectWiseAnalysisOL"
+        Tab3Link="/OLResultsData"
+        showButtons={true}
+      />
 
-/>
 
 <div ref={componentPDF}>
 <Container fluid>
@@ -289,9 +295,7 @@ showButtons={false}
 
       <button onClick={generatePDF} className="buttonDownload" style={{width:"140px",marginLeft:"1330px",height:"40px"}}>Generate PDF</button> 
       </Row> 
-      <Container fluid>
-        <SubjectWiseAnalysisOL/>
-      </Container>
+   
 
 
 
